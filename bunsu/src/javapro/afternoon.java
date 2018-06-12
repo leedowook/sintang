@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 
 public class afternoon extends cost{
 	   

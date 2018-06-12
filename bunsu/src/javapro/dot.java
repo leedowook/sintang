@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 
 public  class dot {
 	int num1,x1,y1;// 각 교차로 지점의 dot

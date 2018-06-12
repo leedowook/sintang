@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 //워터 파크시설
 public class waterfcl extends fclinfo {
 	String wet;//시설 이용제한 시간

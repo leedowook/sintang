@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 import java.util.*;
 public class navi {//
 	info in=new info();
@@ -137,9 +137,71 @@ public class navi {//
 			search=scan.next();
 			start=search;
 			//시작지점
-			fm=closeString(start);
+			System.out.println(start);
+			for(int i=0;i<in.fcl.length;i++) {//끝점에 가장가까운 골목길 설정
+				if(in.fcl[i].fclname.equals(start)) {
+					//끝지점과 같은 장소배열 찾기
+					start1=i;//한글이라 
+					for(int j=0;j<dt.dote.length;j++) {//각 골목길과의 거리비교를 위해 배열에 우겨넣기
+						if(dt.dote[j]==null) {
+							
+
+							break;
+						}
+					esum[j]=(int)dt.gury(in.fcl[i].x, in.fcl[i].y, dt.dote[j].x1, dt.dote[j].y1);}
+					
+					break;
+					
+				}
+				
+			}
 			
-			ed=closeString(end);
+			min=esum[0];
+			for(int j=1;j<dt.dote.length;j++) {//최소거리 구하기
+				if(dt.dote[j+1]==null) {
+					
+					break;}
+				if(esum[j]<min) {
+					min=esum[j];
+					fm=j;//최소 거리인 골목길	
+					
+				}
+				
+				
+				
+			}
+			//끝지점
+			
+			for(int i=0;i<in.fcl.length;i++) {//끝점에 가장가까운 골목길 설정
+				if(in.fcl[i].fclname.equals(end)) {
+					//끝지점과 같은 장소배열 찾기
+					end1=i;//한글이라 
+					for(int j=0;j<dt.dote.length;j++) {//각 골목길과의 거리비교를 위해 배열에 우겨넣기
+						if(dt.dote[j]==null) {
+							
+
+							break;
+						}
+					esum[j]=(int)dt.gury(in.fcl[i].x, in.fcl[i].y, dt.dote[j].x1, dt.dote[j].y1);}
+					
+					break;
+					
+				}
+				
+			}
+			min=esum[0];
+			for(int j=1;j<dt.dote.length;j++) {//최소거리 구하기
+				if(dt.dote[j]==null) {
+					
+					break;
+				}
+				else if(esum[j]<min) {
+					
+					
+					min=esum[j];
+					ed=j;//최소 거리인 골목길	목적지
+				}
+			}
 			n=fm;//초기 시작지점인덱스
 			z=fm;//초기 이전지점인덱스
 			ArrayList<Integer> gr = new ArrayList<>();
@@ -279,8 +341,6 @@ public class navi {//
 		int fm = 0,start1,esum[]=new int[23],min;
 		String start;
 		start=a;
-		esum=this.esum;
-		min=this.min;
 		
 	for(int i=0;i<in.fcl.length;i++)
 	 {//시작점에 가장가까운 골목길 설정
@@ -299,6 +359,7 @@ public class navi {//
 				break;}
 					if(esum[j]<min) {
 						this.min=this.esum[j];
+						min=esum[j];
 						fm=j;//최소 거리인 골목길	
 					}}return fm;
 	}

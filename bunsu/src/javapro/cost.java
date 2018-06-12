@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 
 public abstract class cost {
 	   String name;

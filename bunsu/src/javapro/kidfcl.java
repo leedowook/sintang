@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 //유아 테마시설
 public class kidfcl extends fclinfo {
 	int age;

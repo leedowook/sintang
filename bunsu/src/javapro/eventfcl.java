@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 
 public class eventfcl extends fclinfo{
 	int day;//시설 이용제한 날짜

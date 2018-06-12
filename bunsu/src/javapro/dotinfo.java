@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 
 public class dotinfo{
 	dot[] dote=new dot[50];

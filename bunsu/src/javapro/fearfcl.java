@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 //공포테마 시설
 public class fearfcl extends fclinfo{
 	int fear;

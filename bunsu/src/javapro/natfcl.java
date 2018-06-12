@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 //자연 테마 
 public class natfcl extends fclinfo {
 	int timee;//시설 이용제한 시간

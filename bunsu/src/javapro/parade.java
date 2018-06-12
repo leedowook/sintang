@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 
 public class parade {
 	   //카니발 판타지

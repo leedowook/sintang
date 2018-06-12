@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 //스릴 테마 시설
 public class trillfcl extends fclinfo {
 	int dif ;

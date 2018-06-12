@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 import java.util.*;
 public class lookupinfo {
 	info in=new info();

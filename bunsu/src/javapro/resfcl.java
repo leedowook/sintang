@@ -1,4 +1,4 @@
-package project01;
+package javapro;
 
 public class resfcl extends fclinfo{
 	int ppl;
