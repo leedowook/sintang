@@ -38,7 +38,7 @@ public class info {
 			fcl[6]=trill;
 			trill=new trillfcl(7,"성적표차트",50,79,false,5);
 			fcl[7]=trill;
-			trill=new trillfcl(8,"바이킹",90,60,false,3);
+			trill=new trillfcl(8,"바이킹",60,90,false,3);
 			fcl[8]=trill;
 			//vr
 			trill=new trillfcl(32,"VR티익스프레스",30,59,true,3);
