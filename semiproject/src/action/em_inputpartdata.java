@@ -116,7 +116,7 @@ public class em_inputpartdata implements action {
 			powerbean.setSata_num(Integer.parseInt(request.getParameter("sata_num")));
 			powerbean.setPcie_num(Integer.parseInt(request.getParameter("pcie_num")));
 			powerbean.setPrice(Integer.parseInt(request.getParameter("price")));
-		
+			boolean result=ippdb.inputpowerdata(powerbean);
 		
 		}
 		else if("mainboard".equals(request.getAttribute("part"))) {
@@ -150,11 +150,11 @@ public class em_inputpartdata implements action {
 			mainboardbean.setM2_num(Integer.parseInt(request.getParameter("m2_num")));
 			mainboardbean.setUsb1gen(Integer.parseInt(request.getParameter("usb1gen")));
 			mainboardbean.setUsb2gen(Integer.parseInt(request.getParameter("usb2gen")));
-			
+			boolean result=ippdb.inputmainboarddata(mainboardbean);
 		}
 		else if("ram".equals(request.getAttribute("part"))) {
 			ippdb=new inputpartdatabase();
-			System.out.println("그래픽입력");
+			System.out.println("램입력");
 			em_ram rb=new em_ram();
 			em_ram_mm rm=new em_ram_mm();
 			rb.setMaker((String)request.getParameter("maker"));
@@ -162,11 +162,11 @@ public class em_inputpartdata implements action {
 			rb.setCk(Integer.parseInt(request.getParameter("maker")));
 			rm.setMemory(Integer.parseInt(request.getParameter("memory")));
 			rm.setPrice(Integer.parseInt(request.getParameter("price")));
-			
+			boolean result=ippdb.inputramdata(rb,rm);
 		}
 		else if("hdd".equals(request.getAttribute("part"))) {
 			ippdb=new inputpartdatabase();
-			System.out.println("그래픽입력");
+			System.out.println("하드입력");
 			em_hdd hb=new em_hdd();
 			em_hdd_memory hm=new em_hdd_memory();
 			hb.setMaker((String)request.getParameter("maker"));
@@ -178,11 +178,11 @@ public class em_inputpartdata implements action {
 			hb.setSize(Double.parseDouble(request.getParameter("size")));
 			hm.setMemory(Integer.parseInt(request.getParameter("memory")));
 			hm.setPrice(Integer.parseInt(request.getParameter("price")));
-			
+			boolean result=ippdb.inputhdddata(hb,hm);
 		}
 		else if("ssd".equals(request.getAttribute("part"))) {
 			ippdb=new inputpartdatabase();
-			System.out.println("그래픽입력");
+			System.out.println("ssd입력");
 			em_ssd sb=new em_ssd();
 			em_ssd_memory sm=new em_ssd_memory();
 			sb.setMaker((String)request.getParameter("maker"));
@@ -194,7 +194,7 @@ public class em_inputpartdata implements action {
 			sb.setDram(Integer.parseInt(request.getParameter("dram")));
 			sm.setMemory(Integer.parseInt(request.getParameter("memory")));
 			sm.setPrice(Integer.parseInt(request.getParameter("price")));
-			
+			boolean result=ippdb.inputssddata(sb,sm);
 		}
 		
 	

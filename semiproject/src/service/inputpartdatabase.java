@@ -69,7 +69,7 @@ public class inputpartdatabase {
 		}
 		return result;
 	}
-	public boolean inputamainboarddata(em_mainboard mb) {
+	public boolean inputmainboarddata(em_mainboard mb) {
 		System.out.println("메인보드 입력 서비스 접속");
 		boolean result=false;
 		emdao dao =emdao.getInstance();

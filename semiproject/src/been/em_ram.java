@@ -5,7 +5,7 @@ public class em_ram {
 	private String maker;
 	private String kind;
 	private int mm;
-	private double ck;
+	private int ck;
 	private int price;
 	public String getNum() {
 		return num;
@@ -19,7 +19,7 @@ public class em_ram {
 	public int getMm() {
 		return mm;
 	}
-	public double getCk() {
+	public int getCk() {
 		return ck;
 	}
 	public int getPrice() {
@@ -37,7 +37,7 @@ public class em_ram {
 	public void setMm(int mm) {
 		this.mm = mm;
 	}
-	public void setCk(double ck) {
+	public void setCk(int ck) {
 		this.ck = ck;
 	}
 	public void setPrice(int price) {
