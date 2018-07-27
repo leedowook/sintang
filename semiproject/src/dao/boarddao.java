@@ -83,9 +83,6 @@ public class boarddao {
 		rs=null;//순서 정렬기준: 1순위 re_ref 원본번호 2순위 순서번호
 		//+rownum으로 순서를 매긴뒤 그것을 제외한 모든것을 출력 -정렬한 서브컬럼을 순서를 매겨줌, 그리고그사이에서 출력
 		String sql="select v2.* from (select rownum rown,v1.* from (select * from board  order by b_re_ref desc,b_re_seq asc)v1)v2 WHERE v2.rown between ? AND ?";
-		String num="?";
-		String sql2="select * from"+num+"where rown>?";
-		
 		try {
 			
 		pstmt = con.prepareStatement(sql);

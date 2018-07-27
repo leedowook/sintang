@@ -1,7 +1,6 @@
 package control;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,129 +10,154 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.action;
-import action.boarddeleteaction;
-import action.boardfiledownaction;
-import action.boardinfoaction;
-import action.boardlistaction;
-import action.boardmodifiedaction;
-import action.boardmodifiedaction_b;
-import action.boardrecomentaction;
-import action.boardwriteaction;
+import action.em_adminmode;
+import action.em_delgamedata;
+import action.em_delpartdata;
+import action.em_inputgamedata;
+import action.em_inputpartdata;
+import action.em_listgamedata;
+import action.em_listpartdata;
+import action.em_modgamedata;
+import action.em_modpartdata;
+import action.emchoiceaction_main;
 import been.actionforward;
 
 
-@WebServlet("*.bo")
-public class boardcontroller extends HttpServlet {
+
+
+@WebServlet("*.em")
+public class em_control extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
- 
- 
 
-    public boardcontroller() {
+
+
+    public em_control() {
         super();
 
     }
-    
-    
-    
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
     	System.out.println("control연결완료");
     	String RequestURI=request.getRequestURI();
-    	String9 contextPath=request.getContextPath();
+    	String contextPath=request.getContextPath();
     	String command=RequestURI.substring(contextPath.length());
     	actionforward forward=null;
     	action action=null;
     	request.setCharacterEncoding("UTF-8");
     	response.setContentType("text/html;charset=UTF-8 ");
-    	
-    	if(command.equals("/boardWritePro.bo")) {
-    		System.out.println("borad writepro control에 접속");
-    		action=new boardwriteaction();
-    		try {
-    			forward=action.execute(request,response);
-    			System.out.println("성공");
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}
-    	else if(command.equals("/boardList.bo")) {
-    		System.out.println("boradlist control에 접속");
-    		action=new boardlistaction();
-    		try {
-    			forward=action.execute(request,response);
-    			System.out.println("성공");
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}
-    	else if(command.equals("/boardInfo.bo")) {
-    		System.out.println("boardinfo control에 접속");
-    		action=new boardinfoaction();
-    		try {
-    			forward=action.execute(request,response);
-    			System.out.println("성공");
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}
-    	
-    	else if(command.equals("/boardWriteform.bo")) {
-    		forward=new actionforward();
-    		forward.setPath("./board/board.jsp");
-    		//forward.setRedirect(true);
-    	}
-    	//수정
-    	else if(command.equals("/boardModified.bo")) {
-    		String step=request.getParameter("step");
-    		System.out.println(request.getParameter("password"));
-    		if(step.equals("a")) {//수정 정보 보내줄때
-    		action=new boardmodifiedaction();
-    		}
-    		else if(step.equals("b")){//수정 할때
-    		action=new boardmodifiedaction_b();
-    		}
-    		try {
-    			forward=action.execute(request,response);
-    			System.out.println("성공");
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}
-    	//답글
-    	else if(command.equals("/boardRecoment.bo")) {
-    		action=new boardrecomentaction();
-    		try {
-    			forward=action.execute(request,response);
-    			System.out.println("성공");
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}
-    	//삭제
-    	else if(command.equals("/boardDownload.bo")) {
-    		action=new boardfiledownaction();
-    		try {
-    			forward=action.execute(request,response);
-    			System.out.println("성공");
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}
-    	else if(command.equals("/boardDelete.bo")) {
-    		action=new boarddeleteaction();
-    		try {
-    			response.setContentType("text/html;charset=UTF-8");
-    			PrintWriter out=response.getWriter();
-    			forward=action.execute(request,response);
-    			System.out.println("성공");
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}
-    	
+    	System.out.println(command);
+    	if(command.equals("/main_sel_1.em")) {
+    		System.out.println("mainselcontrol에 접속");
     		
+    		if(request.getAttribute("mainsel").equals("choice")) {
+    			forward=new actionforward();
+    			
+        		forward.setPath("./em_first_main/em_cho.jsp");}
+    		else {
+    			forward=new actionforward();
+    			
+        		forward.setPath("./em_first_main/em_sel.jsp");
+    		}
+    		try {
+    			
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
     	
+    	//추천 선택한 부분에 대한 부분 
+    	else if(command.equals("/cho_sel.em")) {
+    		System.out.println("cho_sel control에 접속");
+    		action=new emchoiceaction_main();
+    		try {
+    			forward=action.execute(request,response);
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	
+    	
+    	else if(command.equals("/em_adminmode.em")) {
+    		System.out.println("관리자 모드 접속");
+    		action=new em_adminmode();
+    		try {
+    			forward=action.execute(request,response);
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	else if(command.equals("/inputdata/em_adminmodeadd.em")) {
+    		System.out.println("관리자 추가 모드 접속");
+    		String active=(String) request.getParameter("active");
+    		System.out.println(active);
+    		if(active.equals("part")) {
+    			action=new em_inputpartdata();
+    		}
+    		else {
+    			action=new em_inputgamedata();
+    		}
+    		try {
+    			forward=action.execute(request,response);
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	else if(command.equals("/em_adminmodemod.em")) {
+    		System.out.println("관리자 수정 모드 접속");
+    		String active=(String) request.getAttribute("active");
+    		if(active.equals("part")) {
+    			action=new em_modpartdata();
+    		}
+    		else {
+    			action=new em_modgamedata();
+    		}
+    		try {
+    			forward=action.execute(request,response);
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	else if(command.equals("/em_adminmodedel.em")) {
+    		System.out.println("관리자 삭제 모드 접속");
+    	
+    		String active=(String) request.getParameter("active");
+    		System.out.println(active);
+    		if(active.equals("part")) {
+    			action=new em_delpartdata();
+    		}
+    		else {
+    			action=new em_delgamedata();
+    		}
+    		try {
+    			forward=action.execute(request,response);
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	else if(command.equals("/em_adminmodelist.em")) {
+    		System.out.println("관리자 목록 action 접속");
+    		String active=(String) request.getAttribute("active");
+    		if(active.equals("part")) {
+    			action=new em_listpartdata();
+    		}
+    		else {
+    			action=new em_listgamedata();
+    		}
+    		try {
+    			forward=action.execute(request,response);
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	
+    	//jsp로 넘겨주기 위한곳
     	if(forward!=null) {
     		if(forward.isRedirect()) {
     			response.sendRedirect(forward.getPath());
@@ -146,43 +170,22 @@ public class boardcontroller extends HttpServlet {
     	}
     	
     	
-		
+    	
+    	
 	}
 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		doProcess(request, response);
 	}
 
-	
-	
+
+
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+
 		doProcess(request, response);
 	}
 
