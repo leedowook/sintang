@@ -8,27 +8,394 @@ import java.util.*;
 import been.*;
 import methodcode.*;
 
-public class emdao {
-	private static emdao emdao;
-	Connection con;
-	PreparedStatement pstmt;
-	ResultSet rs;
-	public static emdao getInstance() {
-		if(emdao==null) {
-			emdao=new emdao();
-		}
-		return emdao;
-	}
-	public void setConnection(Connection con) {
-		this.con=con;
-	}
-	
-	public int selectcpu(String num) {
-		System.out.println("cpu 조회");
-		rs=null;
+
+	public class emdao {
+		private static emdao emdao;
+		Connection con;
+		PreparedStatement pstmt;
+		ResultSet rs;
 		
-		return 0;
-	}
+		public static emdao getInstance() {
+			if(emdao==null) {
+				emdao=new emdao();
+			}
+			return emdao;
+		}
+		public void setConnection(Connection con) {
+			this.con=con;
+		}
+		//조회 
+		public em_cpu selectcpu(String num) {
+			System.out.println("cpu 조회");
+			em_cpu cb=new em_cpu();
+			pstmt=null;
+			rs=null;
+		
+			String sql1="select * from cpu_info_m where cpu_num=?";
+			String sql2="select * from cpu_info_e where cpu_num=?";
+			try {
+			pstmt = con.prepareStatement(sql1);
+			pstmt.setString(1,num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+			cb.setNum(num);
+			cb.setMaker(rs.getString("cpu_maker"));
+			cb.setCodename(rs.getString("codename"));
+			cb.setBrand(rs.getString("brand"));
+			cb.setOver(rs.getString("cpu_over"));
+			cb.setName(rs.getString("cpu_name"));
+			cb.setSize(rs.getString("cpu_size"));
+			cb.setPrice(rs.getInt("price"));
+			}
+			pstmt = con.prepareStatement(sql2);
+			pstmt.setString(1,num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+			
+			cb.setMaxck(rs.getDouble("cpu_ck_max"));
+			cb.setCk(rs.getDouble("cpu_ck"));
+			cb.setTd(rs.getInt("cpu_td"));
+			cb.setCore(rs.getInt("cpu_core"));
+			cb.setL2cashm(rs.getInt("l2cashm"));
+			cb.setL3cashm(rs.getInt("l3cashm"));
+			boolean gpu=false;
+			if(rs.getInt("gpu")==1) {
+				gpu=true;
+			}
+			cb.setGpu(gpu);
+			cb.setTdp(rs.getInt("tdp"));
+			cb.setTri(rs.getInt("tri"));
+			cb.setSysbus(rs.getInt("sysbus"));
+			
+			}
+			
+			
+			}catch(Exception e) {
+				System.out.println("찾기dao오류"+e);
+				e.printStackTrace();
+				
+			}finally {
+				close(pstmt);
+				close(rs);
+			}
+			return cb;
+		}
+		public em_power selectpower(String num) {
+			System.out.println("poewr 조회");
+			em_power powerbean=new em_power();
+			pstmt=null;
+			rs=null;
+		
+			String sql1="select * from power_info_m where cpu_num=?";
+		
+			try {
+			pstmt = con.prepareStatement(sql1);
+			pstmt.setString(1,num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				powerbean.setNum(num);
+				powerbean.setNum(rs.getString("pow_num"));
+				powerbean.setMaker(rs.getString("pow_maker"));
+				powerbean.setKind(rs.getString("pow_kind"));
+				powerbean.setEplus(rs.getString("pow_80plus"));
+				powerbean.setPower(rs.getInt("pow_power"));
+				powerbean.setFpinide_num(rs.getInt("pow_4pinide_num"));
+				powerbean.setSata_num(rs.getInt("pow_sata_num"));
+				powerbean.setPcie_num(rs.getInt("pow_pcie_num"));
+				powerbean.setPrice(rs.getInt("price"));
+			}
+			
+		
+			
+			
+			}catch(Exception e) {
+				System.out.println("찾기dao오류"+e);
+				e.printStackTrace();
+				
+			}finally {
+				close(pstmt);
+				close(rs);
+			}
+			return powerbean;
+		}
+		
+		public em_mainboard selectmb(String num) {
+			System.out.println("poewr 조회");
+			em_mainboard mainboardbean=new em_mainboard();
+			pstmt=null;
+			rs=null;
+		
+			String sql1="select m.*,e.usb1gen,e.usb0gen,ps2 from mb_info_m m inner join mb_info_e e on m.mainboard_num=e.mainboard_num   where cpu_num=?";
+			
+			try {
+			pstmt = con.prepareStatement(sql1);
+			pstmt.setString(1,num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				mainboardbean.setNum(num);
+				mainboardbean.setMaker(rs.getString("mainboard_maker"));
+				mainboardbean.setName(rs.getString("mainboard_name"));
+				mainboardbean.setBrand(rs.getString("mainboard_brand"));
+				mainboardbean.setLan(rs.getInt("lan"));
+				mainboardbean.setCpu_size(rs.getString("cpu_size"));
+				mainboardbean.setChip_group(rs.getString("chip_group"));
+				mainboardbean.setChip_group_b(rs.getString("chip_group_b"));
+				mainboardbean.setRam_kind(rs.getString("ram_kind"));
+				mainboardbean.setPs2(rs.getString("ps2"));
+				mainboardbean.setPowertype(rs.getInt("powertype"));
+				mainboardbean.setPrice(rs.getInt("price"));
+				mainboardbean.setSata3(rs.getInt("sata3"));
+				mainboardbean.setSata2(rs.getInt("sata2"));
+				mainboardbean.setPcieslot_n(rs.getInt("pcieslot_n"));
+				mainboardbean.setPcie3x16_n(rs.getInt("pcie3x16_n"));
+				mainboardbean.setPcie3x8_n(rs.getInt("pcie3x8_n"));
+				mainboardbean.setPcie3x1_n(rs.getInt("pcie3x1_n"));
+				mainboardbean.setPciex6_n(rs.getInt("pciex6_n"));
+				mainboardbean.setPciex4_n(rs.getInt("pciex4_n"));
+				mainboardbean.setPciex1_n(rs.getInt("pciex1_n"));
+				mainboardbean.setRam_ck(rs.getInt("ram_ck"));
+				mainboardbean.setRam_mm(rs.getInt("ram_mm"));
+				mainboardbean.setRam_mnum(rs.getInt("ram_mnum"));
+				mainboardbean.setRam_ch(rs.getInt("ram_ch"));
+				mainboardbean.setM2_num(rs.getInt("m2_num"));
+				mainboardbean.setUsb1gen(rs.getInt("usb1gen"));
+				mainboardbean.setUsb2gen(rs.getInt("usb2gen"));
+			}
+			
+		
+			
+			
+			}catch(Exception e) {
+				System.out.println("찾기dao오류"+e);
+				e.printStackTrace();
+				
+			}finally {
+				close(pstmt);
+				close(rs);
+			}
+			return mainboardbean;
+			
+			
+		}
+	//조회 옵션이 있는 것들 
+	public em_part_info selectvga(String num) {
+		System.out.println("vga 조회");
+		em_part_info ep=new em_part_info();
+		ArrayList<em_vga_spec> arvga=new ArrayList<>();
+		em_vga vb=new em_vga();
+		em_vga_spec vs=new em_vga_spec();
+		pstmt=null;
+		rs=null;
+		String sql1="select * from vga_info_m where vga_num=?";
+		String sql2="select * from vga_info_else where vga_num=?";
+		String sql3="select * from vga_info_spec where vga_num=?";
+		try {
+		pstmt = con.prepareStatement(sql1);
+		pstmt.setString(1,num);
+		rs=pstmt.executeQuery();
+		if(rs.next()) {
+		vb.setNum(num);
+		vb.setMaker(rs.getString("vga_maker"));
+		vb.setName(rs.getString("vga_name"));
+		vb.setItf(rs.getString("vga_interface"));
+		vb.setChip(rs.getString("vga_chip"));
+		vb.setChipmaker(rs.getString("vga_chipmaker"));
+		vb.setChipgroup(rs.getString("vga_chipgroup"));
+		vb.setMaxck(rs.getDouble("vga_ck_max"));
+		vb.setCk(rs.getDouble("vga_ck"));
+		vb.setBirth(rs.getDate("birth"));
+		vb.setShaders(rs.getInt("shaders"));
+		vb.setTmus(rs.getInt("tmus"));
+		vb.setRops(rs.getInt("rops"));
+		
+		}
+		pstmt = con.prepareStatement(sql2);
+		pstmt.setString(1,num);
+		rs=pstmt.executeQuery();
+		if(rs.next()) {
+		
+		vb.setShaders(rs.getInt("shaders"));
+		vb.setTmus(rs.getInt("tmus"));
+		vb.setRops(rs.getInt("rops"));
+		vb.setHdmi(rs.getString("hdmi"));
+		
+		}
+		pstmt = con.prepareStatement(sql3);
+		pstmt.setString(1,num);
+		rs=pstmt.executeQuery();
+		int i=0;
+		while(rs.next()) {
+		vs=new em_vga_spec();
+		vs.setNum(num);
+		vs.setRam_ck(rs.getInt("ram_ck"));
+		vs.setRam_bus(rs.getInt("ram_bus"));
+		vs.setRam_mm(rs.getInt("ram_mm"));
+		vs.setKind(rs.getInt("kind"));
+		vs.setTdp(rs.getInt("tdp"));
+		vs.setStr(rs.getInt("str"));
+			
+		arvga.set(i,vs);
+		i++;
+		}
+		ep.setVb(vb);
+		ep.setAr_v(arvga);
+		}catch(Exception e) {
+			System.out.println("찾기dao오류"+e);
+			e.printStackTrace();
+			
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return ep;}
+	
+	public em_part_info selectram(String num) {
+		System.out.println("ram 조회");
+		em_part_info ep=new em_part_info();
+		ArrayList<em_ram_mm> arram=new ArrayList<>();
+		em_ram rb=new em_ram();
+		em_ram_mm rm=new em_ram_mm();
+		pstmt=null;
+		rs=null;
+		String sql1="select * from ram_info_m where ram_num=?";
+		String sql2="select * from ram_info_e where ram_num=?";
+		try {
+		pstmt = con.prepareStatement(sql1);
+		pstmt.setString(1,num);
+		rs=pstmt.executeQuery();
+		if(rs.next()) {
+			rb.setNum(num);
+			rb.setMaker(rs.getString("maker"));
+			rb.setKind(rs.getString("kind"));
+			rb.setCk(rs.getInt("ck"));
+		
+		}
+		pstmt = con.prepareStatement(sql2);
+		pstmt.setString(1,num);
+		
+		rs=pstmt.executeQuery();
+		int i=0;
+		while(rs.next()) {
+		rm=new em_ram_mm();
+		rm.setMemory(rs.getInt("memory"));
+		rm.setPrice(rs.getInt("price"));
+			
+		arram.set(i,rm);
+		i++;
+		}
+		ep.setRb(rb);
+		ep.setAr_r(arram);
+		}catch(Exception e) {
+			System.out.println("찾기dao오류"+e);
+			e.printStackTrace();
+			
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return ep;}
+	
+	
+	public em_part_info selecthdd(String num) {
+		System.out.println("hdd 조회");
+		em_part_info ep=new em_part_info();
+		ArrayList<em_hdd_memory> arhdd=new ArrayList<>();
+		em_hdd hb=new em_hdd();
+		em_hdd_memory hm=new em_hdd_memory();
+		pstmt=null;
+		rs=null;
+		String sql1="select * from hdd_info_m where hdd_num=?";
+		String sql2="select * from hdd_info_e where hdd_num=?";
+		try {
+		pstmt = con.prepareStatement(sql1);
+		pstmt.setString(1,num);
+		rs=pstmt.executeQuery();
+		if(rs.next()) {
+			hb.setMaker(rs.getString("hdd_maker"));
+			hb.setKind(rs.getString("hdd_kind"));
+			hb.setItf(rs.getString("hdd_interface"));
+			hb.setPlatter(rs.getInt("hdd_platter"));
+			hb.setDisk_num(rs.getInt("hdd_disk_num"));
+			hb.setBuffer_mm(rs.getInt("hdd_buffer_mm"));
+			hb.setSize(rs.getDouble("hdd_size"));
+		
+		}
+		pstmt = con.prepareStatement(sql2);
+		pstmt.setString(1,num);
+		
+		rs=pstmt.executeQuery();
+		int i=0;
+		while(rs.next()) {
+		hm=new em_hdd_memory();
+		hm.setMemory(rs.getInt("hdd_memory"));
+		hm.setPrice(rs.getInt("hdd_price"));
+			
+		arhdd.set(i,hm);
+		i++;
+		}
+		ep.setHb(hb);
+		ep.setAr_h(arhdd);
+		}catch(Exception e) {
+			System.out.println("찾기dao오류"+e);
+			e.printStackTrace();
+			
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return ep;}
+	
+	public em_part_info selectssd(String num) {
+		System.out.println("ssd 조회");
+		em_part_info ep=new em_part_info();
+		ArrayList<em_ssd_memory> arssd=new ArrayList<>();
+		em_ssd sb=new em_ssd();
+		em_ssd_memory sm=new em_ssd_memory();
+		pstmt=null;
+		rs=null;
+		String sql1="select * from ssd_info_m where ssd_num=?";
+		String sql2="select * from ssd_info_e where ssd_num=?";
+		try {
+		pstmt = con.prepareStatement(sql1);
+		pstmt.setString(1,num);
+		rs=pstmt.executeQuery();
+		if(rs.next()) {
+			sb.setMaker(rs.getString("ssd_maker"));
+			sb.setKind(rs.getString("ssd_kind"));
+			sb.setRead(rs.getInt("read"));
+			sb.setWrite(rs.getInt("write"));
+			sb.setRead_iops(rs.getInt("read_iops"));
+			sb.setWrite_iops(rs.getInt("write_iops"));
+			sb.setDram(rs.getInt("dram"));
+		
+		}
+		pstmt = con.prepareStatement(sql2);
+		pstmt.setString(1,num);
+		
+		rs=pstmt.executeQuery();
+		int i=0;
+		while(rs.next()) {
+		sm=new em_ssd_memory();
+		sm.setMemory(rs.getInt("ssd_memory"));
+		sm.setPrice(rs.getInt("ssd_price"));
+			
+		arssd.set(i,sm);
+		i++;
+		}
+		ep.setSb(sb);
+		ep.setAr_s(arssd);
+		}catch(Exception e) {
+			System.out.println("찾기dao오류"+e);
+			e.printStackTrace();
+			
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return ep;}
+	
+	
+	
 	public int inputcpu(em_cpu cb){
 		System.out.println("dao cpu입력에 접속");
 		me_number mn=new me_number();
@@ -44,13 +411,11 @@ public class emdao {
 			
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				System.out.println("rs정보있음");
-				number=mn.number(rs.getString(1));
-			}
-			else {
-				System.out.println("rs정보없음");
-				number="ca00";
-			}
+				if(rs.getString(1)!=null) {
+					number=mn.number(rs.getString(1));}
+					else{System.out.println("rs정보없음");
+					number="ca00";}
+				}
 			pstmt = con.prepareStatement(sql1); 
 			
 			pstmt.setString(1,number);
@@ -93,15 +458,16 @@ public class emdao {
 		return result;
 		
 	}
-	public int inputvga(em_vga vb,em_vga_spec vs){
+	public int inputvga(em_part_info ep){
 		System.out.println("dao vga입력에 접속");
 		me_number mn=new me_number();
+		em_vga vb=ep.getVb();
 		int result=0,result1=0,result2=0,result3=0;
 		String number=null;
 		pstmt=null;
 		rs=null;
 		String num="select max(vga_num) from vga_info_m";
-		String sql1="insert into vga_info_m values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql1="insert into vga_info_m values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		String sql2="insert into vga_info_else values(?,?,?,?,?)";
 		String sql3="insert into vga_info_spec values(?,?,?,?,?,?,?,?,?)";
 		try {
@@ -109,13 +475,11 @@ public class emdao {
 			
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				System.out.println("rs정보있음");
-				number=mn.number(rs.getString(1));
-			}
-			else {
-				System.out.println("rs정보없음");
-				number="va00";
-			}
+				if(rs.getString(1)!=null) {
+					number=mn.number(rs.getString(1));}
+					else{System.out.println("rs정보없음");
+					number="va00";}
+				}
 			pstmt = con.prepareStatement(sql1); 
 			
 			pstmt.setString(1,number);
@@ -127,10 +491,10 @@ public class emdao {
 			pstmt.setString(7,vb.getChip());
 			pstmt.setString(8,vb.getChipmaker());
 			pstmt.setString(9,vb.getChipgroup());
-			pstmt.setDate(10,vb.getBirth());
-			pstmt.setInt(11,vb.getShaders());
-			pstmt.setInt(12,vb.getTmus());
-			pstmt.setInt(13,vb.getRops());
+		
+			pstmt.setInt(10,vb.getShaders());
+			pstmt.setInt(11,vb.getTmus());
+			pstmt.setInt(12,vb.getRops());
 			
 			result1=pstmt.executeUpdate();
 			pstmt = con. prepareStatement(sql2);
@@ -143,7 +507,7 @@ public class emdao {
 			pstmt.setString(5,vb.getHdmi());
 			
 			result2=pstmt.executeUpdate();
-			
+			for(em_vga_spec vs:ep.getAr_v()) {
 			pstmt = con. prepareStatement(sql3);
 			
 			
@@ -157,8 +521,9 @@ public class emdao {
 			pstmt.setInt(8,vs.getStr());
 			pstmt.setInt(9,vs.getRam_mm());
 			result3=pstmt.executeUpdate();
-			
-			result=result1+result2+result3;
+			result+=result3;
+			}
+			result=result1+result2;
 			
 			}catch(Exception e) {
 				System.out.println("vga emdao오류"+e);
@@ -180,19 +545,17 @@ public class emdao {
 		
 		pstmt=null;
 		String num="select max(pow_num) from pow_info_m";
-		String sql1="insert into power_info_m values(?,?,?,?,?,?,?,?,?)";
+		String sql1="insert into pow_info_m values(?,?,?,?,?,?,?,?,?)";
 		try {
 			pstmt=con.prepareStatement(num);
 			
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				System.out.println("rs정보있음");
-				number=mn.number(rs.getString(1));
-			}
-			else {
-				System.out.println("rs정보없음");
-				number="pa00";
-			}
+				if(rs.getString(1)!=null) {
+					number=mn.number(rs.getString(1));}
+					else{System.out.println("rs정보없음");
+					number="pa00";}
+				}
 		pstmt = con. prepareStatement(sql1);
 		
 		
@@ -232,13 +595,11 @@ public class emdao {
 			
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				System.out.println("rs정보있음");
-				number=mn.number(rs.getString(1));
-			}
-			else {
-				System.out.println("rs정보없음");
-				number="ma00";
-			}
+				if(rs.getString(1)!=null) {
+					number=mn.number(rs.getString(1));}
+					else{System.out.println("rs정보없음");
+					number="ma00";}
+				}
 		pstmt = con. prepareStatement(sql1);
 		
 		
@@ -292,8 +653,10 @@ public class emdao {
 		return result;
 		
 	}
-	public int inputram(em_ram rb, em_ram_mm rs2) {
+	public int inputram(em_part_info ep) {
 		System.out.println("ram입력에 접속");
+		em_ram rb=ep.getRb();
+	
 		me_number mn=new me_number();
 		int result=0,result1=0;
 		String number=null;
@@ -307,13 +670,13 @@ public class emdao {
 			
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				System.out.println("rs정보있음");
-				number=mn.number(rs.getString(1));
+			
+				if(rs.getString(1)!=null) {
+				number=mn.number(rs.getString(1));}
+				else{System.out.println("rs정보없음");
+				number="ra00";}
 			}
-			else {
-				System.out.println("rs정보없음");
-				number="ra00";
-			}
+			
 		pstmt = con. prepareStatement(sql1);
 		
 		
@@ -325,14 +688,15 @@ public class emdao {
 		
 		result1=pstmt.executeUpdate();
 		result=+result1;
+	
+		for(em_ram_mm rs:ep.getAr_r()) {
 		pstmt = con. prepareStatement(sql2);
-		
 		pstmt.setString(1,number);
-		pstmt.setInt(2,rs2.getMemory());
-		pstmt.setInt(3,rs2.getPrice());
+		pstmt.setInt(2,rs.getMemory());
+		pstmt.setInt(3,rs.getPrice());
 		
 		result1=pstmt.executeUpdate();
-		result=+result1;
+		result=+result1;}
 		}
 		catch(Exception e) {
 			System.out.println("램 emdao오류"+e);
@@ -344,9 +708,10 @@ public class emdao {
 		}
 		return result;
 	}
-	public int inputhdd(em_hdd hd, em_hdd_memory hm) {
-		System.out.println("ram입력에 접속");
+	public int inputhdd(em_part_info ep) {
+		System.out.println("hdd입력에 접속");
 		me_number mn=new me_number();
+		em_hdd hd=ep.getHb();
 		int result=0,result1=0;
 		String number=null;
 		rs=null;
@@ -359,13 +724,11 @@ public class emdao {
 			
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				System.out.println("rs정보있음");
-				number=mn.number(rs.getString(1));
-			}
-			else {
-				System.out.println("rs정보없음");
-				number="ha00";
-			}
+				if(rs.getString(1)!=null) {
+					number=mn.number(rs.getString(1));}
+					else{System.out.println("rs정보없음");
+					number="ha00";}
+				}
 		pstmt = con. prepareStatement(sql1);
 		
 		
@@ -381,15 +744,16 @@ public class emdao {
 		
 		result1=pstmt.executeUpdate();
 		result=+result1;
-		pstmt = con. prepareStatement(sql2);
 		
+		for(em_hdd_memory hm:ep.getAr_h()) {
+		pstmt = con. prepareStatement(sql2);
 		pstmt.setString(1,number);
 		pstmt.setInt(2,hm.getMemory());
 		pstmt.setInt(3,hm.getPrice());
 		
 		result1=pstmt.executeUpdate();
 		result=+result1;
-		}
+		}}
 		catch(Exception e) {
 			System.out.println("하드emdao오류"+e);
 			e.printStackTrace();
@@ -400,8 +764,9 @@ public class emdao {
 		}
 		return result;
 	}
-	public int inputssd(em_ssd sd, em_ssd_memory sm) {
+	public int inputssd(em_part_info ep) {
 		System.out.println("ssd입력에 접속");
+		em_ssd sd=ep.getSb();
 		me_number mn=new me_number();
 		int result=0,result1=0;
 		String number=null;
@@ -415,13 +780,11 @@ public class emdao {
 			
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				System.out.println("rs정보있음");
-				number=mn.number(rs.getString(1));
-			}
-			else {
-				System.out.println("rs정보없음");
-				number="sa00";
-			}
+				if(rs.getString(1)!=null) {
+					number=mn.number(rs.getString(1));}
+					else{System.out.println("rs정보없음");
+					number="sa00";}
+				}
 		pstmt = con. prepareStatement(sql1);
 		
 		
@@ -439,15 +802,17 @@ public class emdao {
 		
 		result1=pstmt.executeUpdate();
 		result=+result1;
-		pstmt = con. prepareStatement(sql2);
 		
+		for(em_ssd_memory sm:ep.getAr_s()) {
+		pstmt = con. prepareStatement(sql2);
 		pstmt.setString(1,number);
 		pstmt.setInt(2,sm.getMemory());
 		pstmt.setInt(3,sm.getPrice());
 		
+		System.out.println("dao"+sm.getMemory());
 		result1=pstmt.executeUpdate();
 		result=+result1;
-		}
+		}}
 		catch(Exception e) {
 			System.out.println("ssd emdao오류"+e);
 			e.printStackTrace();
@@ -458,4 +823,6 @@ public class emdao {
 		}
 		return result;
 	}
+	
+	
 }

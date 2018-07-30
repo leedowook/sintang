@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="em_adminmodeadd.em?active=part&part=hhd" method="post">
+<form action="em_adminmodeadd.em?active=part&part=hdd&option=<%=request.getParameter("optionnum") %>" method="post">
 <table id="hdd">
 	
 	
@@ -58,7 +58,7 @@
 				크기(ex:3.5형)
 			</td>
 			<td>
-				<input type="number" name="size">
+				<input type="text" name="size">
 			</td>
 		</tr>
 		<tr>
@@ -66,7 +66,7 @@
 				버퍼메모리
 			</td>
 			<td>
-				<input type="number" name="platter">(단위:)
+				<input type="number" name="buffer_mm">(단위:)
 			</td>
 		</tr>
 	</tbody>
@@ -84,7 +84,7 @@
 	</tbody>
 <%} %>
 
-	<input type="submit" value="">
+	<input type="submit" value="입력!">
 </table>
 
 

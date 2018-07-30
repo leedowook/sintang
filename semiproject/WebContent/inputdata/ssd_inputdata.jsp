@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="em_adminmodeadd.em?active=part&part=ssd" method="post">
+<form action="em_adminmodeadd.em?active=part&part=ssd&option=<%=request.getParameter("optionnum") %>" method="post">
 <table id="ssd" >
 	
 	<tbody id="ssd_main">
@@ -70,7 +70,7 @@
 				SSD의 캐시메모리의 크기
 			</td>
 			<td>
-				<input type="number" name="read">
+				<input type="number" name="dram">
 			</td>
 		
 		</tr>
@@ -98,7 +98,7 @@
 	</tbody>
 <%} %>
 </table>
-<input type="submit" value="">
+<input type="submit" value="입력!">
 
 
 </form>

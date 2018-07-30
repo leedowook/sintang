@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<form action="em_adminmodeadd.em?active=part&part=ram" method="post">
+<form action="em_adminmodeadd.em?active=part&part=ram&option=<%=request.getParameter("optionnum")%>" method="post">
 <table id="ram" >
 	
 	<tbody id="ram_main">

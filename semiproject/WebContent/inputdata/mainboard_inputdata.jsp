@@ -33,7 +33,7 @@
 				브랜드
 			</td>
 			<td>
-				<input type="text" name="maker">
+				<input type="text" name="brand">
 			</td>
 		</tr>
 		<tr>

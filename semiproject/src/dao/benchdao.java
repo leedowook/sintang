@@ -193,6 +193,10 @@ public class benchdao {
 		em_ssd ssd=new em_ssd();
 		return ssd;
 	}
+	public em_power power(em_cho_gamespec ecgs) {
+		
+		return null;
+	}
 
 
 }

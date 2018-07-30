@@ -106,7 +106,7 @@ public class em_control extends HttpServlet {
     			e.printStackTrace();
     		}
     	}
-    	else if(command.equals("/em_adminmodemod.em")) {
+    	else if(command.equals("/adminmode/em_adminmodemod.em")) {
     		System.out.println("관리자 수정 모드 접속");
     		String active=(String) request.getAttribute("active");
     		if(active.equals("part")) {
@@ -122,7 +122,7 @@ public class em_control extends HttpServlet {
     			e.printStackTrace();
     		}
     	}
-    	else if(command.equals("/em_adminmodedel.em")) {
+    	else if(command.equals("/adminmode/em_adminmodedel.em")) {
     		System.out.println("관리자 삭제 모드 접속");
     	
     		String active=(String) request.getParameter("active");
@@ -140,7 +140,7 @@ public class em_control extends HttpServlet {
     			e.printStackTrace();
     		}
     	}
-    	else if(command.equals("/em_adminmodelist.em")) {
+    	else if(command.equals("/adminmode/em_adminmodelist.em")) {
     		System.out.println("관리자 목록 action 접속");
     		String active=(String) request.getAttribute("active");
     		if(active.equals("part")) {

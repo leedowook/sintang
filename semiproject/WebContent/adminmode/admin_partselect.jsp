@@ -11,8 +11,8 @@
  
 	
 	
-	
-	<form action="/semiproject/inputdata/ram_inputdata.jsp">
+	램:
+	<form action="/semiproject/inputdata/ram_inputdata.jsp" target="_blank" >
 	<input type="hidden" name="part" value="ram">
 	<input type="submit" value="RAM">
 	옵션개수
@@ -22,7 +22,9 @@
 	<% }%>
 	</select>
 	</form>
-	<form action="/semiproject/inputdata/hdd_inputdata.jsp">
+	
+	hdd:
+	<form action="/semiproject/inputdata/hdd_inputdata.jsp" target="_blank">
 	<input type="hidden" name="part" value="hdd">
 	<input type="submit" value="HDD">
 	옵션개수
@@ -32,7 +34,9 @@
 	<% }%>
 	</select>
 	</form>
-	<form action="/semiproject/inputdata/ssd_inputdata.jsp">
+	
+	ssd:
+	<form action="/semiproject/inputdata/ssd_inputdata.jsp" target="_blank">
 	<input type="hidden" name="part" value="ssd">
 	<input type="submit" value="SSD">
 	옵션개수
@@ -42,7 +46,9 @@
 	<% }%>
 	</select>
 	</form>
-	<form action="/semiproject/inputdata/vga_inputdata.jsp">
+	
+	vga:
+	<form action="/semiproject/inputdata/vga_inputdata.jsp" target="_blank">
 	<input type="hidden" name="part" value="vga">
 	<input type="submit" value="VGA">
 	옵션개수
@@ -52,17 +58,25 @@
 	<% }%>
 	</select>
 	</form>
-	<form action="/semiproject/inputdata/power_inputdata.jsp">
+	
+	power:
+	<form action="/semiproject/inputdata/power_inputdata.jsp" target="_blank">
 	<input type="hidden" name="part" value="power">
 	<input type="submit" value="POWER">
 
 	</form>
-	<form action="/semiproject/inputdata/cpu_inputdata.jsp">
+	
+	
+	cpu:
+	<form action="/semiproject/inputdata/cpu_inputdata.jsp" target="_blank">
 	<input type="hidden" name="part" value="cpu">
 	<input type="submit" value="CPU">
 	
 	</form>
-	<form action="/semiproject/inputdata/mainboard_inputdata.jsp">
+	
+	
+	mainboard
+	<form action="/semiproject/inputdata/mainboard_inputdata.jsp" target="_blank">
 	<input type="hidden" name="part" value="mainboard">
 	<input type="submit" value="MAINBOARD">
 	

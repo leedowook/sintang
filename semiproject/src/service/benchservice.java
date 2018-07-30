@@ -72,6 +72,15 @@ public class benchservice{
 		
 		return vga;
 	}
+	public em_power benchgamepower(em_cho_gamespec ecgs) {
+		//해당사양 파워담을곳
+		benchdao dao =benchdao.getInstance();
+		Connection con=getConnection();
+		dao.setConnection(con);
+		em_power power=dao.power(ecgs);
+		
+		return null;
+	}
 	
 	
 	

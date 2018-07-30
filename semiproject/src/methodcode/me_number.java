@@ -16,7 +16,7 @@ public class me_number {
 	 파워 일경우 *=p*/
 	
 	public String number(String number) {
-		String endnum=null;
+		 String endnum=null;
 		 int num=Integer.parseInt(number.substring(2));
 		 System.out.println(num);
 		 String numalpha=number.substring(0,2);

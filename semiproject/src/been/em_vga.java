@@ -175,8 +175,8 @@ public class em_vga {
 	public void setMaxck(double maxck) {
 		this.maxck = maxck;
 	}
-	public void setBirth(Date birth) {
-		this.birth = birth;
+	public void setBirth(Date date) {
+		this.birth = date;
 	}
 	
 }

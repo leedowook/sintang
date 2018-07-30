@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="em_adminmodeadd.em?active=part&part=vga" method="post">
+<form action="em_adminmodeadd.em?active=part&part=vga&option=<%=request.getParameter("optionnum") %>" method="post">
 <table id="vga" >
 	<tbody id="vga_main">
 		<tr>
@@ -55,7 +55,23 @@
 				칩제조사(nvidia,amd)
 			</td>
 			<td>
-				<input type="text" name="chipgroup">
+				<input type="text" name="chipmaker">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				GPU속도
+			</td>
+			<td>
+				<input type="text" name="ck">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				부스트속도
+			</td>
+			<td>
+				<input type="text" name="maxck">
 			</td>
 		</tr>
 		<tr>
@@ -114,6 +130,7 @@
 				<input type="text" name="size">
 			</td>
 		</tr>
+		
 		<tr>
 			<td>
 				hdmi,displayport 지원 여부
@@ -126,6 +143,7 @@
 			</td>
 		</tr>
 	</tbody>
+	
 		<%
 	for(int i=1;i<=Integer.parseInt(request.getParameter("optionnum"));i++){ %>
 	<tbody id="vga_option<%=i%>">
@@ -143,6 +161,10 @@
 		</tr>
 		<tr><td>스트림프로세서 </td>
 			<td><input type="number" name="str<%=i%>">(단위:개)</td>
+		</tr>
+		<tr><td>정격사용량</td>
+			<td><input type="number" name="tdp<%=i%>">(단위:w)</td>
+		
 		</tr>
 		
 		<tr><td>가격</td>

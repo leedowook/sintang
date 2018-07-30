@@ -33,13 +33,13 @@ public class inputpartdatabase {
 		}
 		return result;
 	}
-	public boolean inputvgadata(em_vga vb,em_vga_spec vs) {
+	public boolean inputvgadata(em_part_info ep) {
 		System.out.println("vga 입력 서비스 접속");
 		boolean result=false;
 		emdao dao =emdao.getInstance();
 		Connection con=getConnection();
 		dao.setConnection(con);
-		int sqlresult=dao.inputvga(vb,vs);
+		int sqlresult=dao.inputvga(ep);
 		if(sqlresult>0) {
 			System.out.println("dao성공후 service로 넘어옴");
 			result=true;
@@ -87,13 +87,13 @@ public class inputpartdatabase {
 		}
 		return result;
 	}
-	public boolean inputramdata(em_ram rb,em_ram_mm rs) {
+	public boolean inputramdata(em_part_info ep) {
 		System.out.println("ram 입력 서비스 접속");
 		boolean result=false;
 		emdao dao =emdao.getInstance();
 		Connection con=getConnection();
 		dao.setConnection(con);
-		int sqlresult=dao.inputram(rb,rs);
+		int sqlresult=dao.inputram(ep);
 		if(sqlresult>0) {
 			System.out.println("dao성공후 service로 넘어옴");
 			result=true;
@@ -105,13 +105,13 @@ public class inputpartdatabase {
 		}
 		return result;
 	}
-	public boolean inputhdddata(em_hdd hd,em_hdd_memory hm) {
+	public boolean inputhdddata(em_part_info ep) {
 		System.out.println("hdd 입력 서비스 접속");
 		boolean result=false;
 		emdao dao =emdao.getInstance();
 		Connection con=getConnection();
 		dao.setConnection(con);
-		int sqlresult=dao.inputhdd(hd,hm);
+		int sqlresult=dao.inputhdd(ep);
 		if(sqlresult>0) {
 			System.out.println("dao성공후 service로 넘어옴");
 			result=true;
@@ -123,13 +123,13 @@ public class inputpartdatabase {
 		}
 		return result;
 	}
-	public boolean inputssddata(em_ssd sd,em_ssd_memory sm) {
+	public boolean inputssddata(em_part_info ep) {
 		System.out.println("ssd 입력 서비스 접속");
 		boolean result=false;
 		emdao dao =emdao.getInstance();
 		Connection con=getConnection();
 		dao.setConnection(con);
-		int sqlresult=dao.inputssd(sd,sm);
+		int sqlresult=dao.inputssd(ep);
 		if(sqlresult>0) {
 			System.out.println("dao성공후 service로 넘어옴");
 			result=true;
