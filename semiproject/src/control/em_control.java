@@ -46,10 +46,10 @@ public class em_control extends HttpServlet {
     	request.setCharacterEncoding("UTF-8");
     	response.setContentType("text/html;charset=UTF-8 ");
     	System.out.println(command);
-    	if(command.equals("/main_sel_1.em")) {
+    	if(command.equals("/main_sel.em")) {
     		System.out.println("mainselcontrol에 접속");
     		
-    		if(request.getAttribute("mainsel").equals("choice")) {
+    		if(request.getParameter("mainsel").equals("choice")) {
     			forward=new actionforward();
     			
         		forward.setPath("./em_first_main/em_cho.jsp");}
@@ -67,8 +67,9 @@ public class em_control extends HttpServlet {
     	}
     	
     	//추천 선택한 부분에 대한 부분 
-    	else if(command.equals("/cho_sel.em")) {
+    	else if(command.equals("/em_first_main/cho_sel.em")) {
     		System.out.println("cho_sel control에 접속");
+    		System.out.println(request.getParameter("g1"));
     		action=new emchoiceaction_main();
     		try {
     			forward=action.execute(request,response);

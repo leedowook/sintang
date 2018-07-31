@@ -11,6 +11,7 @@ public class emchoiceaction_main implements action{
 
 	@Override
 	public actionforward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("게임사양emchoiceaciton_main 에접속");
 		actionforward forward=null;
 		em_cho_gamespec ecgs;
 		benchservice bsv=new benchservice();
@@ -19,12 +20,15 @@ public class emchoiceaction_main implements action{
 		//cpu를 기준으로 맞는것을 찾아 골라내어 arraylist로 각각반환
 		//게임 장르가 rpg 나 오픈월드 형식, 시뮬레이션 글자를 포함할경우 ssd 넘겨줘야하니깐
 		//내보내야할값 :해당 받아온 것을 request 로 넘겨줌 arraylist 사용하는 이유는 해당에 대한 정보를 자세히 보고싶을때나 견적함에 추가하기 위해서
+		System.out.println(request.getParameter("g1"));
 		int max=10,k=1;
 		String kind=" ";
 		ArrayList<em_cho_gamespec> gamear=new ArrayList<>(); 
 		for(int i=1;i<=max;i++) {
-			String a=String.valueOf(i);
-			String sayang=request.getParameter(a);
+			
+					
+			System.out.println(request.getParameter("g"+i));
+			String sayang=request.getParameter("g"+i);
 			if(!(sayang.equals("no"))) {
 				k++;
 				ecgs=new em_cho_gamespec();
@@ -131,7 +135,7 @@ public class emchoiceaction_main implements action{
 		else {request.setAttribute("ssd","no");}
 		em_power pow=bsv.benchgamepower(ecgs,wat);
 		request.setAttribute("power", pow);
-		
+		forward.setPath("/em_cho.jsp");
 		return forward;
 	}
 

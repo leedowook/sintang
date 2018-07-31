@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 </head>
 <body>
@@ -19,71 +19,71 @@
 
 사용하는 pc게임용 </br>
 전설의 전당:
-<select id="game" name="lol" name="1">
-<option value="no" selected disabled hidden>안함</option>
+<select id="game"  name="g1">
+<option value="no" selected  hidden>안함</option>
 <option value="high" >최상</option>
 <option value="medium">권장</option>
 <option value="low">최하</option>
 </select><br/>
 별들의전쟁2:
-<select id="game" name="starcraft" name="2">
-<option value="no" selected disabled hidden>안함</option>
+<select id="game"  name="g2">
+<option value="no" selected  hidden>안함</option>
 <option value="high" >최상</option>
 <option value="medium">권장</option>
 <option value="low">최하</option>
 </select><br/>
 엉덩이엉덩이안의신조-시초:
-<select id="game" name="ACO" name="3">
-<option value="no" selected disabled hidden>안함</option>
+<select id="game"  name="g3">
+<option value="no" selected hidden>안함</option>
 <option value="high" >최상</option>
 <option value="medium">권장</option>
 <option value="low">최하</option>
 </select><br/>
 어두운혼:
-<select id="game" name="darksoul" name="4">
-<option value="no" selected disabled hidden>안함</option>
+<select id="game"  name="g4">
+<option value="no" selected hidden>안함</option>
 <option value="high" >최상</option>
 <option value="medium">권장</option>
 <option value="low">최하</option>
 </select><br/>
 마녀사냥꾼3:
-<select id="game" name="wicher3" name="5">
-<option value="no" selected disabled hidden>안함</option>
+<select id="game"  name="g5">
+<option value="no" selected hidden>안함</option>
 <option value="high" >최상</option>
 <option value="medium">권장</option>
 <option value="low">최하</option>
 </select><br/>
 고급시계:
-<select id="game" name="overwatch" name="6">
-<option value="no" selected disabled hidden>안함</option>
+<select id="game" name="g6">
+<option value="no" selected hidden>안함</option>
 <option value="high" >최상</option>
 <option value="medium">권장</option>
 <option value="low">최하</option>
 </select><br/>
 깜장사막:
-<select id="game" name="darkdesert" name="7">
-<option value="no" selected disabled hidden>안함</option>
+<select id="game"  name="g7">
+<option value="no" selected hidden>안함</option>
 <option value="high" >최상</option>
 <option value="medium">권장</option>
 <option value="low">최하</option>
 </select><br/>
 모르는사람들의 싸움의 땅:
-<select id="game" name="battlegraund" name="8">
-<option value="no" selected disabled hidden>안함</option>
+<select id="game" name="g8">
+<option value="no" selected hidden>안함</option>
 <option value="high" >최상</option>
 <option value="medium">권장</option>
 <option value="low">최하</option>
 </select><br/>
 무지개여섯:
-<select id="game" name="rainbowsix" name="9">
-<option value="no" selected disabled hidden>안함</option>
+<select id="game" name="g9">
+<option value="no" selected hidden>안함</option>
 <option value="high" >최상</option>
 <option value="medium">권장</option>
 <option value="low">최하</option>
 </select><br/>
 위대한차도둑5:
-<select id="game" name="gta5" name="10">
-<option value="no" selected disabled hidden>안함</option>
+<select id="game" name="g10">
+<option value="no" selected hidden>안함</option>
 <option value="high" >최상</option>
 <option value="medium">권장</option>
 <option value="low">최하</option>
@@ -107,8 +107,13 @@
 <option value="2">2TB</option>
 <option value="3">4TB</option>
 </select><br/>
-
+<input type="submit" value="가즈아">
 </form>
+
+
+
+
+
 <span>
 배우기
 

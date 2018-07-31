@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h2>게임 정보 입력</h2>
 
 </body>
 </html>

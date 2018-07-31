@@ -12,13 +12,14 @@
 
 
 
-<form action="main_sel.em" method="post">
+<form action="main_sel.em" method="post" id="form1">
 <span>
 <input name="mainsel" type="hidden" value="recommend">
-<input  type="submit" value="jin.png">
+<img onclick="document.getElementById('form1').submit()" style="cursor:pointer" src="추천버튼.jpg">
 
 </span>
-
+</form>
+<form action="main_sel.em" method="post" id="form2">
 <span>
 <input name="mainsel" type="hidden" value="choice">
 <input type="submit"  value="선택 이미지칸 ">

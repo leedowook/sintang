@@ -32,8 +32,8 @@ public class benchdao {
 		
 		try {
 			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, spec);
-			pstmt.setInt(2, g_num);
+			pstmt.setInt(1,spec);
+			pstmt.setInt(2,g_num);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 			ecgs.setGamename(rs.getString("name"));
