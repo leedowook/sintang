@@ -20,28 +20,25 @@ public class emchoiceaction_main implements action{
 		//게임 장르가 rpg 나 오픈월드 형식, 시뮬레이션 글자를 포함할경우 ssd 넘겨줘야하니깐
 		//내보내야할값 :해당 받아온 것을 request 로 넘겨줌 arraylist 사용하는 이유는 해당에 대한 정보를 자세히 보고싶을때나 견적함에 추가하기 위해서
 		int max=10,k=1;
+		String kind=" ";
 		ArrayList<em_cho_gamespec> gamear=new ArrayList<>(); 
 		for(int i=1;i<=max;i++) {
 			String a=String.valueOf(i);
 			String sayang=request.getParameter(a);
 			if(!(sayang.equals("no"))) {
 				k++;
+				ecgs=new em_cho_gamespec();
 				if(sayang.equals("high")) {
-					ecgs=new em_cho_gamespec();
 					ecgs=bsv.benchsgame(i,3);
-					gamear.add(ecgs);
 				}
-				if(sayang.equals("middle")) {
-					ecgs=new em_cho_gamespec();
-					ecgs=bsv.benchsgame(i,3);
-					gamear.add(ecgs);
+				else if(sayang.equals("middle")) {
+					ecgs=bsv.benchsgame(i,2);
 				}
-				if(sayang.equals("low")) {
-					ecgs=new em_cho_gamespec();
-					ecgs=bsv.benchsgame(i,3);
-					gamear.add(ecgs);
+				else if(sayang.equals("low")) {
+					ecgs=bsv.benchsgame(i,1);
 				}
-				
+				kind+=ecgs.getGamekind();
+				gamear.add(ecgs);
 			}
 			
 		}
@@ -78,18 +75,62 @@ public class emchoiceaction_main implements action{
 				ecgs.setRam_mm(gamear.get(i).getRam_mm());
 			};
 		}
+		int option=Integer.parseInt(request.getParameter("mainboard"));
+		int hardoption=Integer.parseInt(request.getParameter("hard"));
+		
 		ecgs.setGamename("all");
 		ecgs.setSpec(4);
-		ecgs.setG_num(999);
+		ecgs.setG_num(0);
+		String maker=null;
+		String size=null;
+		int slot=0;
+		em_cpu cpulist;
+		em_mainboard mblist;
+		em_ram ram;
 		em_vga vga=bsv.benchgamevga(ecgs);
-		em_cpu cpu=bsv.benchgamecpu(ecgs);
-		em_ram ram=bsv.benchgameram(ecgs);
-		em_mainboard mb=bsv.benchgamemb(ecgs);
+		request.setAttribute("vga", vga);
+		//cpu 인텔
+		maker="intel";
+		cpulist=new em_cpu();
+		mblist=new em_mainboard();
+		ram=new em_ram();
+		cpulist=bsv.benchgamecpu(ecgs,maker);
+		size=cpulist.getSize();
+		//cpu사이즈와 맞는 메인보드 찾기
+		mblist=bsv.benchgamemb(ecgs,size,option);
+		//메인보드의 슬롯에따라 ram의 크기 결정 
+		slot=mblist.getRam_mnum();
+		ram=bsv.benchgameram(ecgs,slot);
+		request.setAttribute("it_cpu",cpulist);
+		request.setAttribute("it_mb",mblist);
+		request.setAttribute("it_ram",ram);
+		//cpu 암드
+		maker="amd";
+		
+		cpulist=new em_cpu();
+		mblist=new em_mainboard();
+		cpulist=bsv.benchgamecpu(ecgs,maker);
+		size=cpulist.getSize();
+		mblist=bsv.benchgamemb(ecgs,size,option);
+		slot=mblist.getRam_mnum();
+		ram=bsv.benchgameram(ecgs,slot);
+		request.setAttribute("am_cpu",cpulist);
+		request.setAttribute("am_mb",mblist);
+		request.setAttribute("am_ram",ram);
+		//그래픽에 따른 전격사용량
+		double wat=(int)vga.getTdp()*2.5+150;
+		if(hardoption!=0) {
+		em_hdd hdd=bsv.benchgamehdd(ecgs,hardoption);
+		request.setAttribute("hdd",hdd);}
+		else {
+			request.setAttribute("hdd","no");}
+		if(kind.contains("ssd")) {
 		em_ssd ssd=bsv.benchgamessd(ecgs);
-		em_power pow=bsv.benchgamepower(ecgs);
-
-		
-		
+		request.setAttribute("ssd", ssd);
+		}
+		else {request.setAttribute("ssd","no");}
+		em_power pow=bsv.benchgamepower(ecgs,wat);
+		request.setAttribute("power", pow);
 		
 		return forward;
 	}

@@ -4,6 +4,7 @@ package been;
 
 public class em_cho_gamespec {
 	private int g_num;
+	private String gamekind;
 	private String gamename;
 	private int spec;// 1일경우 최하옵 2일경우 중옵 3일경우 최상옵  4일경우 합친거
 	private int vga_shaders;
@@ -15,6 +16,13 @@ public class em_cho_gamespec {
 	private int cpu_core;
 	private double cpu_ck;
 	private int cpu_td;
+	
+	public String getGamekind() {
+		return gamekind;
+	}
+	public void setGamekind(String gamekind) {
+		this.gamekind = gamekind;
+	}
 	public int getG_num() {
 		return g_num;
 	}

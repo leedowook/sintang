@@ -91,7 +91,22 @@
 
 
 </span>
+메인보드의 값에 대해
+<select id="mainboard" name="pay" >
 
+<option value="1" selected>값을 제일 싼거 위주 </option>
+<option value="2">중간</option>
+<option value="3">품질을 제일 좋은거 위주</option>
+</select><br/>
+
+하드디스크 용량:
+<select id="hard" name="hard" >
+
+<option value="0" selected>0(사용안함) </option>
+<option value="1">1GB</option>
+<option value="2">2TB</option>
+<option value="3">4TB</option>
+</select><br/>
 
 </form>
 <span>

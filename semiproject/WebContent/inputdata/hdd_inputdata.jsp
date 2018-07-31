@@ -31,6 +31,14 @@
 		</tr>
 		<tr>
 			<td>
+				이름(회사이름과 용량제외)
+			</td>
+			<td>
+				<input type="text" name="name">
+			</td>
+		</tr>
+		<tr>
+			<td>
 				인터페이스(sata3같은 정보)
 			</td>
 			<td>

@@ -21,32 +21,32 @@ public class benchservice{
 		System.out.println("진행완료");
 		return ecgs;
 	}
-	public em_cpu benchgamecpu(em_cho_gamespec ecgs) {
+	public em_cpu benchgamecpu(em_cho_gamespec ecgs,String maker) {
 		//해당 사양에 대한 그래픽 담을곳 
 		benchdao dao =benchdao.getInstance();
 		Connection con=getConnection();
 		dao.setConnection(con);
-		em_cpu cpu=dao.cpuspec(ecgs);
+		em_cpu cpu=dao.cpuspec(ecgs,maker);
 		
 		
 		return cpu;
 	}
-	public em_ram benchgameram(em_cho_gamespec ecgs) {
+	public em_ram benchgameram(em_cho_gamespec ecgs,int slot) {
 		//해당 사양에 대한 그래픽 담을곳 
 		benchdao dao =benchdao.getInstance();
 		Connection con=getConnection();
 		dao.setConnection(con);
-		em_ram ram=dao.ramspec(ecgs);
+		em_ram ram=dao.ramspec(ecgs,slot);
 		
 		
 		return ram;
 	}
-	public em_mainboard benchgamemb(em_cho_gamespec ecgs) {
+	public em_mainboard benchgamemb(em_cho_gamespec ecgs,String size,int option) {
 		//해당 사양에 대한 그래픽 담을곳 
 		benchdao dao =benchdao.getInstance();
 		Connection con=getConnection();
 		dao.setConnection(con);
-		em_mainboard mb=dao.mbspec(ecgs);
+		em_mainboard mb=dao.mbspec(ecgs,size,option);
 		
 		
 		return mb;
@@ -72,14 +72,22 @@ public class benchservice{
 		
 		return vga;
 	}
-	public em_power benchgamepower(em_cho_gamespec ecgs) {
+	public em_power benchgamepower(em_cho_gamespec ecgs,double wat) {
 		//해당사양 파워담을곳
 		benchdao dao =benchdao.getInstance();
 		Connection con=getConnection();
 		dao.setConnection(con);
-		em_power power=dao.power(ecgs);
+		em_power power=dao.power(ecgs,wat);
 		
-		return null;
+		return power;
+	}
+	public em_hdd benchgamehdd(em_cho_gamespec ecgs, int hardoption) {
+//		
+		benchdao dao =benchdao.getInstance();
+		Connection con=getConnection();
+		dao.setConnection(con);
+		em_hdd hdd=dao.hddspec(ecgs,hardoption);
+		return hdd;
 	}
 	
 	

@@ -189,8 +189,9 @@ public class em_inputpartdata implements action {
 			em_hdd hb=new em_hdd();
 			em_hdd_memory hm;
 			hb.setMaker((String)request.getParameter("maker"));
+			hb.setName((String)request.getParameter("name"));
 			hb.setKind((String)request.getParameter("kind"));
-			hb.setItf((String)request.getParameter("interface"));
+			hb.setItf((String)request.getParameter("itf"));
 			hb.setPlatter(Integer.parseInt(request.getParameter("platter")));
 			hb.setDisk_num(Integer.parseInt(request.getParameter("disk_num")));
 			hb.setBuffer_mm(Integer.parseInt(request.getParameter("buffer_mm")));
@@ -216,6 +217,7 @@ public class em_inputpartdata implements action {
 			em_ssd_memory sm;
 			sb.setMaker((String)request.getParameter("maker"));
 			sb.setKind((String)request.getParameter("kind"));
+			sb.setName((String)request.getParameter("name"));
 			sb.setRead(Integer.parseInt(request.getParameter("read")));
 			sb.setWrite(Integer.parseInt(request.getParameter("write")));
 			sb.setRead_iops(Integer.parseInt(request.getParameter("read_iops")));

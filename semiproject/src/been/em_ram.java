@@ -7,6 +7,14 @@ public class em_ram {
 	private int mm;
 	private int ck;
 	private int price;
+	private int count;
+	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public String getNum() {
 		return num;
 	}

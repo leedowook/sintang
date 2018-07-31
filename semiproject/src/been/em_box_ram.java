@@ -4,6 +4,13 @@ public class em_box_ram {
 	private int num;
 	private int ram_num;
 	private int count;
+	private int ram_mm;
+	public int getRam_mm() {
+		return ram_mm;
+	}
+	public void setRam_mm(int ram_mm) {
+		this.ram_mm = ram_mm;
+	}
 	public int getNum() {
 		return num;
 	}

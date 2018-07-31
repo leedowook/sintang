@@ -12,9 +12,18 @@ public class em_ssd {
 	private int life;
 	private int memory;
 	private int price;
+	private String name;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public String getNum() {
 		return num;
 	}
+	
 	public String getMaker() {
 		return maker;
 	}

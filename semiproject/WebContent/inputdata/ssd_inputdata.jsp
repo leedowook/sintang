@@ -31,6 +31,14 @@
 		</tr>
 		<tr>
 			<td>
+				이름
+			</td>
+			<td>
+				<input type="text" name="name">
+			</td>
+		</tr>
+		<tr>
+			<td>
 				읽기속도
 			</td>
 			<td>

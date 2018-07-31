@@ -12,6 +12,14 @@ public class em_hdd {
 	private int buffer_mm;
 	private int memory;
 	private int price;
+	 
+	private String name;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	
 	public String getNum() {

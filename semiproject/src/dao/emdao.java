@@ -86,7 +86,7 @@ import methodcode.*;
 			pstmt=null;
 			rs=null;
 		
-			String sql1="select * from power_info_m where cpu_num=?";
+			String sql1="select * from pow_info_m where pow_num=?";
 		
 			try {
 			pstmt = con.prepareStatement(sql1);
@@ -125,7 +125,7 @@ import methodcode.*;
 			pstmt=null;
 			rs=null;
 		
-			String sql1="select m.*,e.usb1gen,e.usb0gen,ps2 from mb_info_m m inner join mb_info_e e on m.mainboard_num=e.mainboard_num   where cpu_num=?";
+			String sql1="select m.*,e.usb1gen,e.usb0gen,ps2 from mb_info_m m inner join mb_info_e e on m.mainboard_num=e.mainboard_num   where mainboard_num=?";
 			
 			try {
 			pstmt = con.prepareStatement(sql1);
@@ -311,6 +311,7 @@ import methodcode.*;
 		pstmt.setString(1,num);
 		rs=pstmt.executeQuery();
 		if(rs.next()) {
+			hb.setName(rs.getString("name"));
 			hb.setMaker(rs.getString("hdd_maker"));
 			hb.setKind(rs.getString("hdd_kind"));
 			hb.setItf(rs.getString("hdd_interface"));
@@ -360,6 +361,7 @@ import methodcode.*;
 		pstmt.setString(1,num);
 		rs=pstmt.executeQuery();
 		if(rs.next()) {
+			sb.setName(rs.getString("name"));
 			sb.setMaker(rs.getString("ssd_maker"));
 			sb.setKind(rs.getString("ssd_kind"));
 			sb.setRead(rs.getInt("read"));
@@ -377,7 +379,7 @@ import methodcode.*;
 		while(rs.next()) {
 		sm=new em_ssd_memory();
 		sm.setMemory(rs.getInt("ssd_memory"));
-		sm.setPrice(rs.getInt("ssd_price"));
+		sm.setPrice(rs.getInt("price"));
 			
 		arssd.set(i,sm);
 		i++;
@@ -717,7 +719,7 @@ import methodcode.*;
 		rs=null;
 		pstmt=null;
 		String num="select max(hdd_num) from hdd_info_m";
-		String sql1="insert into hdd_info_m values(?,?,?,?,?,?,?,?)";
+		String sql1="insert into hdd_info_m values(?,?,?,?,?,?,?,?,?)";
 		String sql2="insert into hdd_info_e values(?,?,?)";
 		try {
 			pstmt=con.prepareStatement(num);
@@ -740,7 +742,7 @@ import methodcode.*;
 		pstmt.setInt(6,hd.getDisk_num());
 		pstmt.setDouble(7,hd.getSize());
 		pstmt.setInt(8,hd.getBuffer_mm());
-
+		pstmt.setString(9,hd.getName());
 		
 		result1=pstmt.executeUpdate();
 		result=+result1;
@@ -773,7 +775,7 @@ import methodcode.*;
 		rs=null;
 		pstmt=null;
 		String num="select max(ssd_num) from ssd_info_m";
-		String sql1="insert into ssd_info_m values(?,?,?,?,?,?,?,?,?)";
+		String sql1="insert into ssd_info_m values(?,?,?,?,?,?,?,?,?,?)";
 		String sql2="insert into ssd_info_e values(?,?,?)";
 		try {
 			pstmt=con.prepareStatement(num);
@@ -798,7 +800,7 @@ import methodcode.*;
 		pstmt.setInt(7,sd.getWrite_iops());
 		pstmt.setInt(8,sd.getDram());
 		pstmt.setInt(9,sd.getLife());
-
+		pstmt.setString(10,sd.getName());
 		
 		result1=pstmt.executeUpdate();
 		result=+result1;
