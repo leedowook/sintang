@@ -13,6 +13,7 @@ public class me_number {
 	 본체일경우 *=b 
 	 ssd 일경우 *=s
 	 hdd 일경우 *=h
+
 	 파워 일경우 *=p*/
 	
 	public String number(String number) {

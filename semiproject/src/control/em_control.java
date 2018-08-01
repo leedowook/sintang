@@ -67,7 +67,7 @@ public class em_control extends HttpServlet {
     	}
     	
     	//추천 선택한 부분에 대한 부분 
-    	else if(command.equals("/em_first_main/cho_sel.em")) {
+    	else if(command.equals("/em_first_main/cho_sel.em")||command.equals("/cho_sel.em")) {
     		System.out.println("cho_sel control에 접속");
     		System.out.println(request.getParameter("g1"));
     		action=new emchoiceaction_main();
@@ -90,7 +90,7 @@ public class em_control extends HttpServlet {
     			e.printStackTrace();
     		}
     	}
-    	else if(command.equals("/inputdata/em_adminmodeadd.em")) {
+    	else if(command.equals("/inputdata/em_adminmodeadd.em")||command.equals("/adminmode/em_adminmodeadd.em")) {
     		System.out.println("관리자 추가 모드 접속");
     		String active=(String) request.getParameter("active");
     		System.out.println(active);

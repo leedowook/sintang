@@ -4,6 +4,15 @@ public class em_box_ssd {
 	private int num;
 	private int ssd_num;
 	private int count;
+	
+	private int ssd_mm;
+	public int getSsd_mm() {
+		return ssd_mm;
+	}
+	public void setSsd_mm(int ssd_mm) {
+		this.ssd_mm = ssd_mm;
+	}
+	
 	public int getNum() {
 		return num;
 	}

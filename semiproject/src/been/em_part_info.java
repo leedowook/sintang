@@ -3,10 +3,12 @@ package been;
 import java.util.ArrayList;
 
 public class em_part_info {
+	
+	private em_mainboard mb;
+	
 	private em_hdd hb;
 	private em_ram rb;
 	private em_ssd sb;
-
 	private em_vga vb;
 	private ArrayList<em_vga_spec> ar_v;
 	private ArrayList<em_ram_mm> ar_r;

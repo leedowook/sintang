@@ -3,6 +3,16 @@ package been;
 public class em_box_hdd {
 	private int num;
 	private int hdd_num;
+	
+	
+	private int hdd_mm;
+	public int getHdd_mm() {
+		return hdd_mm;
+	}
+	public void setHdd_mm(int hdd_mm) {
+		this.hdd_mm = hdd_mm;
+	}
+	
 	public int getNum() {
 		return num;
 	}

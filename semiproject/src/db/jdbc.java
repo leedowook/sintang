@@ -12,7 +12,9 @@ public class jdbc {
 			Context initCtx=new InitialContext();
 			Context envCtx=(Context)initCtx.lookup("java:comp/env");
 			DataSource ds=(DataSource)envCtx.lookup("jdbc/OracleDB");
+			System.out.println("test1");
 			con=ds.getConnection();
+			System.out.println("test2");
 			con.setAutoCommit(false);
 			System.out.println("connect success");
 			
