@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 import action.action;
 import action.em_adminmode;
+import action.em_box_inputdata;
 import action.em_delgamedata;
 import action.em_delpartdata;
 import action.em_inputgamedata;
@@ -37,6 +39,8 @@ public class em_control extends HttpServlet {
 
     }
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	
     	System.out.println("control연결완료");
     	String RequestURI=request.getRequestURI();
     	String contextPath=request.getContextPath();
@@ -83,6 +87,17 @@ public class em_control extends HttpServlet {
     	else if(command.equals("/em_adminmode.em")) {
     		System.out.println("관리자 모드 접속");
     		action=new em_adminmode();
+    		try {
+    			forward=action.execute(request,response);
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	else if(command.equals("/inputbox.em")||command.equals("/em_first_maim/inputbox.em")) {
+    		System.out.println("견적함 입력 접속");
+    		if(request.getParameter("id")==null) {}
+    		action=new em_box_inputdata();
     		try {
     			forward=action.execute(request,response);
     			System.out.println("성공");

@@ -2,7 +2,7 @@ package been;
 
 public class em_box_hdd {
 	private int num;
-	private int hdd_num;
+	private String  hdd_num;
 	
 	
 	private int hdd_mm;
@@ -16,7 +16,7 @@ public class em_box_hdd {
 	public int getNum() {
 		return num;
 	}
-	public int getHdd_num() {
+	public String getHdd_num() {
 		return hdd_num;
 	}
 	public int getCount() {
@@ -28,7 +28,7 @@ public class em_box_hdd {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public void setHdd_num(int hdd_num) {
+	public void setHdd_num(String hdd_num) {
 		this.hdd_num = hdd_num;
 	}
 	public void setCount(int count) {

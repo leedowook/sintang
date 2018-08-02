@@ -135,6 +135,7 @@ public class benchdao {
 				vga.setChipmaker(rs.getString("vga_chipmaker"));
 				vga.setChipgroup(rs.getString("vga_chipgroup"));
 				vga.setName(rs.getString("vga_name"));
+				vga.setPrice(rs.getInt("price"));
 				System.out.println(vga.getName());
 			}
 		}catch(Exception e) {
@@ -182,7 +183,8 @@ public class benchdao {
 				cpu.setBrand(rs.getString("brand"));
 				cpu.setName(rs.getString("name"));
 				cpu.setSize(rs.getString("cpu_size"));
-				cpu.setNum(rs.getString("price"));
+				cpu.setPrice(rs.getInt("price"));
+				
 			}
 		}catch(Exception e) {
 			System.out.println("benchdao cpuspec오류"+e);

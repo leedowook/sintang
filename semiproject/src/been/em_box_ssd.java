@@ -2,7 +2,7 @@ package been;
 
 public class em_box_ssd {
 	private int num;
-	private int ssd_num;
+	private String  ssd_num;
 	private int count;
 	
 	private int ssd_mm;
@@ -16,7 +16,7 @@ public class em_box_ssd {
 	public int getNum() {
 		return num;
 	}
-	public int getSsd_num() {
+	public String  getSsd_num() {
 		return ssd_num;
 	}
 	public int getCount() {
@@ -28,7 +28,7 @@ public class em_box_ssd {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public void setSsd_num(int ssd_num) {
+	public void setSsd_num(String  ssd_num) {
 		this.ssd_num = ssd_num;
 	}
 	public void setCount(int count) {

@@ -2,7 +2,7 @@ package been;
 
 public class em_box_vga {
 	private int num;
-	private int vga_num;
+	private String  vga_num;
 	private int ram_mm;
 	
 	public int getRam_mm() {
@@ -14,7 +14,7 @@ public class em_box_vga {
 	public int getNum() {
 		return num;
 	}
-	public int getVga_num() {
+	public String  getVga_num() {
 		return vga_num;
 	}
 	public int getCount() {
@@ -26,7 +26,7 @@ public class em_box_vga {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public void setVga_num(int vga_num) {
+	public void setVga_num(String  vga_num) {
 		this.vga_num = vga_num;
 	}
 	public void setCount(int count) {

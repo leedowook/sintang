@@ -10,8 +10,6 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 function submit_form() {
-
-
   document.getElementById('main').submit();  
  }
 
@@ -144,94 +142,204 @@ function submit_form() {
 <%} if(request.getAttribute("ssd")!=null){%>
 <c:set var="ssd" value="${ssd}"/>
 <%} %>
-
+<form action="./inputbox.em" method="post" id="cpuform">
 <span>
-	<table>
+
+<table>
+	
+	
+	
 	<tbody>
+	
 	<tr>
 		<td id="name">CPU
 		</td>
-		<td	id="partid"><input type="radio" name="cpu" value="${in_cpu.num}">     ${in_cpu.maker}${in_cpu.brand}${in_cpu.name}
+		<td	id="partid">
+		
+		<input type="radio" name="cpu" value="intel">     ${in_cpu.maker}${in_cpu.brand}${in_cpu.name}
+		<br>가격:${in_cpu.price }
 		</td>
-		<td id="partid"><input type="radio" name="cpu" value="${in_cpu.num}">     ${am_cpu.maker}${am_cpu.brand}${am_cpu.name}
+		<td id="partid"><input type="radio" name="cpu" value="amd">     ${am_cpu.maker}${am_cpu.brand}${am_cpu.name}
+		<br>가격:${am_cpu.price }
 		</td>
 		<td>
-		<form action="saveem.em" id="cpuform">
 		
-		</form>
-		<button class="snip1535">견적함에 추가</button>
-		</td>
-		
-	</tr>
-	<tr>
-		<td id="name">메인보드
-		</td> 
-		<td id="partid">${in_mainboard.maker}${in_mainboard.brand}${in_mainboard.name}${in_mainboard.chip_group}${in_mainboard.chip_group_b}
-		</td>
-		<td id="partid">${am_mainboard.maker}${am_mainboard.brand}${am_mainboard.name}${am_mainboard.chip_group}${am_mainboard.chip_group_b}
-		</td>
-		<td>
-		</td>
-		
-	</tr>
-	<tr>
-		<td id="name" >그래픽
-		</td>
-		<td colspan="2" id="partid">${vga.maker} ${vga.chipmaker} ${vga.chip}  ${vga.name}    ${vga.ram_mm}GB
-		</td>
-		<td>
-		</td>
-	</tr>
-	<tr>
-		<td id="name">RAM
-		</td>
+		<select name="cpucount">
+		<%for(int i=0;i<10;i++){ 
+			if(i==0){%>
+			<option value="<%=i%>" selected><%=i%></option>
 			
-		<td id="partid">     ${in_ram.maker}${in_ram.kind} 용량: ${in_ram.mm}Gb
-		</td>
-		<td id="partid">     ${am_ram.maker}${am_ram.kind} 용량: ${am_ram.mm}Gb		
-		</td>
-		<td>
+		<%}	else{%>
+			<option value="<%=i%>"><%=i%></option>
+		
+		<%} }%>
+		</select>
+		
 		</td>
 		
 	</tr>
 	
+	</tbody>
+	<tbody>
+	<tr>
+		<td id="name">메인보드
+		</td> 
+		<td id="partid">${in_mainboard.maker}${in_mainboard.brand}${in_mainboard.name}${in_mainboard.chip_group}${in_mainboard.chip_group_b}
+		<br>가격:${in_mainboard.price }
+		
+		</td>
+		<td id="partid">${am_mainboard.maker}${am_mainboard.brand}${am_mainboard.name}${am_mainboard.chip_group}${am_mainboard.chip_group_b}
+		<br>가격:${am_mainboard.price }
+		</td>
+		<td>
+		<select name="mainboardcount">
+		<%for(int i=0;i<10;i++){ 
+			if(i==0){%>
+			<option value="<%=i%>" selected><%=i%></option>
+			
+		<%}else{%>
+			<option value="<%=i%>"><%=i%></option>
+		
+		<%} }%>
+		</select>
+		</td>
+		
+	</tr>
+	</tbody>
+	<tbody>
+	<tr>
+		<td id="name" >그래픽
+		</td>
+		<td colspan="2" id="partid">${vga.maker} ${vga.chipmaker} ${vga.chip}  ${vga.name}    ${vga.ram_mm}GB
+		<br>가격:${vga.price}
+		</td>
+		<td>
+		<select name="vgacount">
+		<%for(int i=0;i<10;i++){ 
+			if(i==0){%>
+			<option value="<%=i%>" selected><%=i%></option>
+			
+		<%}else{%>
+			<option value="<%=i%>"><%=i%></option>
+		
+		<%} }%>
+		</select>
+		</td>
+	</tr>
+	</tbody>
+	<tbody>
+	<tr>
+		<td id="name">RAM
+		</td>
+			
+		<td id="partid">     ${in_ram.maker}${in_ram.kind} 용량: ${in_ram.mm}Gbx${am_ram.count}개
+		<br>가격:${in_ram.price*in_ram.count }
+		</td>
+		<td id="partid">     ${am_ram.maker}${am_ram.kind} 용량: ${am_ram.mm}Gb x${am_ram.count}개		
+		<br>가격:${am_ram.price*am_ram.count }
+				</td>
+		<td>
+		<select name="ramcount">
+		<%for(int i=0;i<10;i++){ 
+			if(i==0){%>
+			<option value="<%=i%>" selected><%=i%></option>
+			
+		<%}else{%>
+			<option value="<%=i%>"><%=i%></option>
+		
+		<%} }%>
+		</select>
+		</td>
+		
+	</tr>
+	</tbody>
+	<tbody>
 	<tr>
 		<td id="name">HDD
 		</td >
 		<td colspan="2" id="partid">
 		     ${hdd.maker}  ${hdd.name} 용량:${hdd.memory}Tb
+		<br>가격:${hdd.price }
 		</td>
 		<td>
+		<select name="hddcount">
+		<%for(int i=0;i<10;i++){ 
+			if(i==0){%>
+			<option value="<%=i%>" selected><%=i%></option>
+			
+		<%}else{%>
+			<option value="<%=i%>"><%=i%></option>
+		
+		<%} }%>
+		</select>
 		</td>
 	</tr>
+	</tbody>
+	<tbody>
 	<tr>
 		<td id="name">SSD
 		</td>
 		<td colspan="2" id="partid">
 		     ${ssd.maker}${ssd.name} 용량:${ssd.memory}Gb
+		     <br>가격:${ssd.price }
 		</td>
 		<td>
+		<select name="ssdcount">
+		<%for(int i=0;i<10;i++){ 
+			if(i==0){%>
+			<option value="<%=i%>" selected><%=i%></option>
+			
+		<%}else{%>
+			<option value="<%=i%>"><%=i%></option>
+		
+		<%} }%>
+		</select>
 		</td>
 	</tr>
+	</tbody>
+	<tbody>
 	<tr>
 		<td id="name">POWER
 		</td>
 		<td colspan="2" id="partid">
 			${pow.maker }  ${pow.kind }  ${pow.eplus} ${pow.power }W
+			<br>가격:${pow.price }
 		</td>
 		<td>
+		<select name="powcount">
+		<%for(int i=0;i<10;i++){ 
+			if(i==0){%>
+			<option value="<%=i%>" selected><%=i%></option>
+			
+		<%}else{%>
+			<option value="<%=i%>"><%=i%></option>
+		
+		<%} }%>
+		</select>
 		</td>
 	</tr>
-	
+	<tr>
+	<td colspan="4">
+		CPU가 INTEL 일경우 총가격:${in_cpu.price+in_mainboard.price+in_ram.price+vga.price+ssd.price+hdd.price+pow.price}
+		AMD사 일경우 총가격:${am_cpu.price+am_mainboard.price+am_ram.price+vga.price+ssd.price+hdd.price+pow.price}
+	</td>
+	</tr>
 	</tbody>
 	</table>
+	<button class="snip1535">견적함에 추가</button>
 </span>	
-	
+</form>		
 
-  
-
-    
-<%} %>
+<%	request.setAttribute("ssd",request.getAttribute("ssd"));
+request.setAttribute("hdd",request.getAttribute("hdd"));
+request.setAttribute("power", request.getAttribute("pow"));
+request.setAttribute("vga", request.getAttribute("vga"));
+request.setAttribute("am_cpu",request.getAttribute("am_cpu"));
+request.setAttribute("am_mb",request.getAttribute("am_mainboard"));
+request.setAttribute("am_ram",request.getAttribute("am_ram"));
+request.setAttribute("in_cpu",request.getAttribute("in_cpu"));
+	request.setAttribute("in_mb",request.getAttribute("in_mainboard"));
+	request.setAttribute("in_ram",request.getAttribute("in_ram")); } %>
 
 
 

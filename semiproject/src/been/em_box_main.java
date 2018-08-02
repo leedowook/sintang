@@ -5,13 +5,13 @@ public class em_box_main {
 	private String id;
 	private String name;
 	private int price;
-	private boolean cpu;
-	private boolean ram;
-	private boolean mb;
-	private boolean vga;
-	private boolean pow;
-	private boolean ssd;
-	private boolean hdd;
+	private boolean cpu=false;
+	private boolean ram=false;
+	private boolean mb=false;
+	private boolean vga=false;
+	private boolean pow=false;
+	private boolean ssd=false;
+	private boolean hdd=false;
 	public int getNum() {
 		return num;
 	}

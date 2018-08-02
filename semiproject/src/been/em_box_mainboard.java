@@ -2,13 +2,13 @@ package been;
 
 public class em_box_mainboard {
 	private int num;
-	private int mb_num;
+	private String  mb_num;
 	private int count;
 	private int price;
 	public int getNum() {
 		return num;
 	}
-	public int getMb_num() {
+	public String  getMb_num() {
 		return mb_num;
 	}
 	public int getCount() {
@@ -20,7 +20,7 @@ public class em_box_mainboard {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public void setMb_num(int mb_num) {
+	public void setMb_num(String  mb_num) {
 		this.mb_num = mb_num;
 	}
 	public void setCount(int count) {

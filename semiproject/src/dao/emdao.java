@@ -24,6 +24,406 @@ import methodcode.*;
 		public void setConnection(Connection con) {
 			this.con=con;
 		}
+		public int getboxnum(String id) {
+			int number=0;
+			pstmt=null;
+			rs=null;
+			String num="select max(em_num) from em_main where id=?";
+			String min_num="select min(em_num) from em_main where id=?";
+			try {
+				pstmt=con.prepareStatement(num);
+				pstmt.setString(1,id);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					number=rs.getInt(1)+1;
+					pstmt=null;
+					rs=null;
+					pstmt=con.prepareStatement(min_num);
+					pstmt.setString(1,id);
+					rs=pstmt.executeQuery();
+					
+						if(rs.getInt(1)!=1) {
+							number=1;
+						}
+				}else {//등록된글이 없을떄 
+					number=1;
+				}
+				System.out.println("번호찾기dao 성공");
+			}catch(Exception e) {
+				System.out.println("번호찾기dao오류"+e);
+				e.printStackTrace();
+			}finally {	
+					close(pstmt);
+					close(rs);
+			}
+			return number;
+		}
+		public int createbox(String id,int em_num) {
+			int result=0;
+			pstmt=null;
+			rs=null;
+			String sql="insert table em_main(em_num,id,em_price,em_name) values("+em_num+",?,0,'견적함"+em_num+"')";
+			try {
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1,id);
+				result=pstmt.executeUpdate();
+				System.out.println("견적함입력 dao 성공");
+			}catch(Exception e) {
+				System.out.println("견적함입력 dao오류"+e);
+				e.printStackTrace();
+			}finally {	
+					close(pstmt);
+					close(rs);
+			}
+			return result;
+		}
+		public int changename(String id,int em_num,String name) {
+			int result=0;
+			pstmt=null;
+			rs=null;
+			String sql="update em_main set em_name=? where id=? em_num=?";
+			try {
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1,name);
+				pstmt.setString(1,id);
+				pstmt.setInt(1,em_num);
+				
+				result=pstmt.executeUpdate();
+				System.out.println("견적함 이름바꾸기 dao 성공");
+			}catch(Exception e) {
+				System.out.println("견적함 이름바꾸기 dao오류"+e);
+				e.printStackTrace();
+			}finally {	
+					close(pstmt);
+					close(rs);
+			}
+			return result;
+		}
+		//견적 이름 변경 
+		public int updatebox(em_box_userinfo emuser) {
+			int result=0;
+			pstmt=null;
+			rs=null;
+			String option=" ";
+			if(emuser.getBox().isCpu()) {option+=",em_cpu='true'";};
+			if(emuser.getBox().isPow()) {option+=",em_pow='true'";}
+			if(emuser.getBox().isMb()) {option+=",em_mb='true'";}
+			if(emuser.getBox().isRam()) {option+=",em_ram='true'";}
+			if(emuser.getBox().isSsd()) {option+=",em_ssd='true'";}
+			if(emuser.getBox().isHdd()) {option+=",em_hdd='true'";}
+			if(emuser.getBox().isVga()) {option+=",em_vga='true'";}
+			
+			String sql="update em_main set em_name=?"+option+" where id=? em_num=?";
+			String insertsql="";
+			
+			try {
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1,emuser.getBox().getName());
+				pstmt.setString(2,emuser.getBox().getId());
+				pstmt.setInt(3,emuser.getBox().getNum());
+				result=pstmt.executeUpdate();
+				System.out.println("견적함 이름바꾸기 dao 성공");
+			}catch(Exception e) {
+				System.out.println("견적함 이름바꾸기 dao오류"+e);
+				e.printStackTrace();
+			}finally {	
+					close(pstmt);
+					close(rs);
+			}
+			return result;
+		}
+		//견적별 파트추가
+		public int updatboxepart(em_box_userinfo emuser) {
+			
+			pstmt=null;
+			int price=0;
+			int result=0;
+			String option;
+			
+			try {
+				
+				if(emuser.getBox().isCpu()) {
+					option="insert into em_cpu values(?,?,?,?,?)";
+					pstmt=null;
+					pstmt=con.prepareStatement(option);
+					pstmt.setInt(1,emuser.getBox().getNum());
+					pstmt.setInt(2,emuser.getCpu().getNum());
+					pstmt.setInt(3,emuser.getCpu().getCount());
+					pstmt.setInt(4,emuser.getCpu().getPrice());
+					pstmt.setString(5,emuser.getBox().getId());
+					result+=pstmt.executeUpdate();}
+				price+=emuser.getCpu().getPrice();
+				if(emuser.getBox().isPow()) {
+				option="insert into em_pow values(?,?,?,?,?)";
+				pstmt=null;
+				pstmt=con.prepareStatement(option);
+				pstmt.setInt(1,emuser.getBox().getNum());
+				pstmt.setInt(2,emuser.getPow().getNum());
+				pstmt.setInt(3,emuser.getPow().getCount());
+				pstmt.setInt(4,emuser.getPow().getPrice());
+				pstmt.setString(5,emuser.getBox().getId());
+				result+=pstmt.executeUpdate();
+				price+=emuser.getPow().getPrice();}
+				
+				if(emuser.getBox().isMb()) {
+					option="insert into em_mb values(?,?,?,?,?)";
+					pstmt=null;
+					pstmt=con.prepareStatement(option);
+					pstmt.setInt(1,emuser.getBox().getNum());
+					pstmt.setInt(2,emuser.getMb().getNum());
+					pstmt.setInt(3,emuser.getMb().getCount());
+					pstmt.setInt(4,emuser.getMb().getPrice());
+					pstmt.setString(5,emuser.getBox().getId());
+					result+=pstmt.executeUpdate();
+					price+=emuser.getMb().getPrice();	
+				
+				}
+				if(emuser.getBox().isRam()) {
+					option="insert into em_ram values(?,?,?,?,?,?)";
+					pstmt=null;
+					pstmt=con.prepareStatement(option);
+					pstmt.setInt(1,emuser.getBox().getNum());
+					pstmt.setInt(2,emuser.getRam().getNum());
+					pstmt.setInt(3,emuser.getRam().getCount());
+					pstmt.setInt(4,emuser.getRam().getPrice());
+					pstmt.setInt(5,emuser.getRam().getRam_mm());
+					pstmt.setString(6,emuser.getBox().getId());
+					result+=pstmt.executeUpdate();
+					price+=emuser.getRam().getPrice();}			
+				if(emuser.getBox().isSsd()) {
+					option="insert into em_ssd values(?,?,?,?,?,?)";
+					pstmt=null;
+					pstmt=con.prepareStatement(option);
+					pstmt.setInt(1,emuser.getBox().getNum());
+					pstmt.setInt(2,emuser.getSsd().getNum());
+					pstmt.setInt(3,emuser.getSsd().getCount());
+					pstmt.setInt(4,emuser.getSsd().getPrice());
+					pstmt.setInt(5,emuser.getSsd().getSsd_mm());
+					pstmt.setString(6,emuser.getBox().getId());
+					result+=pstmt.executeUpdate();
+					price+=emuser.getSsd().getPrice();	
+				}		
+				if(emuser.getBox().isHdd()) {
+					
+					option="insert into em_hdd values(?,?,?,?,?,?)";
+					pstmt=null;
+					pstmt=con.prepareStatement(option);
+					pstmt.setInt(1,emuser.getBox().getNum());
+					pstmt.setInt(2,emuser.getHdd().getNum());
+					pstmt.setInt(3,emuser.getHdd().getCount());
+					pstmt.setInt(4,emuser.getHdd().getPrice());
+					pstmt.setInt(5,emuser.getHdd().getHdd_mm());
+					pstmt.setString(6,emuser.getBox().getId());
+					result+=pstmt.executeUpdate();
+					price+=emuser.getHdd().getPrice();
+				}		
+				if(emuser.getBox().isVga()) {
+				option="insert into em_vga values(?,?,?,?,?,?)";
+				pstmt=null;
+				pstmt=con.prepareStatement(option);
+				pstmt.setInt(1,emuser.getBox().getNum());
+				pstmt.setInt(2,emuser.getVga().getNum());
+				pstmt.setInt(3,emuser.getVga().getCount());
+				pstmt.setInt(4,emuser.getVga().getPrice());
+				pstmt.setInt(5,emuser.getVga().getRam_mm());
+				pstmt.setString(6,emuser.getBox().getId());
+				result+=pstmt.executeUpdate();
+				price+=emuser.getVga().getPrice();}
+				pstmt=null;
+				String sql="update em_main set em_price=? where id=? em_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1,emuser.getBox().getPrice());
+				pstmt.setString(2,emuser.getBox().getId());
+				pstmt.setInt(3,emuser.getBox().getNum());
+				result+=pstmt.executeUpdate();
+				
+				System.out.println("각견적 입력 or 수정dao 성공");
+			}catch(Exception e) {
+				System.out.println("각견적별 입력 or수정 dao오류"+e);
+				e.printStackTrace();
+			}finally {	
+					close(pstmt);
+					close(rs);
+			}
+			return result;
+		}
+		//견적함 가져오기
+		public ArrayList<em_box_main> selectbox(String id) {
+			ArrayList<em_box_main> ar_box=new ArrayList<em_box_main>();
+			em_box_main embox;
+			
+			pstmt=null;
+			rs=null;
+			String sql="select * from em_main where id=?";
+			try {
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1,id);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+				while(rs.next()) {
+					embox=new em_box_main();
+					embox.setNum(rs.getInt("em_num"));
+					embox.setId(id);
+					embox.setPrice(rs.getInt("em_price"));
+					embox.setName(rs.getString("em_name"));
+					embox.setCpu(rs.getBoolean("em_cpu"));
+					embox.setMb(rs.getBoolean("em_mb"));
+					embox.setSsd(rs.getBoolean("em_ssd"));
+					embox.setHdd(rs.getBoolean("em_hdd"));
+					embox.setVga(rs.getBoolean("em_vga"));
+					embox.setRam(rs.getBoolean("em_ram"));
+					embox.setPow(rs.getBoolean("em_pow"));
+					ar_box.add(embox);
+					
+				}}
+				else {
+					int boxnum=getboxnum(id);
+					int cresult=createbox(id,boxnum);
+					if(cresult>0) {
+					System.out.println("견적함 정보 없어서 새로생성 성공");
+					ar_box=selectbox(id);
+					}
+					else {
+						System.out.println("심각한 오류!");
+					}
+				}
+		
+			}catch(Exception e) {
+				System.out.println("견적함 가져오기 dao오류"+e);
+				e.printStackTrace();
+			}finally {	
+					close(pstmt);
+					close(rs);
+			}
+			return ar_box;
+		}
+	//해당 견적함의 파츠 검색
+			public em_box_userinfo selectboxepart(em_box_userinfo emuser) {
+				em_box_userinfo emuserout=new em_box_userinfo();
+				pstmt=null;
+				
+				String option;
+				
+				try {
+					
+					if(emuser.getBox().isCpu()) {
+						option="select * from em_cpu em_num=? id=?";
+						pstmt=null;
+						pstmt=con.prepareStatement(option);
+						pstmt.setInt(1,emuser.getBox().getNum());
+						pstmt.setString(2,emuser.getBox().getId());
+						rs=pstmt.executeQuery();
+						if(rs.next()) {
+							emuserout.getCpu().setCpu_num(rs.getString("cpu_num"));
+							emuserout.getCpu().setNum(rs.getInt("Em_num"));
+							emuserout.getCpu().setCount(rs.getInt("count"));
+							emuserout.getCpu().setPrice(rs.getInt("price"));
+							
+						}
+						
+						
+					}
+				
+					if(emuser.getBox().isPow()) {
+						option="select * from em_pow em_num=? id=?";
+						pstmt=null;
+						pstmt=con.prepareStatement(option);
+						pstmt.setInt(1,emuser.getBox().getNum());
+						pstmt.setString(2,emuser.getBox().getId());
+						rs=pstmt.executeQuery();
+						if(rs.next()) {
+							emuserout.getPow().setPower_num(rs.getString("pow_num"));
+							emuserout.getPow().setNum(rs.getInt("Em_num"));
+							emuserout.getPow().setCount(rs.getInt("count"));
+							emuserout.getPow().setPrice(rs.getInt("price"));}}
+					
+					if(emuser.getBox().isMb()) {
+						option="select * from em_mb em_num=? id=?";
+						pstmt=null;
+						pstmt=con.prepareStatement(option);
+						pstmt.setInt(1,emuser.getBox().getNum());
+						pstmt.setString(2,emuser.getBox().getId());
+						rs=pstmt.executeQuery();
+						if(rs.next()) {
+							emuserout.getMb().setMb_num(rs.getString("mb_num"));
+							emuserout.getMb().setNum(rs.getInt("Em_num"));
+							emuserout.getMb().setCount(rs.getInt("count"));
+							emuserout.getMb().setPrice(rs.getInt("price"));}}
+					
+							
+						
+				
+					if(emuser.getBox().isRam()) {
+						option="select * from em_ram em_num=? id=?";
+						pstmt=null;
+						pstmt=con.prepareStatement(option);
+						pstmt.setInt(1,emuser.getBox().getNum());
+						pstmt.setString(2,emuser.getBox().getId());
+						rs=pstmt.executeQuery();
+						if(rs.next()) {
+							emuserout.getRam().setRam_num(rs.getString("ram_num"));
+							emuserout.getRam().setNum(rs.getInt("Em_num"));
+							emuserout.getRam().setCount(rs.getInt("count"));
+							emuserout.getRam().setPrice(rs.getInt("price"));
+							emuserout.getRam().setRam_mm(rs.getInt("mm"));}}
+					if(emuser.getBox().isSsd()) {
+						option="select * from em_ssd em_num=? id=?";
+						pstmt=null;
+						pstmt=con.prepareStatement(option);
+						pstmt.setInt(1,emuser.getBox().getNum());
+						pstmt.setString(2,emuser.getBox().getId());
+						rs=pstmt.executeQuery();
+						if(rs.next()) {
+							emuserout.getSsd().setSsd_num(rs.getString("ssd_num"));
+							emuserout.getSsd().setNum(rs.getInt("Em_num"));
+							emuserout.getSsd().setCount(rs.getInt("count"));
+							emuserout.getSsd().setPrice(rs.getInt("price"));
+							emuserout.getSsd().setSsd_mm(rs.getInt("mm"));}}
+					if(emuser.getBox().isHdd()) {
+						
+						option="select * from em_hdd em_num=? id=?";
+						pstmt=null;
+						pstmt=con.prepareStatement(option);
+						pstmt.setInt(1,emuser.getBox().getNum());
+						pstmt.setString(2,emuser.getBox().getId());
+						rs=pstmt.executeQuery();
+						if(rs.next()) {
+							emuserout.getHdd().setHdd_num(rs.getString("hdd_num"));
+							emuserout.getHdd().setNum(rs.getInt("Em_num"));
+							emuserout.getHdd().setCount(rs.getInt("count"));
+							emuserout.getHdd().setPrice(rs.getInt("price"));
+							emuserout.getHdd().setHdd_mm(rs.getInt("mm"));}}
+					
+					if(emuser.getBox().isVga()) {
+					option="select * from em_vga em_num=? id=?";
+					pstmt=null;
+					pstmt=con.prepareStatement(option);
+					pstmt.setInt(1,emuser.getBox().getNum());
+					pstmt.setString(2,emuser.getBox().getId());
+					rs=pstmt.executeQuery();
+					if(rs.next()) {
+						emuserout.getVga().setVga_num(rs.getString("vga_num"));
+						emuserout.getVga().setNum(rs.getInt("Em_num"));
+						emuserout.getVga().setCount(rs.getInt("count"));
+						emuserout.getVga().setPrice(rs.getInt("price"));
+						emuserout.getVga().setRam_mm(rs.getInt("mm"));}
+					
+					System.out.println("각견적 입력 or 수정dao 성공");
+					}}catch(Exception e) {
+					System.out.println("각견적별 입력 or수정 dao오류"+e);
+					e.printStackTrace();
+				}finally {	
+						close(pstmt);
+						close(rs);
+				}
+				return emuserout;
+			
+		}
+		
+		
+		
+		
+		
 		//조회 
 		public em_cpu selectcpu(String num) {
 			System.out.println("cpu 조회");

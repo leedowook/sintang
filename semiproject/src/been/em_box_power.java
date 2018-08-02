@@ -2,11 +2,11 @@ package been;
 
 public class em_box_power {
 	private int num;
-	private int power_num;
+	private String  power_num;
 	public int getNum() {
 		return num;
 	}
-	public int getPower_num() {
+	public String  getPower_num() {
 		return power_num;
 	}
 	public int getCount() {
@@ -18,7 +18,7 @@ public class em_box_power {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public void setPower_num(int power_num) {
+	public void setPower_num(String  power_num) {
 		this.power_num = power_num;
 	}
 	public void setCount(int count) {

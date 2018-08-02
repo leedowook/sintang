@@ -2,7 +2,7 @@ package been;
 
 public class em_box_ram {
 	private int num;
-	private int ram_num;
+	private String  ram_num;
 	private int count;
 	private int ram_mm;
 	public int getRam_mm() {
@@ -14,7 +14,7 @@ public class em_box_ram {
 	public int getNum() {
 		return num;
 	}
-	public int getRam_num() {
+	public String  getRam_num() {
 		return ram_num;
 	}
 	public int getCount() {
@@ -26,7 +26,7 @@ public class em_box_ram {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public void setRam_num(int ram_num) {
+	public void setRam_num(String  ram_num) {
 		this.ram_num = ram_num;
 	}
 	public void setCount(int count) {
