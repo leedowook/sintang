@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="been.*" %>
     <%@ taglib prefix="c" 
 
 uri="http://java.sun.com/jsp/jstl/core" %>
@@ -29,16 +30,34 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 		</c:forEach>
 	</select>
 </form>
-<%if(request.getAttribute("boxinfo")!=null){ %>
+
 <form id="em_info" name="em_boxinfo">
+<span>
+<%if(request.getAttribute("boxinfo")!=null){ 
 
+em_box_userinfo box=((em_box_userinfo)request.getAttribute("boxinfo"));%> 
 
+	<table>
+	<tr>
+	
+	<td></td>
+	<%if(box.getCpu().getCount()==1) %>
+	<td></td><td></td>
+	</tr>
+	
+	
+	</table>
 
+전체가격:<%=box.getBox().getPrice()%>
 <%} %>
-
-
-
+ </span>
 </form>
+
+
+
+
+
+
 
 
 </body>
