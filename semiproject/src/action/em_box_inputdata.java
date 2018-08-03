@@ -12,14 +12,14 @@ public class em_box_inputdata implements action {
 		actionforward forward=null;
 		
 		em_box_main main= new em_box_main();
-		String cho=request.getParameter("cpu");
-		em_hdd hdd=(em_hdd)request.getAttribute("hdd");
-		em_mainboard mainboard=(em_mainboard)request.getAttribute(cho+"mainboard");
-		em_ram ram=(em_ram)request.getAttribute(cho+"ram");
-		em_cpu cpu=(em_cpu)request.getAttribute(cho+"cpu");
-		em_vga vga=(em_vga)request.getAttribute("vga");
-		em_power power=(em_power)request.getAttribute("power");
-	
+		String cpucho=request.getParameter("cpu");
+		String partnum[]=request.getParameterValues(cpucho);
+		int rammm=Integer.parseInt(request.getParameter(cpucho+"ram"));
+		String partelse[]=request.getParameterValues("elsepart");
+		int vgamm=Integer.parseInt(request.getParameter("elsepartvga"));
+		int hddmm=Integer.parseInt(request.getParameter("elseparthdd"));
+		int ssdmm=Integer.parseInt(request.getParameter("elsepartssd"));
+		
 		if(request.getParameter("ramcount").equals("0")) {
 			main.setRam(true);
 			em_box_ram ram_box=new em_box_ram();

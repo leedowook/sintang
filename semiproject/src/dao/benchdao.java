@@ -25,6 +25,8 @@ public class benchdao {
 
 	public em_cho_gamespec gamespec(int g_num,int spec) {
 		System.out.println("게임 스펙찾기 dao");
+		System.out.println(g_num+","+spec);
+		
 		em_cho_gamespec ecgs=new em_cho_gamespec();
 		String sql="select * from spec where specnum=? and game_num=? ";
 		String sql1="select * from game where name=?";
@@ -77,16 +79,18 @@ public class benchdao {
 	public em_vga vgaspec(em_cho_gamespec ecgs) {
 		em_vga vga=new em_vga();
 		System.out.println("해당 사양과 비슷한 그래픽찾기");
-		
+		boolean error=false;
 		String v_num=null;
 		
-		
+		String sql="";
+	
 		
 		//밴치마킹돌린거
-		String sql="select vga_num from (select vga_num,(sha/(?*?)+tmu/(?*?)+(rop/(?*?))*2)/4 as bench from vga_spec_new)v2 where bench between 0.5 and 1";
+		if(!error) {
+		sql="select vga_num from (select vga_num,(sha/(?*?)+tmu/(?*?)+(rop/(?*?))*2)/4 as bench from vga_spec_new)v2 where bench between 0.5 and 1";
 		//밴치마킹 돌린거와 넘버 일치하는거
-		
-		
+		}
+		System.out.println(sql);
 		pstmt= null;
 		rs=null;
 		ArrayList<String> vga_numar=new ArrayList<>();
@@ -95,12 +99,13 @@ public class benchdao {
 			
 			System.out.println("vga 사양비교");
 			pstmt=con.prepareStatement(sql);
+			if(!error) {
 			pstmt.setInt(1,ecgs.getVga_shaders());
 			pstmt.setInt(2,ecgs.getVga_ck());
 			pstmt.setInt(3,ecgs.getVga_tmus());
 			pstmt.setInt(4,ecgs.getVga_ck());
 			pstmt.setInt(5,ecgs.getVga_rops());
-			pstmt.setInt(6,ecgs.getVga_ck());
+			pstmt.setInt(6,ecgs.getVga_ck());}
 			rs=pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -113,9 +118,7 @@ public class benchdao {
 			if(vga_numar.size()>1) {
 			for(int i=1;i<vga_numar.size();i++) {
 				v_num=v_num+","+"'"+vga_numar.get(i)+"'";
-				if(vga_numar.get(i+1)==null) {
-					break;
-				}
+				
 				
 			}}
 			String sel="select * from (select rownum as rnum,v2.*  from  (select vga_info_m.*,vga_info_spec.price as price,vga_info_spec.vga_ram_mm as vga_ram_mm  from vga_info_m inner join vga_info_spec on vga_info_m.vga_num =vga_info_spec.vga_num where vga_info_m.vga_num in("+v_num+")  and vga_info_spec.vga_ram_mm >=? and vga_chipmaker='nvidia'  order by vga_info_spec.price asc)v2)  where rnum=1"; 
@@ -140,6 +143,9 @@ public class benchdao {
 			}
 		}catch(Exception e) {
 			System.out.println("benchdao vgaspec오류"+e);
+				sql="select vga_num from vga_spec_new";
+				error=true;
+				em_vga emvga=vgaspec(ecgs);
 			e.printStackTrace();
 			
 		}finally {
@@ -208,12 +214,15 @@ public class benchdao {
 		
 			//최저가 램  선택
 		
-		if(ecgs.getRam_mm()>=16&&slot<=2) {
+		if(ecgs.getRam_mm()>=16 && slot<=2) {
 		ram_count+=Math.ceil(ecgs.getRam_mm()/16);	
 		ram_sel="select * from (select rownum rnum,rs.* from ram_spec_new rs where ram_kind='ddr4' and mm=16 order by price ) where rnum=1";
 		}
 		else {
-			ram_count+=Math.ceil(ecgs.getRam_mm()/8);	
+			ram_count+=Math.ceil(ecgs.getRam_mm()/8);
+			if(ecgs.getRam_mm()<8) {
+				ram_count=1;
+			}
 			ram_sel="select * from (select rownum rnum,rs.* from ram_spec_new rs where ram_kind='ddr4' and mm=8 order by price ) where rnum=1";
 		}
 		
@@ -247,14 +256,16 @@ public class benchdao {
 		String maker=null;
 		String op=" ";
 		if(option==1) {
-			maker="'asrock'";
+			maker="'ASROCK'";
 		}
 		else if(option==2) {
 			maker="'msi','gigabyte'";
 		}
 		else {
+			if(size.equals("FM2+")) {maker="'gigabyte'";}
+			else {
 			maker="'asus'";
-			op="mainboard_name in('%rog%')";
+			op="mainboard_name in('%rog%')";}
 		}
 		em_mainboard mainboardbean=new em_mainboard();
 		
@@ -262,6 +273,7 @@ public class benchdao {
 		
 		rs=null;
 		String sql1="select * from (select rownum rnum,m.*,e.usb1gen,e.usb0gen,ps2 from mb_info_m m inner join mb_info_e e on m.mainboard_num=e.mainboard_num   where cpu_size=? and mainboard_maker in("+maker+") "+op+" order by price asc) where rnum=1";
+		System.out.println(sql1);
 		try {
 			System.out.println("메인보드 spec test:"+size+","+maker);
 		pstmt = con.prepareStatement(sql1);
@@ -360,14 +372,15 @@ public class benchdao {
 		pstmt = con.prepareStatement(sql1);
 		rs=pstmt.executeQuery();
 		if(rs.next()) {
+			
 			ssd.setName(rs.getString("name"));
 			ssd.setMaker(rs.getString("ssd_maker"));
 			ssd.setKind(rs.getString("ssd_kind"));
-			ssd.setRead(rs.getInt("read"));
-			ssd.setWrite(rs.getInt("write"));
-			ssd.setRead_iops(rs.getInt("read_iops"));
-			ssd.setWrite_iops(rs.getInt("write_iops"));
-			ssd.setDram(rs.getInt("dram"));
+			ssd.setRead(rs.getInt("ssd_read"));
+			ssd.setWrite(rs.getInt("ssd_write"));
+			ssd.setRead_iops(rs.getInt("ssd_read_iops"));
+			ssd.setWrite_iops(rs.getInt("ssd_write_iops"));
+			ssd.setDram(rs.getInt("ssd_dram"));
 			ssd.setMemory(rs.getInt("ssd_memory"));
 			ssd.setPrice(rs.getInt("price"));	
 		}}catch(Exception e) {

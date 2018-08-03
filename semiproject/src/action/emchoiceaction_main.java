@@ -31,16 +31,20 @@ public class emchoiceaction_main implements action{
 			String sayang=request.getParameter("g"+i);
 			if(!(sayang.equals("no"))) {
 				k++;
+			
 				ecgs=new em_cho_gamespec();
 				if(sayang.equals("high")) {
 					ecgs=bsv.benchsgame(i,3);
 				}
-				else if(sayang.equals("middle")) {
+				else if(sayang.equals("medium")) {
 					ecgs=bsv.benchsgame(i,2);
+					
 				}
 				else if(sayang.equals("low")) {
 					ecgs=bsv.benchsgame(i,1);
 				}
+				System.out.println(ecgs.getVga_ck());
+				System.out.println(ecgs.getGamename());
 				kind+=ecgs.getGamekind();
 				gamear.add(ecgs);
 			}
@@ -83,9 +87,13 @@ public class emchoiceaction_main implements action{
 		int hardoption=Integer.parseInt(request.getParameter("hard"));
 		System.out.println("찾아오기 hddoption:"+hardoption);
 		System.out.println(kind.contains("ssd"));
+		
+		//모든게임 통합함
 		ecgs.setGamename("all");
 		ecgs.setSpec(4);
 		ecgs.setG_num(0);
+		
+		
 		String maker[]=new String[2];
 		String size=null;
 		int slot=0;

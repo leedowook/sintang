@@ -4,14 +4,14 @@ public class em_ssd {
 	private String num;
 	private String maker;
 	private String kind;
-	private int read;
-	private int write;
-	private int read_iops;
-	private int write_iops;
-	private int dram;
-	private int life;
-	private int memory;
-	private int price;
+	private int read=0;
+	private int write=0;
+	private int read_iops=0;
+	private int write_iops=0;
+	private int dram=0;
+	private int life=0;
+	private int memory=0;
+	private int price=0;
 	private String name;
 	public String getName() {
 		return name;

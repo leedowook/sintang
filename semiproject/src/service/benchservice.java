@@ -24,7 +24,7 @@ public class benchservice{
 		return ecgs;
 	}
 	public em_cpu benchgamecpu(em_cho_gamespec ecgs,String maker) {
-		//해당 사양에 대한 그래픽 담을곳 
+		//해당 사양에 대한 cpu 담을곳 
 		benchdao dao =benchdao.getInstance();
 		Connection con=getConnection();
 		dao.setConnection(con);
@@ -34,7 +34,7 @@ public class benchservice{
 		return cpu;
 	}
 	public em_ram benchgameram(em_cho_gamespec ecgs,int slot) {
-		//해당 사양에 대한 그래픽 담을곳 
+		//해당 사양에 대한 램 담을곳 
 		benchdao dao =benchdao.getInstance();
 		Connection con=getConnection();
 		dao.setConnection(con);
@@ -44,7 +44,7 @@ public class benchservice{
 		return ram;
 	}
 	public em_mainboard benchgamemb(em_cho_gamespec ecgs,String size,int option) {
-		//해당 사양에 대한 그래픽 담을곳 
+		//해당 사양에 대한 메인보드 담을곳 
 		benchdao dao =benchdao.getInstance();
 		Connection con=getConnection();
 		dao.setConnection(con);

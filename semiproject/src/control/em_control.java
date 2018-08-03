@@ -105,7 +105,7 @@ public class em_control extends HttpServlet {
     			e.printStackTrace();
     		}
     	}
-    	else if(command.equals("/inputdata/em_adminmodeadd.em")||command.equals("/adminmode/em_adminmodeadd.em")) {
+    	else if(command.equals("/adminmode/em_adminmodeadd.em")||command.equals("/em_adminmodeadd.em")) {
     		System.out.println("관리자 추가 모드 접속");
     		String active=(String) request.getParameter("active");
     		System.out.println(active);
@@ -113,7 +113,7 @@ public class em_control extends HttpServlet {
     			action=new em_inputpartdata();
     		}
     		else {
-    			action=new em_inputgamedata();
+    			forward.setPath("../adminmode_partselect.jsp");
     		}
     		try {
     			forward=action.execute(request,response);

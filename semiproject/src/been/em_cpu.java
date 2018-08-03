@@ -20,17 +20,17 @@ public class em_cpu {
 	public void setOver(String over) {
 		this.over = over;
 	}
-	private int price;
-	private int core;
-	private int td;
-	private int l2cashm;
-	private int l3cashm;
-	private int tdp;
-	private int sysbus;
+	private int price=0;
+	private int core=0;
+	private int td=0;
+	private int l2cashm=0;
+	private int l3cashm=0;
+	private int tdp=0;
+	private int sysbus=0;
 	private boolean gpu;
 
-	private double ck;
-	private double maxck;
+	private double ck=0;
+	private double maxck=0;
 	public String getNum() {
 		return num;
 	}

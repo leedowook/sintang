@@ -8,13 +8,7 @@ import java.sql.Connection;
 import been.*;
 import dao.emdao;
 public class inputpartdatabase {
-	public boolean inputramdata() {
-		boolean result=false;
-		
-		return result;
-	}
-	
-	
+
 	public boolean inputcpudata(em_cpu cpubean) {
 		System.out.println("cpu 입력 서비스 접속");
 		boolean result=false;

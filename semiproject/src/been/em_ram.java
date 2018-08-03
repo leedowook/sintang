@@ -4,10 +4,10 @@ public class em_ram {
 	private String num;
 	private String maker;
 	private String kind;
-	private int mm;
-	private int ck;
-	private int price;
-	private int count;
+	private int mm=0;
+	private int ck=0;
+	private int price=0;
+	private int count=0;
 	
 	public int getCount() {
 		return count;
