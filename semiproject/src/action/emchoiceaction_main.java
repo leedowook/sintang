@@ -2,16 +2,22 @@ package action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.util.*;
 import been.*;
 
 import service.benchservice;
-
+import methodcode.*;
 public class emchoiceaction_main implements action{
 
 	@Override
 	public actionforward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("게임사양emchoiceaciton_main 에접속");
+		HttpSession session=request.getSession();
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
+	
 		actionforward forward=new actionforward();
 		em_cho_gamespec ecgs;
 		benchservice bsv=new benchservice();
@@ -149,7 +155,10 @@ public class emchoiceaction_main implements action{
 		else {request.setAttribute("ssd",null);
 		System.out.println("ssd포함안됨");
 		}
-		
+		selectpartdata mc=new selectpartdata();
+		ArrayList<em_box_main> em_box=new ArrayList<em_box_main>();
+		em_box=mc.selec
+		request.setAttribute("boxlist",em_box);
 		request.setAttribute("set", "have");
 		forward.setPath("/em_first_main/em_cho.jsp");
 		return forward;

@@ -99,13 +99,13 @@ public class benchdao {
 			
 			System.out.println("vga 사양비교");
 			pstmt=con.prepareStatement(sql);
-			if(!error) {
+		
 			pstmt.setInt(1,ecgs.getVga_shaders());
 			pstmt.setInt(2,ecgs.getVga_ck());
 			pstmt.setInt(3,ecgs.getVga_tmus());
 			pstmt.setInt(4,ecgs.getVga_ck());
 			pstmt.setInt(5,ecgs.getVga_rops());
-			pstmt.setInt(6,ecgs.getVga_ck());}
+			pstmt.setInt(6,ecgs.getVga_ck());
 			rs=pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -114,6 +114,16 @@ public class benchdao {
 			
 			
 			}
+			if(vga_numar.size()==0) {
+				sql="select vga_num from vga_spec_new";
+				pstmt=con.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					
+					vga_numar.add(rs.getString("vga_num"));
+			}}
+			
+			
 			v_num="'"+vga_numar.get(0)+"'";
 			if(vga_numar.size()>1) {
 			for(int i=1;i<vga_numar.size();i++) {
@@ -265,7 +275,7 @@ public class benchdao {
 			if(size.equals("FM2+")) {maker="'gigabyte'";}
 			else {
 			maker="'asus'";
-			op="mainboard_name in('%rog%')";}
+			op="and mainboard_name like '%rog%'";}
 		}
 		em_mainboard mainboardbean=new em_mainboard();
 		

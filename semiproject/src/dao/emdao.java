@@ -77,6 +77,7 @@ import methodcode.*;
 			}
 			return result;
 		}
+		//견적 이름 변경 
 		public int changename(String id,int em_num,String name) {
 			int result=0;
 			pstmt=null;
@@ -99,8 +100,8 @@ import methodcode.*;
 			}
 			return result;
 		}
-		//견적 이름 변경 
-		public int updatebox(em_box_userinfo emuser) {
+		
+		public em_box_userinfo updatebox(em_box_userinfo emuser) {
 			int result=0;
 			pstmt=null;
 			rs=null;
@@ -122,18 +123,18 @@ import methodcode.*;
 				pstmt.setString(2,emuser.getBox().getId());
 				pstmt.setInt(3,emuser.getBox().getNum());
 				result=pstmt.executeUpdate();
-				System.out.println("견적함 이름바꾸기 dao 성공");
+				System.out.println("견적함 전체변경1단계 dao 성공");
 			}catch(Exception e) {
-				System.out.println("견적함 이름바꾸기 dao오류"+e);
+				System.out.println("견적함 전체변경1단계 dao오류"+e);
 				e.printStackTrace();
 			}finally {	
 					close(pstmt);
 					close(rs);
 			}
-			return result;
+			return emuser;
 		}
 		//견적별 파트추가
-		public int updatboxepart(em_box_userinfo emuser) {
+		public int updateboxpart(em_box_userinfo emuser) {
 			
 			pstmt=null;
 			int price=0;

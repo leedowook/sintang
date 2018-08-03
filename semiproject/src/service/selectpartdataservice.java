@@ -3,6 +3,7 @@ package service;
 import static db.jdbc.*;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import been.*;
 import dao.emdao;
@@ -86,4 +87,7 @@ public em_part_info selectvgadata(String num) {
 	part=dao.selectvga(num);
 	close(con);
 	return part;
-}}
+}
+
+
+}

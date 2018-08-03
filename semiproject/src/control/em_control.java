@@ -10,18 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.*;
 
-import action.action;
-import action.em_adminmode;
-import action.em_box_inputdata;
-import action.em_delgamedata;
-import action.em_delpartdata;
-import action.em_inputgamedata;
-import action.em_inputpartdata;
-import action.em_listgamedata;
-import action.em_listpartdata;
-import action.em_modgamedata;
-import action.em_modpartdata;
-import action.emchoiceaction_main;
+import action.*;
 import been.actionforward;
 
 
@@ -97,7 +86,7 @@ public class em_control extends HttpServlet {
     	else if(command.equals("/inputbox.em")||command.equals("/em_first_maim/inputbox.em")) {
     		System.out.println("견적함 입력 접속");
     		if(request.getParameter("id")==null) {}
-    		action=new em_box_inputdata();
+    		action=new em_box_choinputdata();
     		try {
     			forward=action.execute(request,response);
     			System.out.println("성공");

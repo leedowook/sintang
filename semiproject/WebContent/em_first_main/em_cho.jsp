@@ -347,14 +347,15 @@ function submit_form_dday() {
 	<input type="hidden" name="amd" value="${am_cpu.num }">
 	<input type="hidden" name="amd" value="${am_mainboard.num }">
 	<input type="hidden" name="amd" value="${am_ram.num }">
+	<input type="hidden" name="amdram" value="${am_ram.mm }">
 	<input type="hidden" name="elsepart" value="${vga.num}">
-	<input type="hidden" name="elsepart" value="${pow.num}">
+	
 	<input type="hidden" name="elsepartvga" value="${vga.ram_mm}">
 	<input type="hidden" name="elsepart" value="${hdd.num}">
 	<input type="hidden" name="elseparthdd" value="${hdd.memory}">
 	<input type="hidden" name="elsepart" value="${ssd.num}">
 	<input type="hidden" name="elsepartssd" value="${ssd.memory}">
-	
+	<input type="hidden" name="elsepart" value="${pow.num}">
 	
 	
 	<button onclick="submit_form_em()" class="snip1535">견적함에 추가</button>
