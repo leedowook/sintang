@@ -375,11 +375,8 @@ function submit_form_dday() {
 
 </form>
 <%} %>
-<span>
-배우기
 
 
-<a href="cho_sel.em" target="_blank">배우기.img</a>
-</span>
+
 </body>
 </html>

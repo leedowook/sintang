@@ -1,11 +1,15 @@
 package action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import been.*;
 import methodcode.*;
+import service.boxservice;
+import service.inputpartdatabase;
 public class em_box_choinputdata implements action {
 	@Override
 	public actionforward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -16,6 +20,7 @@ public class em_box_choinputdata implements action {
 		actionforward forward=null;
 		session.getAttribute("id");//정보를 입력하기위해 아이디값받아옴
 		selectpartdata mc=new selectpartdata();
+		boxservice bsv=new boxservice(); 
 		em_box_userinfo main= new em_box_userinfo();  
 		//amd를 선택했는지 intel을 선택했는지 확인
 		String cpucho=request.getParameter("cpu");
@@ -118,7 +123,27 @@ public class em_box_choinputdata implements action {
 				main.setMb(mb_box);
 			}
 			}}
+		boolean result=bsv.updateboxpart(main);
+		
+		if(result) {
+			System.out.println("추천 받은 견적에 있는 정보 입력 성공");
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script>");
+			out.println("alert('견적함에 입력성공')");
+			out.println("history.back()</script>");
 			
+		}
+		else {
+			System.out.println("추천받은 견적 입력 실패");
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script>");
+			out.println("alert('입력실패')");
+			out.println("history.back()</script>");
+		}
+		
+		
 			
 			
 		

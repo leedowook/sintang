@@ -28,7 +28,7 @@ public class boxservice {
 		Connection con=getConnection();
 		dao.setConnection(con);
 		emuser=dao.updatebox(emuser);
-		int =dao.updateboxpart(emuser);
+		int i=dao.updateboxpart(emuser);
 		
 		if(i>0) {
 			result=true;

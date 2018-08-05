@@ -71,8 +71,17 @@ public class em_control extends HttpServlet {
     			e.printStackTrace();
     		}
     	}
-    	
-    	
+    	else if(command.equals("/box_list.em") ){
+    		//해당 아이디에 대한 견적함 조회
+    		System.out.println("boxlist컨트롤접속완료");
+    		action=new box_list();
+    		try {
+    			forward=action.execute(request,response);
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
     	else if(command.equals("/em_adminmode.em")) {
     		System.out.println("관리자 모드 접속");
     		action=new em_adminmode();

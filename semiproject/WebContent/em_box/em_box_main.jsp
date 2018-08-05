@@ -13,8 +13,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
 	function.sumit_sel(){
 		document.getElementById('em_sel').submit();
-		
-		
 	}
 
 </script>
