@@ -8,6 +8,7 @@ import java.util.*;
 import been.*;
 
 import service.benchservice;
+import service.boxservice;
 import methodcode.*;
 public class emchoiceaction_main implements action{
 
@@ -155,10 +156,19 @@ public class emchoiceaction_main implements action{
 		else {request.setAttribute("ssd",null);
 		System.out.println("ssd포함안됨");
 		}
-		selectpartdata mc=new selectpartdata();
+		
+		if(session.getAttribute("id")!=null) {
+			System.out.println("아이디가 비어있지 않을경우");
+		boxservice mc=new boxservice();
 		ArrayList<em_box_main> em_box=new ArrayList<em_box_main>();
-		em_box=mc.selec
-		request.setAttribute("boxlist",em_box);
+		em_box=mc.selectbox((String)session.getAttribute("id"));
+		if(em_box.isEmpty()) {
+			System.out.println("아이디가 있으나 해당목록이 없을경우 ");
+			mc.createbox((String)session.getAttribute("id"));
+			em_box=mc.selectbox((String)session.getAttribute("id"));
+		}
+
+		request.setAttribute("boxlist",em_box);}
 		request.setAttribute("set", "have");
 		forward.setPath("/em_first_main/em_cho.jsp");
 		return forward;

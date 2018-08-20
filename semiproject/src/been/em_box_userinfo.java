@@ -1,14 +1,14 @@
 package been;
 
 public class em_box_userinfo {
-	private em_box_main box;
-	private em_box_ssd ssd;
-	private em_box_ram ram;
-	private em_box_hdd hdd;
-	private em_box_power pow;
-	private em_box_cpu cpu;
-	private em_box_mainboard mb;
-	private em_box_vga vga;
+	private em_box_main box=new em_box_main();
+	private em_box_ssd ssd=new em_box_ssd();
+	private em_box_ram ram=new em_box_ram();
+	private em_box_hdd hdd=new em_box_hdd();
+	private em_box_power pow=new em_box_power();
+	private em_box_cpu cpu=new em_box_cpu();
+	private em_box_mainboard mb=new em_box_mainboard();
+	private em_box_vga vga=new em_box_vga();
 	public em_box_main getBox() {
 		return box;
 	}

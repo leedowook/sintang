@@ -7,7 +7,7 @@ import java.util.*;
 
 import been.*;
 import methodcode.*;
-
+import service.boxservice;
 
 	public class emdao {
 		private static emdao emdao;
@@ -35,22 +35,26 @@ import methodcode.*;
 				pstmt.setString(1,id);
 				rs=pstmt.executeQuery();
 				if(rs.next()) {
-					number=rs.getInt(1)+1;
+					//최대값 구하기
+					number=rs.getInt("max(em_num)")+1;
 					pstmt=null;
 					rs=null;
 					pstmt=con.prepareStatement(min_num);
 					pstmt.setString(1,id);
 					rs=pstmt.executeQuery();
 					
-						if(rs.getInt(1)!=1) {
-							number=1;
+						if(rs.next()) {
+							if(rs.getInt("min(em_num)")!=1) {
+							//최대값이 1이 아니고 만약 제일 작은 값이 존재안할경우
+							number=1;}
 						}
+						
 				}else {//등록된글이 없을떄 
 					number=1;
 				}
-				System.out.println("번호찾기dao 성공");
+				System.out.println("번호얻기dao 성공");
 			}catch(Exception e) {
-				System.out.println("번호찾기dao오류"+e);
+				System.out.println("번호얻기dao오류"+e);
 				e.printStackTrace();
 			}finally {	
 					close(pstmt);
@@ -61,19 +65,98 @@ import methodcode.*;
 		public int createbox(String id,int em_num) {
 			int result=0;
 			pstmt=null;
-			rs=null;
-			String sql="insert table em_main(em_num,id,em_price,em_name) values("+em_num+",?,0,'견적함"+em_num+"')";
+			
+			String sql="insert into em_main(em_num,id,em_price,em_name) values("+em_num+",?,0,'견적함"+em_num+"')";
 			try {
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1,id);
+				System.out.println(sql);
 				result=pstmt.executeUpdate();
+				System.out.println(result);
 				System.out.println("견적함입력 dao 성공");
+				
+					String option1="insert into em_cpu values(?,?,?,?,?)";
+					pstmt=null;
+					pstmt=con.prepareStatement(option1);
+					pstmt.setInt(1,em_num);
+					pstmt.setString(2,"aa99");
+					pstmt.setInt(3,0);
+					pstmt.setInt(4,0);
+					pstmt.setString(5,id);
+					result+=pstmt.executeUpdate();
+				option1="insert into em_pow values(?,?,?,?,?)";
+				pstmt=null;
+				pstmt=con.prepareStatement(option1);
+				pstmt.setInt(1,em_num);
+				pstmt.setString(2,"aa99");
+				pstmt.setInt(3,0);
+				pstmt.setInt(4,0);
+				pstmt.setString(5,id);
+				result+=pstmt.executeUpdate();
+				
+				
+					option1="insert into em_mb values(?,?,?,?,?)";
+					pstmt=null;
+					pstmt=con.prepareStatement(option1);
+					pstmt.setInt(1,em_num);
+					pstmt.setString(2,"aa99");
+					pstmt.setInt(3,0);
+					pstmt.setInt(4,0);
+					pstmt.setString(5,id);
+					result+=pstmt.executeUpdate();	
+				
+				
+					option1="insert into em_ram values(?,?,?,?,?,?)";
+					pstmt=null;
+					pstmt=con.prepareStatement(option1);
+					pstmt.setInt(1,em_num);
+					pstmt.setString(2,"aa99");
+					pstmt.setInt(3,0);
+					pstmt.setInt(4,0);
+					pstmt.setInt(5, 0);
+					pstmt.setString(6,id);
+					result+=pstmt.executeUpdate();		
+				
+					option1="insert into em_ssd values(?,?,?,?,?,?)";
+					pstmt=null;
+					pstmt=con.prepareStatement(option1);
+					pstmt.setInt(1,em_num);
+					pstmt.setString(2,"aa99");
+					pstmt.setInt(3,0);
+					pstmt.setInt(4,0);
+					pstmt.setInt(5, 0);
+					pstmt.setString(6,id);
+					result+=pstmt.executeUpdate();
+				
+					
+					option1="insert into em_hdd values(?,?,?,?,?,?)";
+					pstmt=null;
+					pstmt=con.prepareStatement(option1);
+					pstmt.setInt(1,em_num);
+					pstmt.setString(2,"aa99");
+					pstmt.setInt(3,0);
+					pstmt.setInt(4,0);
+					pstmt.setInt(5, 0);
+					pstmt.setString(6,id);
+					result+=pstmt.executeUpdate();
+				
+					option1="insert into em_vga values(?,?,?,?,?,?)";
+				pstmt=null;
+				pstmt=con.prepareStatement(option1);
+				pstmt.setInt(1,em_num);
+				pstmt.setString(2,"aa99");
+				pstmt.setInt(3,0);
+				pstmt.setInt(4,0);
+				pstmt.setInt(5, 0);
+				pstmt.setString(6,id);
+				result+=pstmt.executeUpdate();
+				
 			}catch(Exception e) {
 				System.out.println("견적함입력 dao오류"+e);
 				e.printStackTrace();
 			}finally {	
 					close(pstmt);
-					close(rs);
+					
 			}
 			return result;
 		}
@@ -100,6 +183,51 @@ import methodcode.*;
 			}
 			return result;
 		}
+		//견적함 삭제를 위한 
+		public int deletebox(int em_num) {
+			int result=0;
+			pstmt=null;
+			String sql="delete from em_main where em_num=?";
+			try {
+				System.out.println(sql);
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1,em_num);
+				
+				result=pstmt.executeUpdate();
+				System.out.println("견적함 전체변경1단계 dao 성공");
+			}catch(Exception e) {
+				System.out.println("견적함 전체변경1단계 dao오류"+e);
+				e.printStackTrace();
+			}finally {	
+					close(pstmt);
+					
+			}
+			return result;
+		}
+		//견적함 파트 삭제을 위한 테이블 
+		public int deletepartbox(String part,int em_num,String part_num) {
+			int result=0;
+			pstmt=null;
+			String sql="delete from em_"+part+" where em_num=? and part_num=?";
+			try {
+				System.out.println(sql);
+				pstmt=con.prepareStatement(sql);
+			
+				pstmt.setInt(1,em_num);
+				pstmt.setString(2,part_num);
+				
+				
+				result=pstmt.executeUpdate();
+				System.out.println("견적함 파츠삭제1단계 dao 성공");
+			}catch(Exception e) {
+				System.out.println("견적함 파츠삭제1단계 dao오류"+e);
+				e.printStackTrace();
+			}finally {	
+					close(pstmt);
+					
+			}
+			return result;
+		}
 		
 		public em_box_userinfo updatebox(em_box_userinfo emuser) {
 			int result=0;
@@ -114,12 +242,13 @@ import methodcode.*;
 			if(emuser.getBox().isHdd()) {option+=",em_hdd='true'";}
 			if(emuser.getBox().isVga()) {option+=",em_vga='true'";}
 			
-			String sql="update em_main set em_name=?"+option+" where id=? em_num=?";
+			String sql="update em_main set em_price=?"+option+" where id=? and em_num=?";
 			String insertsql="";
 			
 			try {
+				System.out.println(sql);
 				pstmt=con.prepareStatement(sql);
-				pstmt.setString(1,emuser.getBox().getName());
+				pstmt.setInt(1,emuser.getBox().getPrice());
 				pstmt.setString(2,emuser.getBox().getId());
 				pstmt.setInt(3,emuser.getBox().getNum());
 				result=pstmt.executeUpdate();
@@ -129,7 +258,7 @@ import methodcode.*;
 				e.printStackTrace();
 			}finally {	
 					close(pstmt);
-					close(rs);
+					
 			}
 			return emuser;
 		}
@@ -144,22 +273,23 @@ import methodcode.*;
 			try {
 				
 				if(emuser.getBox().isCpu()) {
-					option="insert into em_cpu values(?,?,?,?,?)";
+					option="update em_cpu set em_num=?,cpu_num=?,count=?,price=?  where id=?";
 					pstmt=null;
 					pstmt=con.prepareStatement(option);
 					pstmt.setInt(1,emuser.getBox().getNum());
-					pstmt.setInt(2,emuser.getCpu().getNum());
+					pstmt.setString(2,emuser.getCpu().getCpu_num());
 					pstmt.setInt(3,emuser.getCpu().getCount());
 					pstmt.setInt(4,emuser.getCpu().getPrice());
 					pstmt.setString(5,emuser.getBox().getId());
+					
 					result+=pstmt.executeUpdate();}
 				price+=emuser.getCpu().getPrice();
 				if(emuser.getBox().isPow()) {
-				option="insert into em_pow values(?,?,?,?,?)";
+				option="update em_pow set em_num=?,pow_num=?,count=?,price=?  where id=?";
 				pstmt=null;
 				pstmt=con.prepareStatement(option);
 				pstmt.setInt(1,emuser.getBox().getNum());
-				pstmt.setInt(2,emuser.getPow().getNum());
+				pstmt.setString(2,emuser.getPow().getPower_num());
 				pstmt.setInt(3,emuser.getPow().getCount());
 				pstmt.setInt(4,emuser.getPow().getPrice());
 				pstmt.setString(5,emuser.getBox().getId());
@@ -167,11 +297,11 @@ import methodcode.*;
 				price+=emuser.getPow().getPrice();}
 				
 				if(emuser.getBox().isMb()) {
-					option="insert into em_mb values(?,?,?,?,?)";
+					option="update em_mb set em_num=?,mb_num=?,count=?,price=?  where id=?";
 					pstmt=null;
 					pstmt=con.prepareStatement(option);
 					pstmt.setInt(1,emuser.getBox().getNum());
-					pstmt.setInt(2,emuser.getMb().getNum());
+					pstmt.setString(2,emuser.getMb().getMb_num());
 					pstmt.setInt(3,emuser.getMb().getCount());
 					pstmt.setInt(4,emuser.getMb().getPrice());
 					pstmt.setString(5,emuser.getBox().getId());
@@ -180,11 +310,11 @@ import methodcode.*;
 				
 				}
 				if(emuser.getBox().isRam()) {
-					option="insert into em_ram values(?,?,?,?,?,?)";
+					option="update em_ram set em_num=?,ram_num=?,count=?,price=?,mm=?  where id=?";
 					pstmt=null;
 					pstmt=con.prepareStatement(option);
 					pstmt.setInt(1,emuser.getBox().getNum());
-					pstmt.setInt(2,emuser.getRam().getNum());
+					pstmt.setString(2,emuser.getRam().getRam_num());
 					pstmt.setInt(3,emuser.getRam().getCount());
 					pstmt.setInt(4,emuser.getRam().getPrice());
 					pstmt.setInt(5,emuser.getRam().getRam_mm());
@@ -192,11 +322,11 @@ import methodcode.*;
 					result+=pstmt.executeUpdate();
 					price+=emuser.getRam().getPrice();}			
 				if(emuser.getBox().isSsd()) {
-					option="insert into em_ssd values(?,?,?,?,?,?)";
+					option="update em_ssd set em_num=?,ssd_num=?,count=?,price=?,mm=?  where id=?";
 					pstmt=null;
 					pstmt=con.prepareStatement(option);
 					pstmt.setInt(1,emuser.getBox().getNum());
-					pstmt.setInt(2,emuser.getSsd().getNum());
+					pstmt.setString(2,emuser.getSsd().getSsd_num());
 					pstmt.setInt(3,emuser.getSsd().getCount());
 					pstmt.setInt(4,emuser.getSsd().getPrice());
 					pstmt.setInt(5,emuser.getSsd().getSsd_mm());
@@ -206,11 +336,11 @@ import methodcode.*;
 				}		
 				if(emuser.getBox().isHdd()) {
 					
-					option="insert into em_hdd values(?,?,?,?,?,?)";
+					option="update em_hdd set em_num=?,hdd_num=?,count=?,price=?,mm=?  where id=?";
 					pstmt=null;
 					pstmt=con.prepareStatement(option);
 					pstmt.setInt(1,emuser.getBox().getNum());
-					pstmt.setInt(2,emuser.getHdd().getNum());
+					pstmt.setString(2,emuser.getHdd().getHdd_num());
 					pstmt.setInt(3,emuser.getHdd().getCount());
 					pstmt.setInt(4,emuser.getHdd().getPrice());
 					pstmt.setInt(5,emuser.getHdd().getHdd_mm());
@@ -219,19 +349,21 @@ import methodcode.*;
 					price+=emuser.getHdd().getPrice();
 				}		
 				if(emuser.getBox().isVga()) {
-				option="insert into em_vga values(?,?,?,?,?,?)";
+				option="update em_vga set em_num=?,vga_num=?,count=?,price=?,mm=?  where id=?";
 				pstmt=null;
 				pstmt=con.prepareStatement(option);
 				pstmt.setInt(1,emuser.getBox().getNum());
-				pstmt.setInt(2,emuser.getVga().getNum());
+				pstmt.setString(2,emuser.getVga().getVga_num());
 				pstmt.setInt(3,emuser.getVga().getCount());
 				pstmt.setInt(4,emuser.getVga().getPrice());
 				pstmt.setInt(5,emuser.getVga().getRam_mm());
 				pstmt.setString(6,emuser.getBox().getId());
 				result+=pstmt.executeUpdate();
 				price+=emuser.getVga().getPrice();}
+				
+				
 				pstmt=null;
-				String sql="update em_main set em_price=? where id=? em_num=?";
+				String sql="update em_main set em_price=? where id=? and em_num=?";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setInt(1,emuser.getBox().getPrice());
 				pstmt.setString(2,emuser.getBox().getId());
@@ -244,7 +376,7 @@ import methodcode.*;
 				e.printStackTrace();
 			}finally {	
 					close(pstmt);
-					close(rs);
+					
 			}
 			return result;
 		}
@@ -260,34 +392,40 @@ import methodcode.*;
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1,id);
 				rs=pstmt.executeQuery();
-				if(rs.next()) {
+				
 				while(rs.next()) {
 					embox=new em_box_main();
 					embox.setNum(rs.getInt("em_num"));
 					embox.setId(id);
 					embox.setPrice(rs.getInt("em_price"));
 					embox.setName(rs.getString("em_name"));
-					embox.setCpu(rs.getBoolean("em_cpu"));
-					embox.setMb(rs.getBoolean("em_mb"));
-					embox.setSsd(rs.getBoolean("em_ssd"));
-					embox.setHdd(rs.getBoolean("em_hdd"));
-					embox.setVga(rs.getBoolean("em_vga"));
-					embox.setRam(rs.getBoolean("em_ram"));
-					embox.setPow(rs.getBoolean("em_pow"));
+					if(rs.getString("em_cpu").equals("false")) {
+						embox.setCpu(false);
+					}else {embox.setCpu(true);}
+					if(rs.getString("em_mb").equals("false")) {
+						embox.setMb(false);
+					}else {embox.setMb(true);}
+					if(rs.getString("em_ssd").equals("false")) {
+						embox.setSsd(false);
+					}else {embox.setSsd(true);}
+					if(rs.getString("em_hdd").equals("false")) {
+						embox.setHdd(false);
+					}else {embox.setHdd(true);}
+					if(rs.getString("em_vga").equals("false")) {
+						embox.setVga(false);
+					}else {embox.setVga(true);}
+					if(rs.getString("em_mb").equals("false")) {
+						embox.setRam(false);
+					}else {embox.setRam(true);}
+					if(rs.getString("em_pow").equals("false")) {
+						embox.setPow(false);
+					}else {embox.setPow(true);}
+					
+					
 					ar_box.add(embox);
 					
-				}}
-				else {
-					int boxnum=getboxnum(id);
-					int cresult=createbox(id,boxnum);
-					if(cresult>0) {
-					System.out.println("견적함 정보 없어서 새로생성 성공");
-					ar_box=selectbox(id);
-					}
-					else {
-						System.out.println("심각한 오류!");
-					}
 				}
+				
 		
 			}catch(Exception e) {
 				System.out.println("견적함 가져오기 dao오류"+e);
@@ -302,14 +440,16 @@ import methodcode.*;
 			public em_box_userinfo selectboxepart(em_box_userinfo emuser) {
 				em_box_userinfo emuserout=new em_box_userinfo();
 				pstmt=null;
-				
+				rs=null;
+				emuserout.setBox(emuser.getBox());
 				String option;
 				
 				try {
 					
 					if(emuser.getBox().isCpu()) {
-						option="select * from em_cpu em_num=? id=?";
+						option="select * from em_cpu where em_num=? and id=?";
 						pstmt=null;
+						rs=null;
 						pstmt=con.prepareStatement(option);
 						pstmt.setInt(1,emuser.getBox().getNum());
 						pstmt.setString(2,emuser.getBox().getId());
@@ -326,8 +466,9 @@ import methodcode.*;
 					}
 				
 					if(emuser.getBox().isPow()) {
-						option="select * from em_pow em_num=? id=?";
+						option="select * from em_pow where em_num=? and id=?";
 						pstmt=null;
+						rs=null;
 						pstmt=con.prepareStatement(option);
 						pstmt.setInt(1,emuser.getBox().getNum());
 						pstmt.setString(2,emuser.getBox().getId());
@@ -339,8 +480,9 @@ import methodcode.*;
 							emuserout.getPow().setPrice(rs.getInt("price"));}}
 					
 					if(emuser.getBox().isMb()) {
-						option="select * from em_mb em_num=? id=?";
+						option="select * from em_mb where em_num=? and id=?";
 						pstmt=null;
+						rs=null;
 						pstmt=con.prepareStatement(option);
 						pstmt.setInt(1,emuser.getBox().getNum());
 						pstmt.setString(2,emuser.getBox().getId());
@@ -355,8 +497,9 @@ import methodcode.*;
 						
 				
 					if(emuser.getBox().isRam()) {
-						option="select * from em_ram em_num=? id=?";
+						option="select * from em_ram where em_num=? and id=?";
 						pstmt=null;
+						rs=null;
 						pstmt=con.prepareStatement(option);
 						pstmt.setInt(1,emuser.getBox().getNum());
 						pstmt.setString(2,emuser.getBox().getId());
@@ -368,8 +511,9 @@ import methodcode.*;
 							emuserout.getRam().setPrice(rs.getInt("price"));
 							emuserout.getRam().setRam_mm(rs.getInt("mm"));}}
 					if(emuser.getBox().isSsd()) {
-						option="select * from em_ssd em_num=? id=?";
+						option="select * from em_ssd where em_num=? and id=?";
 						pstmt=null;
+						rs=null;
 						pstmt=con.prepareStatement(option);
 						pstmt.setInt(1,emuser.getBox().getNum());
 						pstmt.setString(2,emuser.getBox().getId());
@@ -382,8 +526,9 @@ import methodcode.*;
 							emuserout.getSsd().setSsd_mm(rs.getInt("mm"));}}
 					if(emuser.getBox().isHdd()) {
 						
-						option="select * from em_hdd em_num=? id=?";
+						option="select * from em_hdd where em_num=? and id=?";
 						pstmt=null;
+						rs=null;
 						pstmt=con.prepareStatement(option);
 						pstmt.setInt(1,emuser.getBox().getNum());
 						pstmt.setString(2,emuser.getBox().getId());
@@ -396,8 +541,9 @@ import methodcode.*;
 							emuserout.getHdd().setHdd_mm(rs.getInt("mm"));}}
 					
 					if(emuser.getBox().isVga()) {
-					option="select * from em_vga em_num=? id=?";
+					option="select * from em_vga where em_num=? and id=?";
 					pstmt=null;
+					rs=null;
 					pstmt=con.prepareStatement(option);
 					pstmt.setInt(1,emuser.getBox().getNum());
 					pstmt.setString(2,emuser.getBox().getId());
@@ -409,9 +555,9 @@ import methodcode.*;
 						emuserout.getVga().setPrice(rs.getInt("price"));
 						emuserout.getVga().setRam_mm(rs.getInt("mm"));}
 					
-					System.out.println("각견적 입력 or 수정dao 성공");
+					System.out.println("조회dao 성공");
 					}}catch(Exception e) {
-					System.out.println("각견적별 입력 or수정 dao오류"+e);
+					System.out.println("조회dao오류"+e);
 					e.printStackTrace();
 				}finally {	
 						close(pstmt);
@@ -526,7 +672,7 @@ import methodcode.*;
 			pstmt=null;
 			rs=null;
 		
-			String sql1="select m.*,e.usb1gen,e.usb0gen,ps2 from mb_info_m m inner join mb_info_e e on m.mainboard_num=e.mainboard_num   where mainboard_num=?";
+			String sql1="select m.*,e.usb1gen,e.usb0gen,ps2 from mb_info_m m inner join mb_info_e e on m.mainboard_num=e.mainboard_num   where m.mainboard_num=?";
 			
 			try {
 			pstmt = con.prepareStatement(sql1);
@@ -558,9 +704,9 @@ import methodcode.*;
 				mainboardbean.setRam_mm(rs.getInt("ram_mm"));
 				mainboardbean.setRam_mnum(rs.getInt("ram_mnum"));
 				mainboardbean.setRam_ch(rs.getInt("ram_ch"));
-				mainboardbean.setM2_num(rs.getInt("m2_num"));
+				
 				mainboardbean.setUsb1gen(rs.getInt("usb1gen"));
-				mainboardbean.setUsb2gen(rs.getInt("usb2gen"));
+				mainboardbean.setUsb2gen(rs.getInt("usb0gen"));
 			}
 			
 		
@@ -602,9 +748,8 @@ import methodcode.*;
 		vb.setChip(rs.getString("vga_chip"));
 		vb.setChipmaker(rs.getString("vga_chipmaker"));
 		vb.setChipgroup(rs.getString("vga_chipgroup"));
-		vb.setMaxck(rs.getDouble("vga_ck_max"));
+		vb.setMaxck(rs.getDouble("vga_maxck"));
 		vb.setCk(rs.getDouble("vga_ck"));
-		vb.setBirth(rs.getDate("birth"));
 		vb.setShaders(rs.getInt("shaders"));
 		vb.setTmus(rs.getInt("tmus"));
 		vb.setRops(rs.getInt("rops"));
@@ -615,10 +760,10 @@ import methodcode.*;
 		rs=pstmt.executeQuery();
 		if(rs.next()) {
 		
-		vb.setShaders(rs.getInt("shaders"));
-		vb.setTmus(rs.getInt("tmus"));
-		vb.setRops(rs.getInt("rops"));
-		vb.setHdmi(rs.getString("hdmi"));
+		vb.setShaders(rs.getInt("vga_high"));
+		vb.setTmus(rs.getInt("vga_length"));
+		vb.setRops(rs.getInt("vga_size"));
+		vb.setHdmi(rs.getString("vga_hdmi"));
 		
 		}
 		pstmt = con.prepareStatement(sql3);
@@ -628,15 +773,14 @@ import methodcode.*;
 		while(rs.next()) {
 		vs=new em_vga_spec();
 		vs.setNum(num);
-		vs.setRam_ck(rs.getInt("ram_ck"));
-		vs.setRam_bus(rs.getInt("ram_bus"));
-		vs.setRam_mm(rs.getInt("ram_mm"));
-		vs.setKind(rs.getInt("kind"));
-		vs.setTdp(rs.getInt("tdp"));
-		vs.setStr(rs.getInt("str"));
-			
-		arvga.set(i,vs);
-		i++;
+		vs.setRam_ck(rs.getInt("vga_ram_ck"));
+		vs.setRam_bus(rs.getInt("vga_ram_bus"));
+		vs.setRam_mm(rs.getInt("vga_ram_mm"));
+		vs.setKind(rs.getInt("vga_ram_kind"));
+		vs.setTdp(rs.getInt("vga_tdp"));
+		vs.setStr(rs.getInt("strprocesser"));
+		vs.setPrice(rs.getInt("price"));
+		arvga.add(vs);
 		}
 		ep.setVb(vb);
 		ep.setAr_v(arvga);
@@ -666,9 +810,9 @@ import methodcode.*;
 		rs=pstmt.executeQuery();
 		if(rs.next()) {
 			rb.setNum(num);
-			rb.setMaker(rs.getString("maker"));
-			rb.setKind(rs.getString("kind"));
-			rb.setCk(rs.getInt("ck"));
+			rb.setMaker(rs.getString("ram_maker"));
+			rb.setKind(rs.getString("ram_kind"));
+			rb.setCk(rs.getInt("ram_ck"));
 		
 		}
 		pstmt = con.prepareStatement(sql2);
@@ -678,10 +822,10 @@ import methodcode.*;
 		int i=0;
 		while(rs.next()) {
 		rm=new em_ram_mm();
-		rm.setMemory(rs.getInt("memory"));
+		rm.setMemory(rs.getInt("ram_mm"));
 		rm.setPrice(rs.getInt("price"));
 			
-		arram.set(i,rm);
+		arram.add(rm);
 		i++;
 		}
 		ep.setRb(rb);
@@ -732,8 +876,8 @@ import methodcode.*;
 		hm.setMemory(rs.getInt("hdd_memory"));
 		hm.setPrice(rs.getInt("hdd_price"));
 			
-		arhdd.set(i,hm);
-		i++;
+		arhdd.add(hm);
+	
 		}
 		ep.setHb(hb);
 		ep.setAr_h(arhdd);
@@ -782,7 +926,7 @@ import methodcode.*;
 		sm.setMemory(rs.getInt("ssd_memory"));
 		sm.setPrice(rs.getInt("price"));
 			
-		arssd.set(i,sm);
+		arssd.add(sm);
 		i++;
 		}
 		ep.setSb(sb);

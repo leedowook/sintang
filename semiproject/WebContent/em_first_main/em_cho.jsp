@@ -64,9 +64,9 @@ function submit_form_dday() {
 어두운혼:
 <select id="game"  name="g4">
 <option value="no" selected hidden>안함</option>
-<!-- <option value="high" >최상</option>
+<option value="high" >최상</option>
 <option value="medium">권장</option>
-<option value="low">최하</option> -->
+<option value="low">최하</option>
 </select><br/>
 마녀사냥꾼3:
 <select id="game"  name="g5">
@@ -78,16 +78,16 @@ function submit_form_dday() {
 고급시계:
 <select  id="game" name="g6">
 <option value="no" selected hidden>안함</option>
-<!-- <option value="high" >최상</option>
+ <option value="high" >최상</option>
 <option value="medium">권장</option>
-<option value="low">최하</option> -->
+<option value="low">최하</option>
 </select><br/>
 깜장사막:
 <select id="game"  name="g7">
  <option value="no" selected hidden>안함</option>
-<!--<option value="high" >최상</option>
+<option value="high" >최상</option>
 <option value="medium">권장</option>
-<option value="low">최하</option> -->
+<option value="low">최하</option> 
 </select><br/>
 모르는사람들의 싸움의 땅:
 <select id="game" name="g8">
@@ -99,9 +99,9 @@ function submit_form_dday() {
 무지개여섯:
 <select id="game" name="g9">
 <option value="no" selected hidden>안함</option>
-<!-- <option value="high" >최상</option>
+<option value="high" >최상</option>
 <option value="medium">권장</option>
-<option value="low">최하</option> -->
+<option value="low">최하</option>
 </select><br/>
 위대한차도둑5:
 <select id="game" name="g10">
@@ -151,8 +151,11 @@ function submit_form_dday() {
 <c:set var="am_cpu" value="${am_cpu}"/>
 <% if(request.getAttribute("hdd")!=null){%>
 <c:set var="hdd" value="${hdd}"/>
+<input type="hidden" name="elsepart" value="${hdd.num}">
 <%} if(request.getAttribute("ssd")!=null){%>
+
 <c:set var="ssd" value="${ssd}"/>
+<input type="hidden" name="elsepart" value="${ssd.num}" >
 <%} %>
 <form id="em">
 <span>
@@ -168,7 +171,7 @@ function submit_form_dday() {
 		</td>
 		<td	id="partid">
 		
-		<input type="radio" name="cpu" value="intel">     ${in_cpu.maker}${in_cpu.brand}${in_cpu.name}
+		<input type="radio" name="cpu" value="intel" checked>     ${in_cpu.maker}${in_cpu.brand}${in_cpu.name}
 		<br>가격:${in_cpu.price }
 		</td>
 		<td id="partid">
@@ -179,7 +182,7 @@ function submit_form_dday() {
 		
 		<select name="partcount">
 		<%for(int i=0;i<10;i++){ 
-			if(i==0){%>
+			if(i==1){%>
 			<option value="<%=i%>" selected><%=i%></option>
 			
 		<%}	else{%>
@@ -207,7 +210,7 @@ function submit_form_dday() {
 		<td>
 		<select name="partcount">
 		<%for(int i=0;i<10;i++){ 
-			if(i==0){%>
+			if(i==1){%>
 			<option value="<%=i%>" selected><%=i%></option>
 			
 		<%}else{%>
@@ -229,7 +232,7 @@ function submit_form_dday() {
 		<td>
 		<select name="elsecount">
 		<%for(int i=0;i<10;i++){ 
-			if(i==0){%>
+			if(i==1){%>
 			<option value="<%=i%>" selected><%=i%></option>
 			
 		<%}else{%>
@@ -254,7 +257,7 @@ function submit_form_dday() {
 		<td>
 		<select name="partcount">
 		<%for(int i=0;i<10;i++){ 
-			if(i==0){%>
+			if(i==1){%>
 			<option value="<%=i%>" selected><%=i%></option>
 			
 		<%}else{%>
@@ -277,7 +280,7 @@ function submit_form_dday() {
 		<td>
 		<select name="elsecount">
 		<%for(int i=0;i<10;i++){ 
-			if(i==0){%>
+			if(i==1){%>
 			<option value="<%=i%>" selected><%=i%></option>
 			
 		<%}else{%>
@@ -299,7 +302,7 @@ function submit_form_dday() {
 		<td>
 		<select name="elsecount">
 		<%for(int i=0;i<10;i++){ 
-			if(i==0){%>
+			if(i==1){%>
 			<option value="<%=i%>" selected><%=i%></option>
 			
 		<%}else{%>
@@ -321,7 +324,7 @@ function submit_form_dday() {
 		<td>
 		<select name="elsecount">
 		<%for(int i=0;i<10;i++){ 
-			if(i==0){%>
+			if(i==1){%>
 			<option value="<%=i%>" selected><%=i%></option>
 			
 		<%}else{%>
@@ -351,17 +354,26 @@ function submit_form_dday() {
 	<input type="hidden" name="elsepart" value="${vga.num}">
 	
 	<input type="hidden" name="elsepartvga" value="${vga.ram_mm}">
-	<input type="hidden" name="elsepart" value="${hdd.num}">
+	
 	<input type="hidden" name="elseparthdd" value="${hdd.memory}">
-	<input type="hidden" name="elsepart" value="${ssd.num}">
+	
 	<input type="hidden" name="elsepartssd" value="${ssd.memory}">
 	<input type="hidden" name="elsepart" value="${pow.num}">
-	
-	
+	<input type="hidden" name="amdprice" value="${in_cpu.price+in_mainboard.price+in_ram.price+vga.price+ssd.price+hdd.price+pow.price}">
+	<input type="hidden" name="intelprice" value="${am_cpu.price+am_mainboard.price+am_ram.price+vga.price+ssd.price+hdd.price+pow.price}">
+	<%if(session.getAttribute("id")!=null){ %><select name="boxnum">
+	<c:forEach var="boxar" items="${boxlist}">
+		<option value="${boxar.num}">${boxar.name}</option>
+	</c:forEach>
+	</select>
 	<button onclick="submit_form_em()" class="snip1535">견적함에 추가</button>
-	
+	<a href="createembox.em">견적함 추가</a>
+	<%} else{%>
+	<a href="login.jsp">로그인페이지로</a>
+	<%} %>
 </span>	
 </form>		
+
 <form id="dday" name="dday">
 	<select name="Dprice">
 	<option value="${in_cpu.price+in_mainboard.price+in_ram.price+vga.price+ssd.price+hdd.price+pow.price}">INTEL사양</option>

@@ -16,15 +16,15 @@
 <span>
 <input name="mainsel" type="hidden" value="recommend">
 
-<input type="submit"  value="직접고르기">
-<img onclick="document.getElementById('form1').submit()" style="cursor:pointer" src="추천버튼.jpg">
+<img onclick="document.getElementById('form1').submit()" style="cursor:pointer" src="직접고르기.jpg">
+
 
 </span>
 </form>
 <form action="main_sel.em" method="post" id="form2">
 <span>
 <input name="mainsel" type="hidden" value="choice">
-
+<img onclick="document.getElementById('form2').submit()" style="cursor:pointer" src="추천버튼.jpg">
 </span>
 </form>
 <form name="idboxform" method="post" action="box_list.em">

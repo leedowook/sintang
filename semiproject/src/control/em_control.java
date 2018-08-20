@@ -74,7 +74,7 @@ public class em_control extends HttpServlet {
     	else if(command.equals("/box_list.em") ){
     		//해당 아이디에 대한 견적함 조회
     		System.out.println("boxlist컨트롤접속완료");
-    		action=new box_list();
+    		action=new em_box_listdata();
     		try {
     			forward=action.execute(request,response);
     			System.out.println("성공");
@@ -154,6 +154,45 @@ public class em_control extends HttpServlet {
     			e.printStackTrace();
     		}
     	}
+    	else if(command.equals("/parteminfo.em")) {
+    		System.out.println("관리자 모드 접속");
+    		action=new em_box_selectdata();
+    		try {
+    			forward=action.execute(request,response);
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	else if(command.equals("/deleteempart.em")) {
+    		System.out.println("관리자 모드 접속");
+    		action=new em_box_deleteempart();
+    		try {
+    			forward=action.execute(request,response);
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}else if(command.equals("/delembox.em")) {
+    		System.out.println("관리자 모드 접속");
+    		action=new em_box_deldata();
+    		try {
+    			forward=action.execute(request,response);
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}else if(command.equals("/createembox.em")) {
+    		System.out.println("관리자 모드 접속");
+    		action=new em_box_create();
+    		try {
+    			forward=action.execute(request,response);
+    			System.out.println("성공");
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	
     	else if(command.equals("/adminmode/em_adminmodelist.em")) {
     		System.out.println("관리자 목록 action 접속");
     		String active=(String) request.getAttribute("active");
@@ -178,9 +217,10 @@ public class em_control extends HttpServlet {
     		}
     		else {
     			RequestDispatcher dispatcher=
-    					request.getRequestDispatcher(forward.getPath());
+request.getRequestDispatcher(forward.getPath());
     			dispatcher.forward(request,response);
     		}
+    		
     	}
     	
     	

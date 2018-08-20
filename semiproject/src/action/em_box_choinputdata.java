@@ -13,29 +13,42 @@ import service.inputpartdatabase;
 public class em_box_choinputdata implements action {
 	@Override
 	public actionforward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
+		System.out.println("추천입력페이지");
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session=request.getSession();
 		actionforward forward=null;
-		session.getAttribute("id");//정보를 입력하기위해 아이디값받아옴
+		String id=(String)session.getAttribute("id");//정보를 입력하기위해 아이디값받아옴
+		int num=Integer.parseInt(request.getParameter("boxnum"));
 		selectpartdata mc=new selectpartdata();
 		boxservice bsv=new boxservice(); 
 		em_box_userinfo main= new em_box_userinfo();  
+		
+		
 		//amd를 선택했는지 intel을 선택했는지 확인
 		String cpucho=request.getParameter("cpu");
 		String partnum[]=request.getParameterValues(cpucho);
 		//해당 나눠지는 파트 번호가져옴
-		String partcount[]=request.getParameterValues("partnum");
+		String partcount[]=request.getParameterValues("partcount");
 		//파츠수 가져옴
+		
 		int rammm=Integer.parseInt(request.getParameter(cpucho+"ram"));
 		//램의 메모리가져옴
+		int allprice=Integer.parseInt(request.getParameter(cpucho+"price"));
 		String partelse[]=request.getParameterValues("elsepart");
-		String elsenum[]=request.getParameterValues("elsenum");
+		System.out.println(partelse.length);
+		String elsenum[]=request.getParameterValues("elsecount");
+		System.out.println(elsenum.length);
 		int vgamm=Integer.parseInt(request.getParameter("elsepartvga"));
-		int hddmm=Integer.parseInt(request.getParameter("elseparthdd"));
-		int ssdmm=Integer.parseInt(request.getParameter("elsepartssd"));
-		
+		int hddmm=0;
+		int ssdmm=0;
+		if(!(request.getParameter("elseparthdd").equals(""))) {
+			hddmm=Integer.parseInt(request.getParameter("elseparthdd"));
+		}
+		if(!(request.getParameter("elsepartssd").equals(""))) {
+		ssdmm=Integer.parseInt(request.getParameter("elsepartssd"));
+		}
+	
 		
 		//해당을 각부품별로 분류 
 		//각 부품 인덱스 번호를 같게두었음 
@@ -43,7 +56,8 @@ public class em_box_choinputdata implements action {
 		for(int i=0;i<partnum.length;i++) {
 			if(partnum[i].substring(0,1).equals("c")) {
 				String cpunum=partnum[i];
-				if(!(request.getParameter("partcount").equals("0"))) {
+				if(!partcount[i].equals("0")) {
+					System.out.println(cpunum);
 					main.getBox().setCpu(true);
 					em_box_cpu cpu_box=new em_box_cpu();
 					cpu_box.setCpu_num(cpunum);
@@ -53,7 +67,7 @@ public class em_box_choinputdata implements action {
 				}
 			}else if(partnum[i].substring(0,1).equals("m")) {
 				String mainnum=partnum[i];
-				if(!(request.getParameter("partcount").equals("0"))) {
+				if(!partcount[i].equals("0")) {
 					main.getBox().setMb(true);
 					em_box_mainboard mb_box=new em_box_mainboard();
 					mb_box.setMb_num(mainnum);
@@ -63,7 +77,7 @@ public class em_box_choinputdata implements action {
 				}
 			}else if(partnum[i].substring(0,1).equals("r")) {
 				String ramnum=partnum[i];
-				if(!(request.getParameter("ramcount").equals("0"))) {
+				if(!(partcount[i].equals("0"))) {
 					main.getBox().setRam(true);
 					em_box_ram ram_box=new em_box_ram();
 					
@@ -74,55 +88,62 @@ public class em_box_choinputdata implements action {
 					main.setRam(ram_box);
 				}}
 			}
-			
+		
+		
 		for(int i=0;i<partelse.length;i++) {
+			System.out.println(partelse[i].substring(0,1));
 			if(partelse[i].substring(0,1).equals("v")) {
 			String vganum=partelse[i];
-			if(!(request.getParameter("vgacount").equals("0"))) {
+				if(!elsenum[i].equals("0")) {
 				main.getBox().setVga(true);
 				em_box_vga vga_box=new em_box_vga();
 				
 				vga_box.setVga_num(vganum);
 				vga_box.setCount(Integer.parseInt(elsenum[i]));
-				vga_box.setPrice(mc.selectram(vganum, vgamm).getPrice()*vga_box.getCount());
+				System.out.println(mc.selectvga(vganum, vgamm).getPrice());
+				System.out.println(vga_box.getCount());
+				vga_box.setPrice(mc.selectvga(vganum, vgamm).getPrice()*vga_box.getCount());
 				vga_box.setRam_mm(vgamm);
 				main.setVga(vga_box);
 			}}
 			else if(partelse[i].substring(0,1).equals("h")) {
-				String ramnum=partelse[i];
-				if(!(request.getParameter("ramcount").equals("0"))) {
-					main.getBox().setRam(true);
-					em_box_ram ram_box=new em_box_ram();
+				String hddnum=partelse[i];
+				if(!(elsenum[i].equals("0"))) {
+					main.getBox().setHdd(true);
+					em_box_hdd hdd_box=new em_box_hdd();
 					
-					ram_box.setRam_num(ramnum);
-					ram_box.setCount(Integer.parseInt(elsenum[i]));
-					ram_box.setPrice(mc.selectram(ramnum, rammm).getPrice()*ram_box.getCount());
-					ram_box.setRam_mm(rammm);
-					main.setRam(ram_box);
+					hdd_box.setHdd_num(hddnum);
+					hdd_box.setCount(Integer.parseInt(elsenum[i]));
+					hdd_box.setPrice(mc.selecthdd(hddnum, hddmm).getPrice()*hdd_box.getCount());
+					hdd_box.setHdd_mm(hddmm);
+					main.setHdd(hdd_box);
 				}}
 			else if(partelse[i].substring(0,1).equals("s")) {
-				String ramnum=partelse[i];
-				if(!(request.getParameter("ramcount").equals("0"))) {
-					main.getBox().setRam(true);
-					em_box_ram ram_box=new em_box_ram();
+				String ssdnum=partelse[i];
+				if(!(elsenum[i].equals("0"))) {
+					main.getBox().setSsd(true);
+					em_box_ssd ssd_box=new em_box_ssd();
 					
-					ram_box.setRam_num(ramnum);
-					ram_box.setCount(Integer.parseInt(elsenum[i]));
-					ram_box.setPrice(mc.selectram(ramnum, rammm).getPrice()*ram_box.getCount());
-					ram_box.setRam_mm(rammm);
-					main.setRam(ram_box);
+					ssd_box.setSsd_num(ssdnum);
+					ssd_box.setCount(Integer.parseInt(elsenum[i]));
+					ssd_box.setPrice(mc.selectssd(ssdnum, ssdmm).getPrice()*ssd_box.getCount());
+					ssd_box.setSsd_mm(ssdmm);
+					main.setSsd(ssd_box);
 				}}
 			else if(partelse[i].substring(0,1).equals("p")) {
-			String mainnum=partelse[i];
-			if(!(request.getParameter("elsenum").equals("0"))) {
-				main.getBox().setMb(true);
-				em_box_mainboard mb_box=new em_box_mainboard();
-				mb_box.setMb_num(mainnum);
-				mb_box.setCount(Integer.parseInt(elsenum[i]));
-				mb_box.setPrice(mb_box.getCount()*mc.selectmainboard(partelse[i]).getPrice());
-				main.setMb(mb_box);
+			String powernum=partelse[i];
+			if(!(elsenum[i].equals("0"))) {
+				main.getBox().setPow(true);
+				em_box_power pow_box=new em_box_power();
+				pow_box.setPower_num(powernum);
+				pow_box.setCount(Integer.parseInt(elsenum[i]));
+				pow_box.setPrice(pow_box.getCount()*mc.selectpower(partelse[i]).getPrice());
+				main.setPow(pow_box);
 			}
 			}}
+		main.getBox().setId(id);
+		main.getBox().setNum(num);
+		main.getBox().setPrice(allprice);
 		boolean result=bsv.updateboxpart(main);
 		
 		if(result) {

@@ -153,9 +153,7 @@ public class benchdao {
 			}
 		}catch(Exception e) {
 			System.out.println("benchdao vgaspec오류"+e);
-				sql="select vga_num from vga_spec_new";
-				error=true;
-				em_vga emvga=vgaspec(ecgs);
+				
 			e.printStackTrace();
 			
 		}finally {

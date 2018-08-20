@@ -4,19 +4,45 @@ import java.util.ArrayList;
 
 public class em_part_info {
 	
-	private em_mainboard mb;
-	
-	private em_hdd hb;
-	private em_ram rb;
-	private em_ssd sb;
-	private em_vga vb;
-	private ArrayList<em_vga_spec> ar_v;
-	private ArrayList<em_ram_mm> ar_r;
-	private ArrayList<em_hdd_memory> ar_h;
-	private ArrayList<em_ssd_memory> ar_s;
+	private em_mainboard mb=new em_mainboard();
+	private em_cpu cpu=new em_cpu();
+	private em_power pow=new em_power();
+	private em_hdd hb=new em_hdd();
+	private em_ram rb=new em_ram();
+	private em_ssd sb=new em_ssd();
+	private em_vga vb=new em_vga();
+	private ArrayList<em_vga_spec> ar_v=new ArrayList<em_vga_spec>();
+	private ArrayList<em_ram_mm> ar_r=new ArrayList<em_ram_mm>();
+	private ArrayList<em_hdd_memory> ar_h=new ArrayList<em_hdd_memory>();
+	private ArrayList<em_ssd_memory> ar_s=new ArrayList<em_ssd_memory>();
 	public em_hdd getHb() {
 		return hb;
 	}
+	
+	public em_mainboard getMb() {
+		return mb;
+	}
+
+	public em_cpu getCpu() {
+		return cpu;
+	}
+
+	public em_power getPow() {
+		return pow;
+	}
+
+	public void setMb(em_mainboard mb) {
+		this.mb = mb;
+	}
+
+	public void setCpu(em_cpu cpu) {
+		this.cpu = cpu;
+	}
+
+	public void setPow(em_power pow) {
+		this.pow = pow;
+	}
+
 	public em_ram getRb() {
 		return rb;
 	}
