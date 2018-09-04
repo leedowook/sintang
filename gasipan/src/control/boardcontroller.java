@@ -40,7 +40,7 @@ public class boardcontroller extends HttpServlet {
     	
     	System.out.println("control연결완료");
     	String RequestURI=request.getRequestURI();
-    	String9 contextPath=request.getContextPath();
+    	String contextPath=request.getContextPath();
     	String command=RequestURI.substring(contextPath.length());
     	actionforward forward=null;
     	action action=null;

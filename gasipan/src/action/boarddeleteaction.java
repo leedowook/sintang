@@ -25,6 +25,8 @@ public class boarddeleteaction implements action{
 		
 		boardselectnumservice bsns=new boardselectnumservice();
 		String password= null;
+		
+		
 		password = JOptionPane.showInputDialog("마 패스워드입력해라");
 
 		boardbean bb=new boardbean();

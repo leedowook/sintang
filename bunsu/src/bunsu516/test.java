@@ -5,6 +5,19 @@ import java.util.Scanner;
 public class test {
 	
 	public static void main(String[] args) {
+		Scanner scan=new Scanner(System.in);
+		String[] n =new String[1];
+		int d =scan.nextInt();
+		String ll=null;
+		if(d==1) {
+			ll="a";
+		}
+		
+		if(ll==null) {
+			System.out.println("비어있다. ");
+		}
+		
+		
 		String a="(ㄴㄴㄴ";
 		String b=",ddd";
 		String c=a;
