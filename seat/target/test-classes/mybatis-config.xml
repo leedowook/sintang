@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias alias="seat" type="com.pr.job.vo.SeatVO"/>
+		<typeAlias alias="line" type="com.pr.job.vo.LineVO"/>
+		<typeAlias alias="hall" type="com.pr.job.vo.HallVO"/>
+		
+	</typeAliases>
+</configuration>
