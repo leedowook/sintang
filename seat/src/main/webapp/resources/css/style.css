@@ -10,10 +10,25 @@ div#Hall{
 	padding:1px;
 	height: auto; 
 	width: 300px;
- border:1px solid gold;
-
+ 	border:1px solid gold;
 }
 
+div#entry{
+	background-color: red;
+	text-align: center;
+	height:30px;
+	width:100px;
+
+	
+}
+
+div#exit{
+	background-color: yellow;
+	text-align: center;
+	height:30px;
+	width:100px;
+	
+}
 
 
 .AddConsertMenu{
