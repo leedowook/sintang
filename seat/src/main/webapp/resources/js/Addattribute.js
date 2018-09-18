@@ -114,7 +114,7 @@ function CreateLine(Hallname){
 			Linename:Linename
 	}
 	for(var i=0;i<HallList.length;i++){
-		console.log("test1"+HallList[i].LineList);
+		console.log("test"+HallList[i].LineList);
 		if(Hallname==HallList[i].Hallname){
 			if(HallList[i].LineList!=undefined){
 				Linename=searchsamename(i,Linename);
