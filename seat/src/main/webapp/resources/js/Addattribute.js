@@ -2,7 +2,7 @@
 var HallNameList = new Array;
 var LineNameList = new Array;
 var HallList=new Array;
-var LineList=new Array;
+var LineList;
 var img_L = 0;
 var img_T = 0;
 var targetObj;
@@ -86,21 +86,51 @@ function AddHall_1(){
 
 function AddHall_2(name){
 	console.log(name);
+	LineList==new Array;
 	var Hallinfo={
-			Hallname:name
+			Hallname:name,
+			LineList:LineList
 	}
-	var hall=document.getElementByName(name);
-	console.log(hall);
-	$("#AddJob").append("<div class='"+name+"' id='Hall' name='"+name+"' style='position:absolute; left:120px; top:120px; cursor:pointer; cursor:hand' onmousedown='startDrag(event,this)'  ><p style='text-align: center;' ><b1>"+name+"</b1></p>" +
-			"<p>라인이름:<input class='inputlinename'   type='text' name='LineName'  size='5'/><input type='button' value='라인 추가시키기' onclick='CreateLine("+name+");'/><input type='button' value='라인전체삭제' onclick='ClearLine("+name+")'</div><div id='"+name+"Linebox'></p></div>");
-
+	var CreateLine="CreateLine('"+name+"')";
+	var startdrag="startDrag(event,this)";
+	$("#AddJob").append("<div class='"+name+"' id='Hall' name='"+name+"Hall' style='position:absolute; left:120px; top:120px; cursor:pointer; cursor:hand' onmousedown="+startdrag+"   ><p style='text-align: center;'  ><b1>"+name+"</b1></p>" +
+			"<p><input type='button' value='라인 추가시키기' onclick="+CreateLine+"><input type='button' value='라인전체삭제' onclick='ClearLine("+name+")'><div id='"+name+"Linebox'></p></div> </div>");
+	HallList.push(Hallinfo);
 }
-
+function ClearLine(Hallname){
+	document.getElementById(Hallname+"Linebox").innerHTML="";	
+}
 function CreateLine(Hallname){
-	var Linename= docoument.getElementByName(Hallname+"Hall").LineName.value; 
-	if(!isNaN(count)){
-		document.getElementById(Hallname+"Linebox").innerHTML="<p id='"+Linename+"SeatBox'></p><input type='text' name='"+Linename+"Seatcount' size='3'><input type='button' value='좌석추가' onclick='AddSeat("+Linename+")'>";
-	}//숫자인지 아닌지를 판단
+	var Linename=prompt("입력해라 라인의 이름을 ","0");
+	function searchsamename(i,name){for(j=0;j<HallList[i].LineList.length;j++){
+		if(name==HallList[i].LineList[j].LineName ){
+			name=prompt("중복된 라인이름입니다.","제대로 입력하세요");
+			searchsamename(i,name);
+		}
+	}
+	return name;
+	}
+	var LineInfo={
+			Linename:Linename
+	}
+	for(var i=0;i<HallList.length;i++){
+		console.log("test1"+HallList[i].LineList);
+		if(Hallname==HallList[i].Hallname){
+			if(HallList[i].LineList!=undefined){
+				Linename=searchsamename(i,Linename);
+			}else{
+				HallList[i].LineList.push(LineInfo);
+			}
+		}
+	}
+	
+	document.getElementById(Hallname+"Linebox").innerHTML+="<p id='"+Linename+"SeatBox'></p><input type='text' name='"+Linename+"Seatcount' size='3'><input type='button' value='좌석추가' onclick='AddSeat("+Linename+")'>";
+	//숫자인지 아닌지를 판단
+	
+	var ListInfo={
+			LineName:Linename
+	}
+	
 	
 	
 }
