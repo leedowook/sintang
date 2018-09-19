@@ -7,10 +7,17 @@ var img_L = 0;
 var img_T = 0;
 var targetObj;
 var Nullname=65;
+var Hallcount=0;// 홀의 개수를 하나하나 늘려서 최종적으로 저장하기 위해
 var Concerthall={
 		HallCount: 0 
 		
-};//후에 계속 추가 하는데 일단 처음엔 수가 없으므로 0으로 기본값두기
+};
+var LineList=new Array;
+var Hallinfo=[{
+		Hallname:"Hallname",
+		Line:LineList
+}];
+//후에 계속 추가 하는데 일단 처음엔 수가 없으므로 0으로 기본값두기
 
 function getLeft(o){//해당 오브젝트 타켓을 가져온다
     return parseInt(o.style.left.replace('px',''));// 해당오브젝트의 탁렛의 이치를 px가뭔지는 모르겟지만 반환한다.
@@ -51,14 +58,14 @@ function startDrag(e, obj){//e=event obj=this
 }
 
 //드래그 멈추기
-function stopDrag(){//
+function stopDrag(){
     document.onmousemove = null;
     document.onmouseup = null;
 }//드래그가 멈췄을대 해당 값들을 비워낸다.
 
 
 function AddHall_1(){
-	var name=prompt("홀의 이름을 쳐주세요",placeholder="please enter Hall name");
+	var name=prompt("홀의 이름을 쳐주세요","please enter Hall name");
 	var HallCount=0;
 	if(name!=null){
 	function searching(){
@@ -87,22 +94,20 @@ function AddHall_1(){
 function AddHall_2(name){
 	console.log(name);
 	LineList==new Array;
-	var Hallinfo={
-			Hallname:name,
-			LineList:LineList
-	}
+	Hallinfo[Hallcount].Hallname=name;//콘서트의 기본
+	var ClearLine="ClearLine('"+name+")";
 	var CreateLine="CreateLine('"+name+"')";
 	var startdrag="startDrag(event,this)";
-	$("#AddJob").append("<div class='"+name+"' id='Hall' name='"+name+"Hall' style='position:absolute; left:120px; top:120px; cursor:pointer; cursor:hand' onmousedown="+startdrag+"   ><p style='text-align: center;'  ><b1>"+name+"</b1></p>" +
-			"<p><input type='button' value='라인 추가시키기' onclick="+CreateLine+"><input type='button' value='라인전체삭제' onclick='ClearLine("+name+")'><div id='"+name+"Linebox'></p></div> </div>");
-	HallList.push(Hallinfo);
+	$("#AddJob").append("<div class='"+name+"' id='Hall' name='"+name+"Hall' resize='both' style='position:absolute; left:120px; top:120px; cursor:pointer; cursor:hand' onmousedown="+startdrag+"   ><p style='text-align: center;'  ><b1>"+name+"</b1></p>" +
+			"<p><input type='button' value='라인 추가시키기' onclick="+CreateLine+"><input type='button' value='라인전체삭제' onclick="+ClearLine+"><div id='"+name+"Linebox'></p></div> </div>");
 }
 function ClearLine(Hallname){
 	document.getElementById(Hallname+"Linebox").innerHTML="";	
 }
 function CreateLine(Hallname){
-	var Linename=prompt("입력해라 라인의 이름을 ","0");
-	function searchsamename(i,name){for(j=0;j<HallList[i].LineList.length;j++){
+	var Linename=prompt("입력해라 라인의 이름을 ","0"); 
+	
+	function searchsamename(Hallname,name){for(j=0;j<HallList[i].LineList.length;j++){
 		if(name==HallList[i].LineList[j].LineName ){
 			name=prompt("중복된 라인이름입니다.","제대로 입력하세요");
 			searchsamename(i,name);
@@ -111,7 +116,10 @@ function CreateLine(Hallname){
 	return name;
 	}
 	var LineInfo={
-			Linename:Linename
+			Hallname:Hallname,
+			Linename:Linename,
+			Seatcount:"0",
+			
 	}
 	for(var i=0;i<HallList.length;i++){
 		console.log("test"+HallList[i].LineList);
@@ -119,27 +127,28 @@ function CreateLine(Hallname){
 			if(HallList[i].LineList!=undefined){
 				Linename=searchsamename(i,Linename);
 			}else{
-				HallList[i].LineList.push(LineInfo);
 			}
 		}
 	}
+	LineList.push(LineInfo);
 	
-	document.getElementById(Hallname+"Linebox").innerHTML+="<p id='"+Linename+"SeatBox'></p><input type='text' name='"+Linename+"Seatcount' size='3'><input type='button' value='좌석추가' onclick='AddSeat("+Linename+")'>";
+	var AddSeat="AddSeat('"+Linename+"','"+Hallname+"')"; 
+	document.getElementById(Hallname+"Linebox").innerHTML+="<p id='"+Linename+"SeatBox'>"+Linename+"열 </p><input type='button' value='좌석추가' onclick="+AddSeat+">";
+	//시트의 수를 정함 
 	//숫자인지 아닌지를 판단
 	
-	var ListInfo={
-			LineName:Linename
-	}
-	
-	
-	
 }
-function AddSeat(name){//좌석을 추가시켜줌
-	var count= document.getElementById(name+"SeatBox").Seatcount.value;
+
+function AddSeat(Linename,Hallname){//좌석을 추가시켜줌
+	var count=prompt("자리의 개수를 입력해주세요","0");
 	if(!isNaN(count)){
-		document.getELementById(name+"Seatcount").innerHTML="";
-		document.getElementById(name+"Seatcount").innerHTML="좌석:"+count;
+		document.getElementById(Linename+"SeatBox").innerHTML=Linename+"열 ";
+		document.getElementById(Linename+"SeatBox").innerHTML+="좌석:"+count;
 	}
-	
+	for(var i=0;i<LineList.length;i++){
+		if(Hallname==LineList[i].Hallname&&Linename==LineList[i].Linename){
+			LineList[i].Seatcount=count;
+		}
+	}
 }
 
