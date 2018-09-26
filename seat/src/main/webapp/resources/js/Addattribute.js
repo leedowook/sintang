@@ -150,5 +150,13 @@ function AddSeat(Linename,Hallname){//좌석을 추가시켜줌
 			LineList[i].Seatcount=count;
 		}
 	}
+	$.ajax({
+		 type:"post",
+		 url:"AdminConsertSave",
+		 dataType:"json",
+		 data:JSON.stringify(Conserthall),
+		 contentType:"Application/json"
+		
+		});
 }
 
