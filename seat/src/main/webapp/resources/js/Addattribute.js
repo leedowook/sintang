@@ -8,9 +8,9 @@ var img_T = 0;
 var targetObj;
 var Nullname=65;
 var Hallcount=0;// 홀의 개수를 하나하나 늘려서 최종적으로 저장하기 위해
-var Concerthall={
-		HallCount: 0 
-		
+var Conserthall={
+		HallCount: 0 ,
+		ConsertName:"짜장!"
 };
 var LineList=new Array;
 var Hallinfo=[{
@@ -94,7 +94,13 @@ function AddHall_1(){
 function AddHall_2(name){
 	console.log(name);
 	LineList==new Array;
+	console.log("AddHall_2test:"+Hallcount);
+	Hallinfo.push({
+		Hallname:"Hallname",
+		Line:LineList});
 	Hallinfo[Hallcount].Hallname=name;//콘서트의 기본
+	Hallcount+=1;
+	
 	var ClearLine="ClearLine('"+name+")";
 	var CreateLine="CreateLine('"+name+"')";
 	var startdrag="startDrag(event,this)";
@@ -150,6 +156,17 @@ function AddSeat(Linename,Hallname){//좌석을 추가시켜줌
 			LineList[i].Seatcount=count;
 		}
 	}
+	
+}
+function Save(){
+	for(var i=0;i<Hallinfo.length;i++){
+		var Hallname=Hallinfo[i].Hallname;
+		Hallinfo[i].HallTop=$('.'+Hallname).offset().top;
+		Hallinfo[i].HallLeft=$('.'+Hallname).offset().left;
+	}
+	Conserthall.Hallinfo=Hallinfo;
+	Conserthall.Hallcount=Hallinfo.length+1;
+	console.log(Conserthall.Hallinfo.length);
 	$.ajax({
 		 type:"post",
 		 url:"AdminConsertSave",
@@ -158,5 +175,6 @@ function AddSeat(Linename,Hallname){//좌석을 추가시켜줌
 		 contentType:"Application/json"
 		
 		});
+	
 }
 

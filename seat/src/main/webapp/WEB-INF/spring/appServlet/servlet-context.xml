@@ -26,6 +26,8 @@
 	
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 <resources mapping="/resources/**" location="/resources/" />
+
+
 <!-- 파일업로드에 대한 설정 -->
 	<beans:bean id="multipartResolver" 
 	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
