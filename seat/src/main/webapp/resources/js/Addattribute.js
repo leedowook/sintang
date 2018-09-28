@@ -1,8 +1,5 @@
-
 var HallNameList = new Array;
 var LineNameList = new Array;
-var HallList=new Array;
-var LineList;
 var img_L = 0;
 var img_T = 0;
 var targetObj;
@@ -13,10 +10,7 @@ var Conserthall={
 		ConsertName:"짜장!"
 };
 var LineList=new Array;
-var Hallinfo=[{
-		Hallname:"Hallname",
-		Line:LineList
-}];
+var Hallinfo=new Array;
 //후에 계속 추가 하는데 일단 처음엔 수가 없으므로 0으로 기본값두기
 
 function getLeft(o){//해당 오브젝트 타켓을 가져온다
@@ -81,7 +75,6 @@ function AddHall_1(){
 	if(name==""||name==null){
 		String.fromCharCode(Nullname);
 		Nullname++;
-		
 	}
 	}
 	searching();
@@ -93,14 +86,11 @@ function AddHall_1(){
 
 function AddHall_2(name){
 	console.log(name);
-	LineList==new Array;
-	console.log("AddHall_2test:"+Hallcount);
 	Hallinfo.push({
-		Hallname:"Hallname",
-		Line:LineList});
-	Hallinfo[Hallcount].Hallname=name;//콘서트의 기본
+	Hallname:name,
+	Hallindex:Hallcount});
+	//콘서트의 기본
 	Hallcount+=1;
-	
 	var ClearLine="ClearLine('"+name+")";
 	var CreateLine="CreateLine('"+name+"')";
 	var startdrag="startDrag(event,this)";
@@ -113,58 +103,82 @@ function ClearLine(Hallname){
 function CreateLine(Hallname){
 	var Linename=prompt("입력해라 라인의 이름을 ","0"); 
 	
-	function searchsamename(Hallname,name){for(j=0;j<HallList[i].LineList.length;j++){
-		if(name==HallList[i].LineList[j].LineName ){
+	function searchsamename(Hallname,name){
+		console.log("라인 이름 중복검사 Hallname:"+Hallname+name+LineList.length
+				);
+		for(j=0;j<LineList.length;j++){
+		console.log("라인이름중복검사2");
+		console.log("Name:"+name+LineList[j].Linename);
+		console.log("Hallname:"+Hallname+LineList[j].Hallname);
+		if(name==LineList[j].Linename&&Hallname==LineList[j].Hallname ){
+			console.log("라인이름중복발견");
 			name=prompt("중복된 라인이름입니다.","제대로 입력하세요");
-			searchsamename(i,name);
+			searchsamename(Hallname,name);
 		}
 	}
+		
 	return name;
+	}
+	
+	var Hallindex=0;//해당 이름의 홀의 순서를 알기위해
+	for(var i=0;i<Hallinfo.length;i++){
+		console.log("test"+Hallinfo[i]);
+		if(Hallname==Hallinfo[i].Hallname){
+			Hallindex=i;
+			console.log(LineList);
+			if(LineList!=undefined){
+				Linename=searchsamename(Hallname,Linename);
+				break;
+			}
+		}
+	}
+	function selectLineorder(Hallname){
+		var Max=0;
+		for(var i=0;i<LineList.length;i++){
+			if(Hallname==LineList[i].Hallname){
+				if(Max<LineList[i].Order){
+					Max=LineList[i].Order;
+			}
+		}}
+		Max+=1;
+		console.log(Max);
+		return Max;
 	}
 	var LineInfo={
 			Hallname:Hallname,
 			Linename:Linename,
 			Seatcount:"0",
-			
-	}
-	for(var i=0;i<HallList.length;i++){
-		console.log("test"+HallList[i].LineList);
-		if(Hallname==HallList[i].Hallname){
-			if(HallList[i].LineList!=undefined){
-				Linename=searchsamename(i,Linename);
-			}else{
-			}
-		}
+			Hallindex:Hallindex,
+			Order:selectLineorder(Hallname)//라인의 순서 알기위해서
 	}
 	LineList.push(LineInfo);
-	
 	var AddSeat="AddSeat('"+Linename+"','"+Hallname+"')"; 
-	document.getElementById(Hallname+"Linebox").innerHTML+="<p id='"+Linename+"SeatBox'>"+Linename+"열 </p><input type='button' value='좌석추가' onclick="+AddSeat+">";
+	document.getElementById(Hallname+"Linebox").innerHTML+="<p id='"+Hallname+Linename+"SeatBox'>"+Linename+"열 </p><input type='button' value='좌석추가' onclick="+AddSeat+">";
 	//시트의 수를 정함 
 	//숫자인지 아닌지를 판단
-	
 }
 
 function AddSeat(Linename,Hallname){//좌석을 추가시켜줌
 	var count=prompt("자리의 개수를 입력해주세요","0");
 	if(!isNaN(count)){
-		document.getElementById(Linename+"SeatBox").innerHTML=Linename+"열 ";
-		document.getElementById(Linename+"SeatBox").innerHTML+="좌석:"+count;
+		document.getElementById(Hallname+Linename+"SeatBox").innerHTML=Linename+"열 ";
+		document.getElementById(Hallname+Linename+"SeatBox").innerHTML+="좌석:"+count;
 	}
 	for(var i=0;i<LineList.length;i++){
 		if(Hallname==LineList[i].Hallname&&Linename==LineList[i].Linename){
 			LineList[i].Seatcount=count;
 		}
 	}
-	
 }
 function Save(){
+	console.log("Save test Hallinfo의길이:"+Hallinfo.length);
 	for(var i=0;i<Hallinfo.length;i++){
 		var Hallname=Hallinfo[i].Hallname;
-		Hallinfo[i].HallTop=$('.'+Hallname).offset().top;
-		Hallinfo[i].HallLeft=$('.'+Hallname).offset().left;
+		Hallinfo[i].HallTop=$('.'+Hallinfo[i].Hallname).offset().top;
+		Hallinfo[i].HallLeft=$('.'+Hallinfo[i].Hallname).offset().left;
 	}
 	Conserthall.Hallinfo=Hallinfo;
+	Conserthall.LineList=LineList;
 	Conserthall.Hallcount=Hallinfo.length+1;
 	console.log(Conserthall.Hallinfo.length);
 	$.ajax({
@@ -173,7 +187,6 @@ function Save(){
 		 dataType:"json",
 		 data:JSON.stringify(Conserthall),
 		 contentType:"Application/json"
-		
 		});
 	
 }
