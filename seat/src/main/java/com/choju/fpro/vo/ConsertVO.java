@@ -13,7 +13,6 @@ public class ConsertVO {
 	private String C_kind;
 	private String C_hall_count;
 	private String C_hall_img;
-	
 	private List<LineVO> LineList;
 	private List<HallVO> Hallinfo;
 	public ConsertVO() {}
