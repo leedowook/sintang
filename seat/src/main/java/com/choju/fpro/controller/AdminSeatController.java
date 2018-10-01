@@ -4,6 +4,8 @@ package com.choju.fpro.controller;
 import java.io.IOException;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,8 +33,9 @@ public class AdminSeatController{
 	
 	@RequestMapping(value ="/AdminConsertSave",method = RequestMethod.POST)
 	@ResponseBody
-	public void AdminConsertSave(HttpServletRequest request, @RequestBody Map<String, Object> ConsertInfo)  throws IOException {
+	public void AdminConsertSave(HttpServletRequest request,HttpSession session, @RequestBody Map<String, Object> ConsertInfo)  throws IOException {
 		System.out.println("저장실행중");
+		ConsertInfo.put("ID",session.getAttribute("ID"));
 		SeatService.QuickSave(ConsertInfo);	
 	}
 	

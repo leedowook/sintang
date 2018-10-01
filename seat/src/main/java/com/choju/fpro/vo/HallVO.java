@@ -4,9 +4,8 @@ public class HallVO {
 	private String C_hall_num;
 	private String C_num;
 	private String C_hall_name;
-	private String C_hall_col;
-	private String C_hall_loc_top;
-	private String C_hall_loc_left;
+	private double C_hall_loc_top;
+	private double C_hall_loc_left;
 	
 	public String getC_hall_num() {
 		return C_hall_num;
@@ -26,38 +25,33 @@ public class HallVO {
 	public void setC_hall_name(String c_hall_name) {
 		C_hall_name = c_hall_name;
 	}
-	public String getC_hall_col() {
-		return C_hall_col;
-	}
-	public void setC_hall_col(String c_hall_col) {
-		C_hall_col = c_hall_col;
-	}
-	public String getC_hall_loc_top() {
+
+	public double getC_hall_loc_top() {
 		return C_hall_loc_top;
 	}
-	public void setC_hall_loc_top(String c_hall_loc_top) {
+	public void setC_hall_loc_top(double c_hall_loc_top) {
 		C_hall_loc_top = c_hall_loc_top;
 	}
-	public String getC_hall_loc_left() {
+	public double getC_hall_loc_left() {
 		return C_hall_loc_left;
 	}
-	public void setC_hall_loc_left(String c_hall_loc_left) {
+	public void setC_hall_loc_left(double c_hall_loc_left) {
 		C_hall_loc_left = c_hall_loc_left;
 	}
 	
 	@Override
 	public String toString() {
 		return "HallVO [C_hall_num=" + C_hall_num + ", C_num=" + C_num + ", C_hall_name=" + C_hall_name
-				+ ", C_hall_col=" + C_hall_col + ", C_hall_loc_top=" + C_hall_loc_top + ", C_hall_loc_left="
+				+ ", C_hall_loc_top=" + C_hall_loc_top + ", C_hall_loc_left="
 				+ C_hall_loc_left + "]";
 	}
-	public HallVO(String c_hall_num, String c_num, String c_hall_name, String c_hall_col, String c_hall_loc_top,
-			String c_hall_loc_left) {
+	public HallVO(String c_hall_num, String c_num, String c_hall_name,  double c_hall_loc_top,
+			double c_hall_loc_left) {
 	
 		C_hall_num = c_hall_num;
 		C_num = c_num;
 		C_hall_name = c_hall_name;
-		C_hall_col = c_hall_col;
+	
 		C_hall_loc_top = c_hall_loc_top;
 		C_hall_loc_left = c_hall_loc_left;
 		

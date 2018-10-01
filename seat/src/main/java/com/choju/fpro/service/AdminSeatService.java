@@ -24,6 +24,7 @@ public class AdminSeatService {
 	public void QuickSave(Map<String, Object> ConsertInfo) {
 		consert=new ConsertVO();
 		consert=consert.Matchscript(ConsertInfo);
+		
 		SeatDao.QuickSave(consert);
 	}
 }

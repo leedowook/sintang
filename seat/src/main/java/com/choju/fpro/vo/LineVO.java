@@ -7,7 +7,7 @@ public class LineVO {
 	private String C_hall_name;
 	private String C_col_name;//라인 이름
 	private String C_row_count;// 열개수
-	private String C_col_priority;//열 우선순위 A가 위인지 Z가위인지
+	private Double C_col_priority;//열 우선순위 A가 위인지 Z가위인지
 	public LineVO() {}
 	public String getC_col_num() {
 		return C_col_num;
@@ -45,14 +45,14 @@ public class LineVO {
 	public void setC_row_count(String c_row_count) {
 		C_row_count = c_row_count;
 	}
-	public String getC_col_priority() {
+	public Double getC_col_priority() {
 		return C_col_priority;
 	}
-	public void setC_col_priority(String c_col_priority) {
+	public void setC_col_priority(Double c_col_priority) {
 		C_col_priority = c_col_priority;
 	}
 	public LineVO(String c_col_num, String c_num, String c_hall_num, String c_hall_name, String c_col_name,
-			String c_row_count, String c_col_priority) {
+			String c_row_count, Double c_col_priority) {
 		C_col_num = c_col_num;
 		C_num = c_num;
 		C_hall_num = c_hall_num;

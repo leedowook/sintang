@@ -6,6 +6,7 @@ var targetObj;
 var Nullname=65;
 var Hallcount=0;// 홀의 개수를 하나하나 늘려서 최종적으로 저장하기 위해
 var Conserthall={
+		
 		HallCount: 0 ,
 		ConsertName:"짜장!"
 };
@@ -151,6 +152,7 @@ function CreateLine(Hallname){
 			Hallindex:Hallindex,
 			Order:selectLineorder(Hallname)//라인의 순서 알기위해서
 	}
+	console.log(LineInfo.Order);
 	LineList.push(LineInfo);
 	var AddSeat="AddSeat('"+Linename+"','"+Hallname+"')"; 
 	document.getElementById(Hallname+"Linebox").innerHTML+="<p id='"+Hallname+Linename+"SeatBox'>"+Linename+"열 </p><input type='button' value='좌석추가' onclick="+AddSeat+">";
