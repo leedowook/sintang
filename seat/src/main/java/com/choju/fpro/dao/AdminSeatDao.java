@@ -12,6 +12,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 public class AdminSeatDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	public ConsertVO QuickLoad(ConsertVO consert) {
+		consert=sqlSession.selectOne("AdminConsertMain.ConsertSelect",consert);
+		
+		return consert;
+	}
 	public void QuickSave(ConsertVO consert) {
 		String num=sqlSession.selectOne("AdminConsertMain.CountConsertid");
 		System.out.println("없을경우:"+num);
@@ -45,6 +50,7 @@ public class AdminSeatDao {
 				Linevo=consert.getLineList().get(j);
 				Linevo.setC_num(num);
 				Linevo.setC_hall_num(Hallvo.getC_hall_num());
+				System.out.println(Linevo.getC_num());
 				String Linenum=sqlSession.selectOne("AdminConsertLine.CountLineid",Hallvo);
 				if(Linenum==null) {
 					System.out.println("라인 이름이 존재없음");

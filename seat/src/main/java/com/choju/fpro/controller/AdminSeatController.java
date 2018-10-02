@@ -18,19 +18,13 @@ import com.choju.fpro.service.AdminSeatService;
 @Controller
 public class AdminSeatController{
 	private ModelAndView mv;
-	
 	@Autowired
 	private AdminSeatService SeatService; 
-	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String AddSeatHome() {
-		
 		System.out.println("관리자모드-seat 추가하기  실행됨");
-		
-		
 		return "AddSeat";
 	}
-	
 	@RequestMapping(value ="/AdminConsertSave",method = RequestMethod.POST)
 	@ResponseBody
 	public void AdminConsertSave(HttpServletRequest request,HttpSession session, @RequestBody Map<String, Object> ConsertInfo)  throws IOException {
@@ -38,5 +32,4 @@ public class AdminSeatController{
 		ConsertInfo.put("ID",session.getAttribute("ID"));
 		SeatService.QuickSave(ConsertInfo);	
 	}
-	
 }

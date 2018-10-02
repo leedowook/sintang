@@ -92,10 +92,10 @@ function AddHall_2(name){
 	Hallindex:Hallcount});
 	//콘서트의 기본
 	Hallcount+=1;
-	var ClearLine="ClearLine('"+name+")";
+	var ClearLine="ClearLine('"+name+"')";
 	var CreateLine="CreateLine('"+name+"')";
 	var startdrag="startDrag(event,this)";
-	$("#AddJob").append("<div class='"+name+"' id='Hall' name='"+name+"Hall' resize='both' style='position:absolute; left:120px; top:120px; cursor:pointer; cursor:hand' onmousedown="+startdrag+"   ><p style='text-align: center;'  ><b1>"+name+"</b1></p>" +
+	$("#AddJob").append("<div class='"+name+"' id='Hall' name='"+name+"Hall' resize='both' style='position:absolute; left:200px; top:120px; cursor:pointer; cursor:hand' onmousedown="+startdrag+"   ><p style='text-align: center;'  ><b1>"+name+"</b1></p>" +
 			"<p><input type='button' value='라인 추가시키기' onclick="+CreateLine+"><input type='button' value='라인전체삭제' onclick="+ClearLine+"><div id='"+name+"Linebox'></p></div> </div>");
 }
 function ClearLine(Hallname){
@@ -179,6 +179,10 @@ function Save(){
 		Hallinfo[i].HallTop=$('.'+Hallinfo[i].Hallname).offset().top;
 		Hallinfo[i].HallLeft=$('.'+Hallinfo[i].Hallname).offset().left;
 	}
+	Conserthall.exitTop=$('#exit').offset().top;
+	Conserthall.exitLeft=$('#exit').offset().left;
+	Conserthall.entryTop=$('#entry').offset().top;
+	Conserthall.entryLeft=$('#entry').offset().left;
 	Conserthall.Hallinfo=Hallinfo;
 	Conserthall.LineList=LineList;
 	Conserthall.Hallcount=Hallinfo.length+1;
@@ -188,7 +192,18 @@ function Save(){
 		 url:"AdminConsertSave",
 		 dataType:"json",
 		 data:JSON.stringify(Conserthall),
-		 contentType:"Application/json"
+		 contentType:"Application/json;charset=UTF-8",
+			 success: function(data){
+				 Conserthall=JSON.stringify(data);
+				 console.log("ajaxtest"+Conserthall.Hallcount);
+				  },
+				  error: function(jqXHR, textStatus, errorThrown) {
+				        if(textStatus=="timeout") {
+				        	alert("시간이 초과되어 데이터를 수신하지 못하였습니다.");
+				     } else {
+				        	alert("데이터 전송에 실패했습니다. 다시 시도해 주세요");
+				        } 
+				    }
 		});
 	
 }

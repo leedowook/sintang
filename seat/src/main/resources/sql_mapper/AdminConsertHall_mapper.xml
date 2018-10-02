@@ -11,6 +11,7 @@
 	<insert id="AddHall" parameterType="ConsertHall">
 		INSERT INTO ConsertHall_Hall VALUES(#{C_hall_num},#{C_num},#{C_hall_name},#{C_hall_loc_top},#{C_hall_loc_left})
 	</insert>
-	
-
+	<select id="SelHall" parameterType="ConsertHall" resultType="ConsertHall">
+		
+	</select>
 </mapper>

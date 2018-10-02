@@ -9,10 +9,10 @@
 	</select>
 	<!-- 기본 메인정보 입력 쿼리 -->
 	<insert id="AddConsert" parameterType="ConsertMain">
-		INSERT INTO ConsertHall_Main VALUES(#{C_num}, #{C_name} ,#{address},#{ad_x},#{ad_y},#{C_kind},#{C_hall_count},#{C_hall_img},#{ID})
+		INSERT INTO ConsertHall_Main VALUES(#{C_num}, #{C_name} ,#{address},#{ad_x},#{ad_y},#{C_kind},#{C_hall_count},#{C_hall_img},#{ID},#{entry_x},#{entry_y},#{exit_x},#{exit_y})
 	</insert>
-	<select id="Consertid" resultType="String">
-		select * from ConsertHall_main where C_num=#{C_num} and 
+	<select id="ConsertSelect" parameterType="ConsertMain" resultType="ConsertMain">
+		select * from ConsertHall_main where C_num=#{C_num} and ID=#{ID}
 	</select>
 	
 

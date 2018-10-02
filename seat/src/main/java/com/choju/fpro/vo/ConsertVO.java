@@ -9,101 +9,168 @@ public class ConsertVO {
 	private String C_num;
 	private String C_name;
 	private String address="noaddress";
-	private String ad_x="0";
-	private String ad_y="0";
+	private double ad_x=0;
+	private double ad_y=0;
 	private String C_kind="all";
 	private double C_hall_count;
 	private String C_hall_img="noimg";
 	private List<LineVO> LineList;
 	private List<HallVO> Hallinfo;
-	private String id;
+	private String ID;
+	private double entry_x=0;
+	private double entry_y=0;
+	private double exit_x=0;
+	private double exit_y=0;
 	public ConsertVO() {}
-	public String getC_num() {
-		return C_num;
-	}
-	public void setC_num(String c_num) {
+	
+	public ConsertVO(String c_num, String c_name, String address, double ad_x, double ad_y, String c_kind,
+			double c_hall_count, String c_hall_img, List<LineVO> lineList, List<HallVO> hallinfo, String iD,
+			double entry_x, double entry_y, double exit_x, double exit_y) {
 		C_num = c_num;
-	}
-	public String getC_name() {
-		return C_name;
-	}
-	public void setC_name(String c_name) {
 		C_name = c_name;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
 		this.address = address;
-	}
-	public String getAd_x() {
-		return ad_x;
-	}
-	public void setAd_x(String ad_x) {
 		this.ad_x = ad_x;
-	}
-	public String getAd_y() {
-		return ad_y;
-	}
-	public void setAd_y(String ad_y) {
 		this.ad_y = ad_y;
-	}
-	public String getC_kind() {
-		return C_kind;
-	}
-	public void setC_kind(String c_kind) {
 		C_kind = c_kind;
-	}
-	public double getC_hall_count() {
-		return C_hall_count;
-	}
-	public void setC_hall_count(double c_hall_count) {
 		C_hall_count = c_hall_count;
-	}
-	public String getC_hall_img() {
-		return C_hall_img;
-	}
-	public void setC_hall_img(String c_hall_img) {
 		C_hall_img = c_hall_img;
-	}
-	public List<LineVO> getLineList() {
-		return LineList;
-	}
-	public void setLineList(List<LineVO> lineList) {
 		LineList = lineList;
-	}
-	public List<HallVO> getHallinfo() {
-		return Hallinfo;
-	}
-	public void setHallinfo(List<HallVO> hallinfo) {
 		Hallinfo = hallinfo;
+		ID = iD;
+		this.entry_x = entry_x;
+		this.entry_y = entry_y;
+		this.exit_x = exit_x;
+		this.exit_y = exit_y;
 	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+
 	@Override
 	public String toString() {
 		return "ConsertVO [C_num=" + C_num + ", C_name=" + C_name + ", address=" + address + ", ad_x=" + ad_x
 				+ ", ad_y=" + ad_y + ", C_kind=" + C_kind + ", C_hall_count=" + C_hall_count + ", C_hall_img="
-				+ C_hall_img + ", LineList=" + LineList + ", Hallinfo=" + Hallinfo + ", id=" + id + "]";
+				+ C_hall_img + ", LineList=" + LineList + ", Hallinfo=" + Hallinfo + ", ID=" + ID + ", entry_x="
+				+ entry_x + ", entry_y=" + entry_y + ", exit_x=" + exit_x + ", exit_y=" + exit_y + "]";
 	}
-	public ConsertVO(String c_num, String c_name, String address, String ad_x, String ad_y, String c_kind,
-			double c_hall_count, String c_hall_img, List<LineVO> lineList, List<HallVO> hallinfo, String id) {
+
+	public String getC_num() {
+		return C_num;
+	}
+
+	public void setC_num(String c_num) {
 		C_num = c_num;
-		C_name = c_name;
-		this.address = address;
-		this.ad_x = ad_x;
-		this.ad_y = ad_y;
-		C_kind = c_kind;
-		C_hall_count = c_hall_count;
-		C_hall_img = c_hall_img;
-		LineList = lineList;
-		Hallinfo = hallinfo;
-		this.id = id;
 	}
+
+	public String getC_name() {
+		return C_name;
+	}
+
+	public void setC_name(String c_name) {
+		C_name = c_name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public double getAd_x() {
+		return ad_x;
+	}
+
+	public void setAd_x(double ad_x) {
+		this.ad_x = ad_x;
+	}
+
+	public double getAd_y() {
+		return ad_y;
+	}
+
+	public void setAd_y(double ad_y) {
+		this.ad_y = ad_y;
+	}
+
+	public String getC_kind() {
+		return C_kind;
+	}
+
+	public void setC_kind(String c_kind) {
+		C_kind = c_kind;
+	}
+
+	public double getC_hall_count() {
+		return C_hall_count;
+	}
+
+	public void setC_hall_count(double c_hall_count) {
+		C_hall_count = c_hall_count;
+	}
+
+	public String getC_hall_img() {
+		return C_hall_img;
+	}
+
+	public void setC_hall_img(String c_hall_img) {
+		C_hall_img = c_hall_img;
+	}
+
+	public List<LineVO> getLineList() {
+		return LineList;
+	}
+
+	public void setLineList(List<LineVO> lineList) {
+		LineList = lineList;
+	}
+
+	public List<HallVO> getHallinfo() {
+		return Hallinfo;
+	}
+
+	public void setHallinfo(List<HallVO> hallinfo) {
+		Hallinfo = hallinfo;
+	}
+
+	public String getID() {
+		return ID;
+	}
+
+	public void setID(String iD) {
+		ID = iD;
+	}
+
+	public double getEntry_x() {
+		return entry_x;
+	}
+
+	public void setEntry_x(double entry_x) {
+		this.entry_x = entry_x;
+	}
+
+	public double getEntry_y() {
+		return entry_y;
+	}
+
+	public void setEntry_y(double entry_y) {
+		this.entry_y = entry_y;
+	}
+
+	public double getExit_x() {
+		return exit_x;
+	}
+
+	public void setExit_x(double exit_x) {
+		this.exit_x = exit_x;
+	}
+
+	public double getExit_y() {
+		return exit_y;
+	}
+
+	public void setExit_y(double exit_y) {
+		this.exit_y = exit_y;
+	}
+
 	public ConsertVO Matchscript(Map<String,Object> ConsertInfo) {// 해당 스크립트에서 받아온걸 자바꺼로 만들기위해
 		List<LineVO> Line=new ArrayList<LineVO>();
 		List<HallVO> Hall=new ArrayList<HallVO>();
@@ -128,7 +195,13 @@ public class ConsertVO {
 			LineVO.setC_col_priority((Double)LineList.get(i).get("Order"));
 			Line.add(LineVO);
 		}
-		Consert.setId((String)ConsertInfo.get("ID"));
+		Consert.setID((String)ConsertInfo.get("ID"));
+		Consert.setEntry_x((double)ConsertInfo.get("entryLeft"));
+		Consert.setEntry_y((double)ConsertInfo.get("entryTop"));
+		Consert.setExit_x((double)ConsertInfo.get("exitLeft"));
+		Consert.setExit_y((double)ConsertInfo.get("exitTop"));
+		
+		
 		Consert.setC_name((String)ConsertInfo.get("ConsertName"));
 		Consert.setC_hall_count((double)ConsertInfo.get("HallCount"));
 		Consert.setHallinfo(Hall);
@@ -165,11 +238,16 @@ public class ConsertVO {
 			javaLine.put("Linenum",Line.get(i).getC_col_num());
 			LineList.add(javaLine);
 		}
+		
 		Consert.put("Hallinfo",Hallinfo);
 		Consert.put("LineList", LineList);
 		Consert.put("Consertnum", Consertinfo.getC_num());
 		Consert.put("ConsertName", Consertinfo.getC_name());
 		Consert.put("Hallcount", Consertinfo.getC_hall_count());
+		Consert.put("exitTop", Consertinfo.getExit_y());
+		Consert.put("exitLeft", Consertinfo.getExit_x());
+		Consert.put("entryTop", Consertinfo.getEntry_y());
+		Consert.put("entryLeft", Consertinfo.getEntry_x());
 		return Consert;
 	}
 	public String numbering(String number) {
@@ -281,10 +359,4 @@ public class ConsertVO {
 		 number=numalpha+endnum;
 		 return number;
 }
-	
-	
-
-	
-
-	
 }
