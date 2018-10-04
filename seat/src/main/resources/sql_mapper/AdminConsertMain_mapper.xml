@@ -14,6 +14,8 @@
 	<select id="ConsertSelect" parameterType="ConsertMain" resultType="ConsertMain">
 		select * from ConsertHall_main where C_num=#{C_num} and ID=#{ID}
 	</select>
-	
+	<update id="ModConsert" parameterType="ConsertMain">
+		update ConsertHall_main set C_name=#{C_name},C_ad_x=#{ad_x},C_ad_y=#{ad_y},C_kind=#{C_kind},C_Address=#{address},Entry_x=#{entry_x},Entry_y=#{entry_y},Exit_x=#{exit_x},Exit_y=#{exit_y},C_hall_img=#{C_hall_img} where C_num=#{C_num}
+	</update>
 
 </mapper>

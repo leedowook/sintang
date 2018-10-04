@@ -179,12 +179,19 @@ public class ConsertVO {
 		List<Map<String,Object>> LineList = new ArrayList<Map<String,Object>>();
 		Hallinfo=(List<Map<String, Object>>)ConsertInfo.get("Hallinfo");
 		LineList=(List<Map<String, Object>>)ConsertInfo.get("LineList");
+		if(ConsertInfo.get("Consertnum")!=null) {
+			Consert.setC_num((String)ConsertInfo.get("Consertnum"));
+		};
 		for(int i=0;i<Hallinfo.size();i++) {
 			HallVO HallVO=new HallVO();
 			HallVO.setC_hall_name((String)Hallinfo.get(i).get("Hallname"));
 			System.out.println(Hallinfo.get(i).get("HallTop"));
 			HallVO.setC_hall_loc_top((double)Hallinfo.get(i).get("HallTop"));
 			HallVO.setC_hall_loc_left((double)Hallinfo.get(i).get("HallLeft"));
+			if(Hallinfo.get(i).get("Hallnum")!=null) {
+				HallVO.setC_num((String)ConsertInfo.get("Consertnum"));
+				HallVO.setC_hall_num((String)Hallinfo.get(i).get("Hallnum"));
+			};
 			Hall.add(HallVO);
 		}
 		for(int i=0;i<LineList.size();i++) {
@@ -193,6 +200,9 @@ public class ConsertVO {
 			LineVO.setC_col_name((String)LineList.get(i).get("Linename"));
 			LineVO.setC_row_count((String)LineList.get(i).get("Seatcount"));
 			LineVO.setC_col_priority((Double)LineList.get(i).get("Order"));
+			if(LineList.get(i).get("Linenum")!=null) {
+				LineVO.setC_col_num((String)LineList.get(i).get("Linenum"));
+			};
 			Line.add(LineVO);
 		}
 		Consert.setID((String)ConsertInfo.get("ID"));
@@ -201,11 +211,12 @@ public class ConsertVO {
 		Consert.setExit_x((double)ConsertInfo.get("exitLeft"));
 		Consert.setExit_y((double)ConsertInfo.get("exitTop"));
 		
-		
+		System.out.println("ConsertVOHallcount"+ConsertInfo.get("Hallcount"));
 		Consert.setC_name((String)ConsertInfo.get("ConsertName"));
-		Consert.setC_hall_count((double)ConsertInfo.get("HallCount"));
+		Consert.setC_hall_count((double)ConsertInfo.get("Hallcount"));
 		Consert.setHallinfo(Hall);
 		Consert.setLineList(Line);
+		
 		return Consert;
 	}
 	
@@ -261,9 +272,7 @@ public class ConsertVO {
 		 System.out.println(num);
 		 String numalpha=number.substring(0,2);
 		 String numbeta=number.substring(0,1);
-		 System.out.println(numalpha);
-		 System.out.println(numbeta);
-		 System.out.println(numalpha.substring(1,2));
+		 
 		 if((num+1)==100){
 		 if(numalpha.substring(1,2).equals("a")){
 		 		numalpha=numalpha.substring(0,1)+"b";	

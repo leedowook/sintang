@@ -13,8 +13,8 @@
 <body>
 	<div class="AddConsertMenu" id="AddConsertMenu">
 	<p><button onclick="AddHall_1()">홀 추가</button></p>
-<p><button  onclick="Save()">저장</button></p>
-<p><button onclick="Back()">되돌아가기</button></p>
+	<p><button  onclick="Save()">저장</button></p>
+	<p><button onclick="Back()">되돌아가기</button></p>
 	
 	</div>
 	<form id="ConcertInfoForm"action="AddConcert" method="post">

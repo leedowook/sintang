@@ -7,6 +7,8 @@ import com.choju.fpro.vo.ConsertVO;
 import com.choju.fpro.vo.HallVO;
 import com.choju.fpro.vo.LineVO;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.mybatis.spring.SqlSessionTemplate;
 @Repository
 public class AdminSeatDao {
@@ -14,8 +16,61 @@ public class AdminSeatDao {
 	private SqlSessionTemplate sqlSession;
 	public ConsertVO QuickLoad(ConsertVO consert) {
 		consert=sqlSession.selectOne("AdminConsertMain.ConsertSelect",consert);
-		
+	
 		return consert;
+	}
+	public void QuickUpdate(ConsertVO consert) {
+		System.out.println("이미 있는 공연장이기에 업데이트로 접어듬");
+		sqlSession.update("AdminConsertMain.ModConsert",consert);
+		for(int i=0;i<consert.getHallinfo().size();i++) {
+			HallVO Hallvo=new HallVO();
+			Hallvo=consert.getHallinfo().get(i);
+			System.out.println("AdminSeatDao name검사:"+Hallvo.getC_hall_name());
+			if(Hallvo.getC_hall_num()==null) {//홀이 이미 있을경우
+				Hallvo.setC_num(consert.getC_num());
+				String Hallnum=sqlSession.selectOne("AdminConsertHall.CountHallid",Hallvo);
+				if(Hallnum==null) {
+					System.out.println("홀이름이 존재 없음");
+					Hallvo.setC_hall_num("ha00");
+				}else {
+					System.out.println("홀이름 존재");
+					Hallvo.setC_hall_num(consert.numbering(Hallnum)); 
+				}
+			
+				sqlSession.insert("AdminConsertHall.AddHall",Hallvo);
+			}
+			else {
+				
+				sqlSession.update("AdminConsertHall.ModHall",Hallvo);
+			}
+			for(int j=0;j<consert.getLineList().size();j++) {//같은 홀이름을 가진 라인 찾기
+				LineVO Linevo=new LineVO();
+				Linevo=consert.getLineList().get(j);
+				if(consert.getHallinfo().get(i).getC_hall_name().equals(consert.getLineList().get(j).getC_hall_name())) {
+					System.out.println("test2"+consert.getLineList().get(j).getC_col_priority());
+					
+					if(Linevo.getC_col_num()==null) {//라인 최초입력일경우
+					Linevo.setC_num(consert.getC_num());
+					Linevo.setC_hall_num(Hallvo.getC_hall_num());
+					System.out.println("test AdminSeatDao"+Linevo.getC_num()+Linevo.getC_hall_num());
+					String Linenum=sqlSession.selectOne("AdminConsertLine.CountLineid",Linevo);
+					if(Linenum==null) {
+						System.out.println("라인 이름이 존재없음");
+						Linevo.setC_col_num("la00");
+					}else {
+						System.out.println("라인이름존재");
+						Linevo.setC_col_num(consert.numbering(Linenum));
+					}
+				
+					sqlSession.insert("AdminConsertLine.AddLine",Linevo);}
+					else {//라인 이미 존재할경우
+						System.out.println("AdminSeatDaoLineUpdate");
+						sqlSession.update("AdminConsertLine.ModLine",Linevo);
+						}
+				}
+			}
+		}
+		sqlSession.delete("AdminConsertLine.DelAllLine");
 	}
 	public void QuickSave(ConsertVO consert) {
 		String num=sqlSession.selectOne("AdminConsertMain.CountConsertid");
@@ -48,17 +103,19 @@ public class AdminSeatDao {
 				System.out.println("test2"+consert.getLineList().get(j).getC_col_priority());
 				LineVO Linevo=new LineVO();
 				Linevo=consert.getLineList().get(j);
-				Linevo.setC_num(num);
+				Linevo.setC_num(consert.getC_num());
 				Linevo.setC_hall_num(Hallvo.getC_hall_num());
-				System.out.println(Linevo.getC_num());
-				String Linenum=sqlSession.selectOne("AdminConsertLine.CountLineid",Hallvo);
+				System.out.println("test AdminSeatDao"+Linevo.getC_num()+Linevo.getC_hall_num());
+				String Linenum=sqlSession.selectOne("AdminConsertLine.CountLineid",Linevo);
 				if(Linenum==null) {
 					System.out.println("라인 이름이 존재없음");
 					Linevo.setC_col_num("la00");
 				}else {
 					System.out.println("라인이름존재");
-					Linevo.setC_col_name(consert.numbering(Linenum));
+					Linevo.setC_col_num(consert.numbering(Linenum));
 				}
+				
+				System.out.println("점검 adminseatdao c_num"+Linevo.getC_num()+" C_hall_num"+Linevo.getC_hall_num());
 				sqlSession.insert("AdminConsertLine.AddLine",Linevo);}}
 		}
 	}

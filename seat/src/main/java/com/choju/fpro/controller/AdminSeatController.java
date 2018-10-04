@@ -27,9 +27,12 @@ public class AdminSeatController{
 	}
 	@RequestMapping(value ="/AdminConsertSave",method = RequestMethod.POST)
 	@ResponseBody
-	public void AdminConsertSave(HttpServletRequest request,HttpSession session, @RequestBody Map<String, Object> ConsertInfo)  throws IOException {
+	public Map<String, Object> AdminConsertSave(HttpServletRequest request,HttpSession session, @RequestBody Map<String, Object> ConsertInfo)  throws IOException {
 		System.out.println("저장실행중");
 		ConsertInfo.put("ID",session.getAttribute("ID"));
-		SeatService.QuickSave(ConsertInfo);	
+		
+		Map<String, Object> consert=SeatService.QuickSave(ConsertInfo);
+		return consert;
 	}
 }
+

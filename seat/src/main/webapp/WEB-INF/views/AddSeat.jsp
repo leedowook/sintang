@@ -20,6 +20,7 @@
 <p><button onclick="AddHall_1()">홀 추가</button></p>
 <p><button  onclick="Save()">저장</button></p>
 <p><button onclick="Back()">되돌아가기</button></p>
+<p><button onclick="Check()">중간점검</button></p>
 </div>
 
 <form id="ConcertInfoForm"action="AddConcert" method="post">

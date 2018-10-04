@@ -56,7 +56,7 @@ function startDrag(e, obj){//e=event obj=this
 function stopDrag(){
     document.onmousemove = null;
     document.onmouseup = null;
-}//드래그가 멈췄을대 해당 값들을 비워낸다.
+}//드래그가 멈췄을때 해당 값들을 비워낸다.
 
 
 function AddHall_1(){
@@ -99,11 +99,19 @@ function AddHall_2(name){
 			"<p><input type='button' value='라인 추가시키기' onclick="+CreateLine+"><input type='button' value='라인전체삭제' onclick="+ClearLine+"><div id='"+name+"Linebox'></p></div> </div>");
 }
 function ClearLine(Hallname){
-	document.getElementById(Hallname+"Linebox").innerHTML="";	
+	document.getElementById(Hallname+"Linebox").innerHTML="";
+	var DeleteLine=new Array();
+	
+	for(var i in LineList){
+		if(LineList[i].Hallname==Hallname){
+			LineList[i].Hallname='DeleteLine';
+		}
+		
+	}
 }
 function CreateLine(Hallname){
 	var Linename=prompt("입력해라 라인의 이름을 ","0"); 
-	
+	if(Linename!=null){
 	function searchsamename(Hallname,name){
 		console.log("라인 이름 중복검사 Hallname:"+Hallname+name+LineList.length
 				);
@@ -157,11 +165,16 @@ function CreateLine(Hallname){
 	var AddSeat="AddSeat('"+Linename+"','"+Hallname+"')"; 
 	document.getElementById(Hallname+"Linebox").innerHTML+="<p id='"+Hallname+Linename+"SeatBox'>"+Linename+"열 </p><input type='button' value='좌석추가' onclick="+AddSeat+">";
 	//시트의 수를 정함 
-	//숫자인지 아닌지를 판단
+	//숫자인지 아닌지를 판단}
+}}
+function Check(){
+	console.log("check1 c_num:"+Conserthall.Consertnum);
+	console.log("check2 "+Conserthall);
+	
 }
-
 function AddSeat(Linename,Hallname){//좌석을 추가시켜줌
 	var count=prompt("자리의 개수를 입력해주세요","0");
+	if(count!=null){
 	if(!isNaN(count)){
 		document.getElementById(Hallname+Linename+"SeatBox").innerHTML=Linename+"열 ";
 		document.getElementById(Hallname+Linename+"SeatBox").innerHTML+="좌석:"+count;
@@ -171,7 +184,7 @@ function AddSeat(Linename,Hallname){//좌석을 추가시켜줌
 			LineList[i].Seatcount=count;
 		}
 	}
-}
+}}
 function Save(){
 	console.log("Save test Hallinfo의길이:"+Hallinfo.length);
 	for(var i=0;i<Hallinfo.length;i++){
@@ -185,8 +198,8 @@ function Save(){
 	Conserthall.entryLeft=$('#entry').offset().left;
 	Conserthall.Hallinfo=Hallinfo;
 	Conserthall.LineList=LineList;
-	Conserthall.Hallcount=Hallinfo.length+1;
-	console.log(Conserthall.Hallinfo.length);
+	Conserthall.Hallcount=(Hallinfo.length)+1;
+	console.log(Conserthall);
 	$.ajax({
 		 type:"post",
 		 url:"AdminConsertSave",
@@ -194,9 +207,14 @@ function Save(){
 		 data:JSON.stringify(Conserthall),
 		 contentType:"Application/json;charset=UTF-8",
 			 success: function(data){
-				 Conserthall=JSON.stringify(data);
-				 console.log("ajaxtest"+Conserthall.Hallcount);
-				  },
+				 if(data.isExist){
+					 console.log("사용불가");
+				 }else{
+				 Conserthall=data;
+				 Hallinfo=data.Hallinfo;
+				 LinList=data.LineList;
+				 console.log("ajaxtest"+data.Consertnum);
+				  }},
 				  error: function(jqXHR, textStatus, errorThrown) {
 				        if(textStatus=="timeout") {
 				        	alert("시간이 초과되어 데이터를 수신하지 못하였습니다.");

@@ -21,10 +21,19 @@ public class AdminSeatService {
 	@Autowired
 	private HttpSession session;
 	
-	public void QuickSave(Map<String, Object> ConsertInfo) {
+	public Map<String, Object> QuickSave(Map<String, Object> ConsertInfo) {
 		consert=new ConsertVO();
 		consert=consert.Matchscript(ConsertInfo);
+		System.out.println("서비스 업데이트 테스트"+consert.getC_num());
+		if(consert.getC_num()==null) {
+		SeatDao.QuickSave(consert);}
+		else {
+			SeatDao.QuickUpdate(consert);
+		}
+		Map<String,Object> consertscript=new HashMap<String,Object>();
+		consertscript=consert.Matchjava(consert);
+		System.out.println("testAdminSeatService"+consertscript.size());
 		
-		SeatDao.QuickSave(consert);
+		return consertscript;
 	}
 }
