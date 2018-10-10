@@ -179,6 +179,7 @@ public class ConsertVO {
 		List<Map<String,Object>> LineList = new ArrayList<Map<String,Object>>();
 		Hallinfo=(List<Map<String, Object>>)ConsertInfo.get("Hallinfo");
 		LineList=(List<Map<String, Object>>)ConsertInfo.get("LineList");
+		System.out.println("자바쪽으로 변환중:"+ConsertInfo.get("ConsertName"));
 		if(ConsertInfo.get("Consertnum")!=null) {
 			Consert.setC_num((String)ConsertInfo.get("Consertnum"));
 		};
@@ -203,6 +204,7 @@ public class ConsertVO {
 			if(LineList.get(i).get("Linenum")!=null) {
 				LineVO.setC_col_num((String)LineList.get(i).get("Linenum"));
 			};
+			System.out.println("test Consert VO:"+LineList.get(i).get("Linenum"));
 			Line.add(LineVO);
 		}
 		Consert.setID((String)ConsertInfo.get("ID"));
@@ -213,7 +215,7 @@ public class ConsertVO {
 		
 		System.out.println("ConsertVOHallcount"+ConsertInfo.get("Hallcount"));
 		Consert.setC_name((String)ConsertInfo.get("ConsertName"));
-		Consert.setC_hall_count((double)ConsertInfo.get("Hallcount"));
+		Consert.setC_hall_count((double)ConsertInfo.get("HallCount"));
 		Consert.setHallinfo(Hall);
 		Consert.setLineList(Line);
 		
@@ -254,7 +256,7 @@ public class ConsertVO {
 		Consert.put("LineList", LineList);
 		Consert.put("Consertnum", Consertinfo.getC_num());
 		Consert.put("ConsertName", Consertinfo.getC_name());
-		Consert.put("Hallcount", Consertinfo.getC_hall_count());
+		Consert.put("HallCount", Consertinfo.getC_hall_count());
 		Consert.put("exitTop", Consertinfo.getExit_y());
 		Consert.put("exitLeft", Consertinfo.getExit_x());
 		Consert.put("entryTop", Consertinfo.getEntry_y());

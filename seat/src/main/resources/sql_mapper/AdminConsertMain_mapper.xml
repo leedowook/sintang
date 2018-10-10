@@ -7,7 +7,16 @@
 	<select id="CountConsertid" resultType="String">
 		select max(C_num) from ConsertHall_main 
 	</select>
+	<delete id="ConsertDelete" parameterType="String">
+		delete from ConsertHall_main where C_num=#{C_num}
+	</delete>
 	<!-- 기본 메인정보 입력 쿼리 -->
+	<select id="ConsertnameOverlap" parameterType="java.util.HashMap" resultType="ConsertMain">
+		select * from ConsertHall_main where ID=#{ID} and C_name=#{C_name}
+	</select>
+	<select id="SelectConsertList" parameterType="String" resultType="ConsertMain">
+		select * from ConsertHall_main where ID=#{ID}
+	</select>
 	<insert id="AddConsert" parameterType="ConsertMain">
 		INSERT INTO ConsertHall_Main VALUES(#{C_num}, #{C_name} ,#{address},#{ad_x},#{ad_y},#{C_kind},#{C_hall_count},#{C_hall_img},#{ID},#{entry_x},#{entry_y},#{exit_x},#{exit_y})
 	</insert>
@@ -17,5 +26,10 @@
 	<update id="ModConsert" parameterType="ConsertMain">
 		update ConsertHall_main set C_name=#{C_name},C_ad_x=#{ad_x},C_ad_y=#{ad_y},C_kind=#{C_kind},C_Address=#{address},Entry_x=#{entry_x},Entry_y=#{entry_y},Exit_x=#{exit_x},Exit_y=#{exit_y},C_hall_img=#{C_hall_img} where C_num=#{C_num}
 	</update>
-
+	<select id="SelectConsertMain" parameterType="java.util.HashMap" resultType="ConsertMain">
+		select * from ConsertHall_main where C_num=#{C_num} and ID=#{ID}
+	</select>
+	<select id="SelectConsertMain2" parameterType="String" resultType="ConsertMain">
+		select * from ConsertHall_main where C_num=#{C_num}
+	</select>
 </mapper>

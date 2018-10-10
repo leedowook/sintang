@@ -4,16 +4,58 @@ var img_L = 0;
 var img_T = 0;
 var targetObj;
 var Nullname=65;
-var Hallcount=0;// 홀의 개수를 하나하나 늘려서 최종적으로 저장하기 위해
+var Ready='false';
+var HallCount=0;// 홀의 개수를 하나하나 늘려서 최종적으로 저장하기 위해
 var Conserthall={
-		
-		HallCount: 0 ,
-		ConsertName:"짜장!"
+		HallCount: 0 
 };
 var LineList=new Array;
 var Hallinfo=new Array;
-//후에 계속 추가 하는데 일단 처음엔 수가 없으므로 0으로 기본값두기
 
+//후에 계속 추가 하는데 일단 처음엔 수가 없으므로 0으로 기본값두기
+SelectConsert();
+function Create(){
+	var Consertname=prompt("입력해라 공연장이름을","공연장이름");
+	ConsertnameOverlap(Consertname);//같은아이디에 같은 이름이 있는지 중복확인
+	function ConsertnameOverlap(Consertname){
+		$.ajax({
+		type:"post",
+		url:"ConsertOverlap",
+		dataType:"text",
+		data:{"Consertname":Consertname},
+			 success: function(data){
+				 if(data=="1"){
+				console.log("새로 만들기 서공 콘서트 이름 사용가능사용가능");
+					if(Consertname!=null){
+						Conserthall.ConsertName=Consertname;
+						Ready='true';
+						document.getElementById("AddJob").innerHTML="";
+						ConsertHall={Hallcount:0};
+						Hallinfo=new Array;
+						LineList=new Array;
+						HallNameList = new Array;
+						LineNameList = new Array;
+						$("#AddJob").append("<div id=Consertnamediv></div>"+
+						"<div id=exit style='position:absolute; left:200px; top:400px; cursor:pointer; cursor:hand' onmousedown='startDrag(event,this)'>출구</div>"+
+						"<div id=entry style='position:absolute; left:400px; top:400px; cursor:pointer; cursor:hand' onmousedown='startDrag(event,this)'>입구</div>");
+
+						ShowConsertname(Consertname);
+					
+					}
+				 }else{
+				 console.log("새로만들기 실패 콘서트이름 불일치사용불가");
+				 Consertname=prompt("다시입력해라 공연장이름을","공연장이름");
+				 ConsertnameOverlap(Consertname);
+				  }},
+				  error: function(jqXHR, textStatus, errorThrown) {
+				        if(textStatus=="timeout") {
+				        	alert("시간이 초과되어 데이터를 수신하지 못하였습니다.");
+				     } else {
+				        	alert("데이터 전송에 실패했습니다. 다시 시도해 주세요");
+				        } 
+				    }
+		});}
+}
 function getLeft(o){//해당 오브젝트 타켓을 가져온다
     return parseInt(o.style.left.replace('px',''));// 해당오브젝트의 탁렛의 이치를 px가뭔지는 모르겟지만 반환한다.
 }
@@ -29,6 +71,8 @@ function moveDrag(e){//event 함수를 가져온다.
     if(dmvx<0||dmvy<0){
     	dmvx=0;
     	dmvy=0;
+    }if(dmvx<160){
+    	dmvx=160;
     }else{
     targetObj.style.left = dmvx +"px";//px는 사이즈인것같다 해당 사이즈를 입력하려면 px단위로 써지므로 붙여지는듯
    //해당 오브젝트의 x좌표를 변환한다.
@@ -58,9 +102,39 @@ function stopDrag(){
     document.onmouseup = null;
 }//드래그가 멈췄을때 해당 값들을 비워낸다.
 
+function Load(){
+	var Consertnum=LoadConsertForm.ConsertList.value;	
+	$.ajax({
+		 type:"post",
+		 url:"LoadSeat",
+		 dataType:"json",
+		 data:Consertnum,
+		 contentType:"Application/json;charset=UTF-8",
+			 success: function(data){
+				 if(data.isExist){
+					 console.log("불러오기 실패사용불가");
+				 }else{
+				 Conserthall=data;
+				 Hallinfo=data.Hallinfo;
+				 LineList=data.LineList;
+				 console.log(Hallinfo);
+				 Ready='true';
+				LoadAllData();
+				  }},
+				  error: function(jqXHR, textStatus, errorThrown) {
+				        if(textStatus=="timeout") {
+				        	alert("시간이 초과되어 데이터를 수신하지 못하였습니다.");
+				     } else {
+				        	alert("데이터 전송에 실패했습니다. 다시 시도해 주세요");
+				        } 
+				    }
+		});
+	
+}
 
 function AddHall_1(){
 	var name=prompt("홀의 이름을 쳐주세요","please enter Hall name");
+	name=name.replace(/\s/gi,"");
 	var HallCount=0;
 	if(name!=null){
 	function searching(){
@@ -82,21 +156,102 @@ function AddHall_1(){
 	AddHall_2(name);
 	HallNameList.push(name);
 }}
-
+function ShowConsertname(Consertname){
+	document.getElementById("Consertnamediv").innerHTML="<h>"+Consertname+"</h>";
+}
+function SelectConsert(){
+	$.ajax({
+		 type:"post",
+		 url:"AdminConsertList",
+		 dataType:"json",
+		 contentType:"Application/json;charset=UTF-8",
+			 success: function(data){
+				 if(data.isExist){
+						console.log(data);
+						 console.log("해당 아이디 리스트없음 사용불가");
+				 }else{
+					 console.log("해당 아이디 리스트있음 사용가능");
+					 console.log(data);
+					 document.getElementById("ConsertList").innerHTML="";
+					 for(var i=0;i<data.length;i++){
+						 	
+							document.getElementById("ConsertList").innerHTML+="<option value="+data[i].Consertnum+">"+data[i].name+"</option>";
+							}	 
+				 }},
+				  error: function(jqXHR, textStatus, errorThrown) {
+				        if(textStatus=="timeout") {
+				        	alert("시간이 초과되어 데이터를 수신하지 못하였습니다.");
+				     } else {
+				        	alert("데이터 전송에 실패했습니다. 다시 시도해 주세요");
+				        } 
+				    }
+		});
+	
+	
+}
+function LoadAllData(){
+	document.getElementById("AddJob").innerHTML="";
+	for(var i=0;i<Hallinfo.length;i++){
+		var ClearLine="ClearLine('"+Hallinfo[i].Hallname+"')";
+		var CreateLine="CreateLine('"+Hallinfo[i].Hallname+"')";
+		var startdrag="startDrag(event,this)";
+	$("#AddJob").append("<div class="+Hallinfo[i].Hallname+" id=Hall name="+Hallinfo[i].Hallname+"Hall resize='both' style='position:absolute; left:"+Hallinfo[i].HallLeft+"px; top:"+Hallinfo[i].HallTop+"px; cursor:pointer; cursor:hand' onmousedown="+startdrag+"><p style='text-align: center;'><b1>"+Hallinfo[i].Hallname+"</b1></p>" +
+"<p><input type='button' value='라인 추가시키기' onclick="+CreateLine+"><input type='button' value='라인전체삭제' onclick="+ClearLine+"><div id='"+Hallinfo[i].Hallname+"Linebox'></p></div>");	
+	}
+	$("#AddJob").append("<div id=Consertnamediv></div>");
+	$("#AddJob").append("<div id=exit style='position:absolute; left:"+Conserthall.exitLeft+"px; top:"+Conserthall.exitTop+"px; cursor:pointer; cursor:hand' onmousedown=startDrag(event,this)>출구</div>");
+	$("#AddJob").append("<div id=entry style='position:absolute; left:"+Conserthall.entryLeft+"px; top:"+Conserthall.entryTop+"px; cursor:pointer; cursor:hand' onmousedown=startDrag(event,this)>출구</div>");
+	for(var j=0;j<LineList.length;j++){
+		var AddSeat="AddSeat('"+LineList[j].Linename+"','"+LineList[j].Hallname+"')"; 
+		document.getElementById(LineList[j].Hallname+"Linebox").innerHTML+="<p id='"+LineList[j].Hallname+LineList[j].Linename+"SeatBox'>"+LineList[j].Linename+"열 </p><input type='button' value='좌석추가' onclick="+AddSeat+">";
+		if(LineList[j].Seatcount!=null){document.getElementById(LineList[j].Hallname+LineList[j].Linename+"SeatBox").innerHTML=LineList[j].Linename+"열 ";
+		document.getElementById(LineList[j].Hallname+LineList[j].Linename+"SeatBox").innerHTML+="좌석:"+LineList[j].Seatcount;}
+	}
+	ShowConsertname(Conserthall.ConsertName);
+}
 
 
 function AddHall_2(name){
 	console.log(name);
 	Hallinfo.push({
 	Hallname:name,
-	Hallindex:Hallcount});
+	Hallindex:HallCount});
 	//콘서트의 기본
-	Hallcount+=1;
+	HallCount+=1;
 	var ClearLine="ClearLine('"+name+"')";
 	var CreateLine="CreateLine('"+name+"')";
 	var startdrag="startDrag(event,this)";
 	$("#AddJob").append("<div class='"+name+"' id='Hall' name='"+name+"Hall' resize='both' style='position:absolute; left:200px; top:120px; cursor:pointer; cursor:hand' onmousedown="+startdrag+"   ><p style='text-align: center;'  ><b1>"+name+"</b1></p>" +
 			"<p><input type='button' value='라인 추가시키기' onclick="+CreateLine+"><input type='button' value='라인전체삭제' onclick="+ClearLine+"><div id='"+name+"Linebox'></p></div> </div>");
+}
+function DeleteConsert(){
+	
+	 var Consertnum=LoadConsertForm.ConsertList.value;
+	 if (confirm("정말로 삭제하시겠습니까? 하시겠습니까?") == true) {
+		 $.ajax({
+			 type:"post",
+			 url:"AdminConsertDelete",
+			 dataType:"json",
+			 data:Consertnum,
+			 contentType:"Application/json;charset=UTF-8",
+				 success: function(data){
+						 if(data=="1"){
+					 alert("삭제가 완료되었습니다.");
+					  }
+					  else{
+					alert("삭제가 실패하였습니다 관리자에게 문의하세요")
+						  
+					  }},
+					  error: function(jqXHR, textStatus, errorThrown) {
+					        if(textStatus=="timeout") {
+					        	alert("시간이 초과되어 데이터를 수신하지 못하였습니다.");
+					     } else {
+					        	alert("데이터 전송에 실패했습니다. 다시 시도해 주세요");
+					        } 
+					    }
+			});
+	 } 
+	 SelectConsert();
 }
 function ClearLine(Hallname){
 	document.getElementById(Hallname+"Linebox").innerHTML="";
@@ -104,13 +259,14 @@ function ClearLine(Hallname){
 	
 	for(var i in LineList){
 		if(LineList[i].Hallname==Hallname){
-			LineList[i].Hallname='DeleteLine';
+			LineList[i].Linename='DeleteLine';
 		}
 		
 	}
 }
 function CreateLine(Hallname){
 	var Linename=prompt("입력해라 라인의 이름을 ","0"); 
+	Linename=Linename.replace(/\s/gi,"");
 	if(Linename!=null){
 	function searchsamename(Hallname,name){
 		console.log("라인 이름 중복검사 Hallname:"+Hallname+name+LineList.length
@@ -185,10 +341,12 @@ function AddSeat(Linename,Hallname){//좌석을 추가시켜줌
 		}
 	}
 }}
+
 function Save(){
 	console.log("Save test Hallinfo의길이:"+Hallinfo.length);
 	for(var i=0;i<Hallinfo.length;i++){
 		var Hallname=Hallinfo[i].Hallname;
+		console.log("저장시 확인"+Hallinfo[i].Hallname);
 		Hallinfo[i].HallTop=$('.'+Hallinfo[i].Hallname).offset().top;
 		Hallinfo[i].HallLeft=$('.'+Hallinfo[i].Hallname).offset().left;
 	}
@@ -198,12 +356,18 @@ function Save(){
 	Conserthall.entryLeft=$('#entry').offset().left;
 	Conserthall.Hallinfo=Hallinfo;
 	Conserthall.LineList=LineList;
-	Conserthall.Hallcount=(Hallinfo.length)+1;
+	Conserthall.HallCount=(Hallinfo.length)+1;
 	console.log(Conserthall);
+	if(Conserthall instanceof Array){
+		console.log("value is Array!");
+		
+	}else{
+		console.log("not Array");
+	}
 	$.ajax({
 		 type:"post",
-		 url:"AdminConsertSave",
 		 dataType:"json",
+		 url:"AdminConsertSave",
 		 data:JSON.stringify(Conserthall),
 		 contentType:"Application/json;charset=UTF-8",
 			 success: function(data){
@@ -212,9 +376,10 @@ function Save(){
 				 }else{
 				 Conserthall=data;
 				 Hallinfo=data.Hallinfo;
-				 LinList=data.LineList;
+				 LineList=data.LineList;
 				 console.log("ajaxtest"+data.Consertnum);
-				  }},
+				 SelectConsert();
+				 }},
 				  error: function(jqXHR, textStatus, errorThrown) {
 				        if(textStatus=="timeout") {
 				        	alert("시간이 초과되어 데이터를 수신하지 못하였습니다.");
@@ -223,6 +388,7 @@ function Save(){
 				        } 
 				    }
 		});
+	
 	
 }
 

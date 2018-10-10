@@ -11,11 +11,10 @@
 	<insert id="AddHall" parameterType="ConsertHall">
 		INSERT INTO ConsertHall_Hall VALUES(#{C_hall_num},#{C_num},#{C_hall_name},#{C_hall_loc_top},#{C_hall_loc_left})
 	</insert>
-	
 	<update id="ModHall" parameterType="ConsertHall">
 		update ConsertHall_Hall set C_hall_name=#{C_hall_name},C_hall_loc_top=#{C_hall_loc_top},C_hall_loc_left=#{C_hall_loc_left} where C_num=#{C_num} and C_hall_num=#{C_hall_num}
 	</update>
-	<select id="SelHall" parameterType="ConsertHall" resultType="ConsertHall">
+	<select id="SelectConsertHall" parameterType="String" resultType="ConsertHall">
+		select * from ConsertHall_Hall where C_num=#{num}
 	</select>
-	
 </mapper>

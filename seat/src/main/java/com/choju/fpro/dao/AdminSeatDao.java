@@ -7,6 +7,10 @@ import com.choju.fpro.vo.ConsertVO;
 import com.choju.fpro.vo.HallVO;
 import com.choju.fpro.vo.LineVO;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -16,7 +20,6 @@ public class AdminSeatDao {
 	private SqlSessionTemplate sqlSession;
 	public ConsertVO QuickLoad(ConsertVO consert) {
 		consert=sqlSession.selectOne("AdminConsertMain.ConsertSelect",consert);
-	
 		return consert;
 	}
 	public void QuickUpdate(ConsertVO consert) {
@@ -48,10 +51,10 @@ public class AdminSeatDao {
 				Linevo=consert.getLineList().get(j);
 				if(consert.getHallinfo().get(i).getC_hall_name().equals(consert.getLineList().get(j).getC_hall_name())) {
 					System.out.println("test2"+consert.getLineList().get(j).getC_col_priority());
-					
-					if(Linevo.getC_col_num()==null) {//라인 최초입력일경우
 					Linevo.setC_num(consert.getC_num());
 					Linevo.setC_hall_num(Hallvo.getC_hall_num());
+					if(Linevo.getC_col_num()==null) {//라인 최초입력일경우
+					
 					System.out.println("test AdminSeatDao"+Linevo.getC_num()+Linevo.getC_hall_num());
 					String Linenum=sqlSession.selectOne("AdminConsertLine.CountLineid",Linevo);
 					if(Linenum==null) {
@@ -71,6 +74,18 @@ public class AdminSeatDao {
 			}
 		}
 		sqlSession.delete("AdminConsertLine.DelAllLine");
+	}
+	public void DeleteConsert(String C_num,HttpServletResponse response) throws IOException {
+		int success=sqlSession.delete("AdminConsertMain.ConsertDelete",C_num);
+		System.out.println("삭제 쿼리결과"+success);
+		if(success>0) {
+			response.getWriter().print("1");
+			
+		}else {
+			response.getWriter().print("0");
+			
+		}
+		
 	}
 	public void QuickSave(ConsertVO consert) {
 		String num=sqlSession.selectOne("AdminConsertMain.CountConsertid");
@@ -95,7 +110,6 @@ public class AdminSeatDao {
 				System.out.println("홀이름 존재");
 				Hallvo.setC_hall_num(consert.numbering(Hallnum)); 
 			}
-			
 			sqlSession.insert("AdminConsertHall.AddHall",Hallvo);
 			
 			for(int j=0;j<consert.getLineList().size();j++) {
@@ -114,10 +128,46 @@ public class AdminSeatDao {
 					System.out.println("라인이름존재");
 					Linevo.setC_col_num(consert.numbering(Linenum));
 				}
-				
 				System.out.println("점검 adminseatdao c_num"+Linevo.getC_num()+" C_hall_num"+Linevo.getC_hall_num());
 				sqlSession.insert("AdminConsertLine.AddLine",Linevo);}}
 		}
 	}
-}
+	
+	public  void ConsertOverlap(String ID, String Consertname,HttpServletResponse response) throws IOException {
+		  HashMap map = new HashMap();//파라미터값을 여러개 ㅈ넘겨주기위해 map을 선언 
+	      map.put("ID", ID);
+	      map.put("C_name", Consertname);
+	     ConsertVO ConsertVO=sqlSession.selectOne("AdminConsertMain.ConsertnameOverlap",map);
+	        if(ConsertVO== null) {
+	        	response.getWriter().print("1");
+	        } else {
+	        	response.getWriter().print("0");
+	        }
+	}
+	
+	public	List<ConsertVO> SelectConsertList(String ID) {
+		List<ConsertVO> consertVO=sqlSession.selectList("AdminConsertMain.SelectConsertList",ID);
+		return consertVO;
+	}
+	
+	public ConsertVO SelectConsert(String ID, String num) {
+		HashMap<String,String> map = new HashMap<String,String>();//파라미터값을 여러개 ㅈ넘겨주기위해 map을 선언 
+         map.put("ID", ID);
+         map.put("C_num", num);
+		ConsertVO consertVO=sqlSession.selectOne("AdminConsertMain.SelectConsertMain",map);
+		List<LineVO> LineList=sqlSession.selectList("AdminConsertLine.SelectConsertLine",num);
+		List<HallVO> Hallinfo=sqlSession.selectList("AdminConsertHall.SelectConsertHall", num);
+		consertVO.setHallinfo(Hallinfo);
+		consertVO.setLineList(LineList);
+		return consertVO;
+	}
+	public ConsertVO SelectConsertInfo(String num){
+		ConsertVO consertVO=sqlSession.selectOne("AdminConsertMain.SelectConsertMain2",num);
+		List<LineVO> LineList=sqlSession.selectList("AdminConsertLine.SelectConsertLine",num);
+		List<HallVO> Hallinfo=sqlSession.selectList("AdminConsertHall.SelectConsertHall", num);
+		consertVO.setHallinfo(Hallinfo);
+		consertVO.setLineList(LineList);
+		return consertVO;
+		}
+	}
 	

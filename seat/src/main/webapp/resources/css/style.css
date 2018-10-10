@@ -29,6 +29,11 @@ div#exit{
 	width:100px;
 	
 }
+div#Consertname{
+	top:2%;
+	left:50%;
+	
+}
 
 
 .AddConsertMenu{
@@ -36,7 +41,7 @@ div#exit{
 	background-color: coral;
 	display:block;
 	float:left;
-	width:10%;
+	width:160px;
 	height:100%;
 }
 .AddJob{
