@@ -4,7 +4,9 @@ var img_L = 0;
 var img_T = 0;
 var targetObj;
 var Nullname=65;
+var Preview='false';
 var Ready='false';
+
 var HallCount=0;// 홀의 개수를 하나하나 늘려서 최종적으로 저장하기 위해
 var Conserthall={
 		HallCount: 0 
@@ -57,28 +59,28 @@ function Create(){
 		});}
 }
 function getLeft(o){//해당 오브젝트 타켓을 가져온다
-    return parseInt(o.style.left.replace('px',''));// 해당오브젝트의 탁렛의 이치를 px가뭔지는 모르겟지만 반환한다.
+    return parseInt(o.style.left.replace('px',''));// 해당오브젝트의 왼쪽으로부터 위치를 px단위로 가져와서 int로 반환
 }
 function getTop(o){//해당 오브젝트 타겟을 가져온다.
-    return parseInt(o.style.top.replace('px',''));//해당 오브젝의 높이를 파악하여 int타입으로 반환한다.
+    return parseInt(o.style.top.replace('px',''));//해당 오브젝의 높이를 파악하여 위치를 int로
 }
 
 //이미지 움직이기
 function moveDrag(e){//event 함수를 가져온다.
-    var e_obj = window.event? window.event : e;
+    var e_obj = window.event? window.event : e;//삼항연산자 이벤트면 이벤트그대로 아니면 e로
     var dmvx = parseInt(e_obj.clientX + img_L);//start drag에서 정의되므로 img_L과 img_T에대한 값은 변해있다.
     var dmvy = parseInt(e_obj.clientY + img_T);//마우스 포인터 위치만큼옮기면 이미지가 움직이는거처럼 보이게된다.
-    if(dmvx<0||dmvy<0){
+    if(dmvx<0||dmvy<0){//바깥으로 벗어나지마!
     	dmvx=0;
     	dmvy=0;
-    }if(dmvx<160){
+    }if(dmvx<160){//일정선넘지마라
     	dmvx=160;
     }else{
-    targetObj.style.left = dmvx +"px";//px는 사이즈인것같다 해당 사이즈를 입력하려면 px단위로 써지므로 붙여지는듯
+    targetObj.style.left = dmvx +"px";//해당값에  움직이는 만큼 px단위로 left에 넣어줌
    //해당 오브젝트의 x좌표를 변환한다.
     targetObj.style.top = dmvy +"px";
     //해당 오브젝트의 y좌표를 변환한다.}
-    return false;
+    return false;//반환할 내용이 딱히없음
 }}
 
 //드래그 시작
@@ -159,6 +161,26 @@ function AddHall_1(){
 function ShowConsertname(Consertname){
 	document.getElementById("Consertnamediv").innerHTML="<h>"+Consertname+"</h>";
 }
+function PreviewMotion(){
+	Save();
+	console.log("Result"+Conserthall.Consertnum);
+	if(Conserthall.Consertnum!=null){
+		Preview='true';
+	PreviewConsert();}
+}
+function PreviewConsert(){
+	
+	var Data=Conserthall.Consertnum;
+	console.log("미리보기 "+Data);
+	$("#AddJob").append("<input type='hidden' name='num' value='"+Data+"'>");
+	goData();
+	function goData(){
+	    var form = document.ConsertInfoForm;
+	    
+	    form.submit();
+	}
+	
+}
 function SelectConsert(){
 	$.ajax({
 		 type:"post",
@@ -182,7 +204,7 @@ function SelectConsert(){
 				        if(textStatus=="timeout") {
 				        	alert("시간이 초과되어 데이터를 수신하지 못하였습니다.");
 				     } else {
-				        	alert("데이터 전송에 실패했습니다. 다시 시도해 주세요");
+				        	console.log("데이터 전송에 실패했습니다. 다시 시도해 주세요");
 				        } 
 				    }
 		});
@@ -260,8 +282,7 @@ function ClearLine(Hallname){
 	for(var i in LineList){
 		if(LineList[i].Hallname==Hallname){
 			LineList[i].Linename='DeleteLine';
-		}
-		
+		}	
 	}
 }
 function CreateLine(Hallname){
@@ -302,8 +323,7 @@ function CreateLine(Hallname){
 		for(var i=0;i<LineList.length;i++){
 			if(Hallname==LineList[i].Hallname){
 				if(Max<LineList[i].Order){
-					Max=LineList[i].Order;
-			}
+					Max=LineList[i].Order;}
 		}}
 		Max+=1;
 		console.log(Max);
@@ -326,11 +346,10 @@ function CreateLine(Hallname){
 function Check(){
 	console.log("check1 c_num:"+Conserthall.Consertnum);
 	console.log("check2 "+Conserthall);
-	
 }
 function AddSeat(Linename,Hallname){//좌석을 추가시켜줌
-	var count=prompt("자리의 개수를 입력해주세요","0");
-	if(count!=null){
+	var count=prompt("자리의 개수를 입력해주세요(20칸 이내로)","0");
+	if(count!=null&&count<21){
 	if(!isNaN(count)){
 		document.getElementById(Hallname+Linename+"SeatBox").innerHTML=Linename+"열 ";
 		document.getElementById(Hallname+Linename+"SeatBox").innerHTML+="좌석:"+count;
@@ -341,12 +360,13 @@ function AddSeat(Linename,Hallname){//좌석을 추가시켜줌
 		}
 	}
 }}
-
+function SaveMotion(){
+	Save();
+	SelectConsert();
+}
 function Save(){
-	console.log("Save test Hallinfo의길이:"+Hallinfo.length);
 	for(var i=0;i<Hallinfo.length;i++){
 		var Hallname=Hallinfo[i].Hallname;
-		console.log("저장시 확인"+Hallinfo[i].Hallname);
 		Hallinfo[i].HallTop=$('.'+Hallinfo[i].Hallname).offset().top;
 		Hallinfo[i].HallLeft=$('.'+Hallinfo[i].Hallname).offset().left;
 	}
@@ -357,13 +377,6 @@ function Save(){
 	Conserthall.Hallinfo=Hallinfo;
 	Conserthall.LineList=LineList;
 	Conserthall.HallCount=(Hallinfo.length)+1;
-	console.log(Conserthall);
-	if(Conserthall instanceof Array){
-		console.log("value is Array!");
-		
-	}else{
-		console.log("not Array");
-	}
 	$.ajax({
 		 type:"post",
 		 dataType:"json",
@@ -374,16 +387,22 @@ function Save(){
 				 if(data.isExist){
 					 console.log("사용불가");
 				 }else{
+				
 				 Conserthall=data;
 				 Hallinfo=data.Hallinfo;
 				 LineList=data.LineList;
+				 
 				 console.log("ajaxtest"+data.Consertnum);
-				 SelectConsert();
+				 
 				 }},
 				  error: function(jqXHR, textStatus, errorThrown) {
 				        if(textStatus=="timeout") {
 				        	alert("시간이 초과되어 데이터를 수신하지 못하였습니다.");
-				     } else {
+				     }else if(Preview=="true"){
+				    	 alert("미리불러온다~");
+				    	 
+				     }
+				        else {
 				        	alert("데이터 전송에 실패했습니다. 다시 시도해 주세요");
 				        } 
 				    }

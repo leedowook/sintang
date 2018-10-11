@@ -19,13 +19,13 @@ ViewConsertSeat
 
 
 콘서트장 이름 ${ConsertSeat.c_name}
+
 <c:forEach items="${ConsertSeat.hallinfo}" var="Hallinfo">
 <div class="${Hallinfo.c_hall_name }" name="${Hallinfo.c_hall_name}Hall" style="position:absolute; left:${Hallinfo.c_hall_loc_left-160}px; top:${Hallinfo.c_hall_loc_top}px;">
 <p style='text-align:center;'>${Hallinfo.c_hall_name}</p>
 <div>
 	<c:forEach items="${ConsertSeat.lineList}" var="Linelist">
 		<c:if test="${Hallinfo.c_hall_name eq Linelist.c_hall_name}">
-			${Linelist.c_col_name}
 			<c:forEach var="i" begin="00" end="${Linelist.c_row_count}" step="1">
 			<c:if test="${i<10}">
 			<input type="checkbox" data-toggle="tooltip" style="vertical-align:0px;padding:-3px;margin:-2px" name="seat" value="${Hallinfo.c_hall_num}${Linelist.c_col_num}0${i}" title="${Hallinfo.c_hall_name}-${Linelist.c_col_name}0${i}"></c:if><c:if test="${i>=10}">

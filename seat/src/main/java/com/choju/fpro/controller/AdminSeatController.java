@@ -81,6 +81,7 @@ public class AdminSeatController{
 	
 	@RequestMapping(value="/ViewConsertSeat",method=RequestMethod.POST)
 	public ModelAndView ViewConsertSeat(@RequestParam String num) {
+		
 		mv=new ModelAndView();
 		mv=SeatService.InfoConsertSeat(num);
 		return mv;
