@@ -35,7 +35,7 @@
 </div>
 <form id="ConsertInfoForm" name="ConsertInfoForm" action="ViewConsertSeat" method="POST">
 <div class="AddJob" id="AddJob" id="menu">
-<div id="Consertnamediv" style="text-align: center;"></div>
+<div id="Consertnamediv" ></div>
 <div id='exit' style='position:absolute; left:200px; top:400px; cursor:pointer; cursor:hand' onmousedown='startDrag(event,this)'>출구</div>
 <div id='entry'style='position:absolute; left:400px; top:400px; cursor:pointer; cursor:hand' onmousedown='startDrag(event,this)'>입구</div>
 </div>

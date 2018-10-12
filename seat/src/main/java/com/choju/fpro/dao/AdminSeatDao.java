@@ -50,7 +50,7 @@ public class AdminSeatDao {
 				LineVO Linevo=new LineVO();
 				Linevo=consert.getLineList().get(j);
 				if(consert.getHallinfo().get(i).getC_hall_name().equals(consert.getLineList().get(j).getC_hall_name())) {
-					System.out.println("test2"+consert.getLineList().get(j).getC_col_priority());
+					System.out.println("test2"+consert.getLineList().get(j).getC_col_name());
 					Linevo.setC_num(consert.getC_num());
 					Linevo.setC_hall_num(Hallvo.getC_hall_num());
 					if(Linevo.getC_col_num()==null) {//라인 최초입력일경우
@@ -67,13 +67,16 @@ public class AdminSeatDao {
 				
 					sqlSession.insert("AdminConsertLine.AddLine",Linevo);}
 					else {//라인 이미 존재할경우
-						System.out.println("AdminSeatDaoLineUpdate");
+						System.out.println("AdminSeatDaoLineUpdate"+Linevo.getC_col_num()+Linevo.getC_col_name());
 						sqlSession.update("AdminConsertLine.ModLine",Linevo);
 						}
 				}
 			}
 		}
+		System.out.println("DAO 삭제검사 Linelist"+consert.getLineList());
+		System.out.println("DAO 삭제검사 Hallvo"+consert.getHallinfo());
 		sqlSession.delete("AdminConsertLine.DelAllLine");
+		sqlSession.delete("AdminConsertHall.DelAllHall");
 	}
 	public void DeleteConsert(String C_num,HttpServletResponse response) throws IOException {
 		int success=sqlSession.delete("AdminConsertMain.ConsertDelete",C_num);

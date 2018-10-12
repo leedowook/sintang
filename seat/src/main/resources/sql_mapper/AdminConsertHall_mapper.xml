@@ -17,4 +17,7 @@
 	<select id="SelectConsertHall" parameterType="String" resultType="ConsertHall">
 		select * from ConsertHall_Hall where C_num=#{num}
 	</select>
+	<delete id="DelAllHall">
+		delete from ConsertHall_Hall where C_Hall_name='DeleteHall'
+	</delete>
 </mapper>

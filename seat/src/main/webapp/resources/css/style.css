@@ -21,6 +21,13 @@ div#entry{
 
 	
 }
+div#Consertnamediv{
+	float:right;
+	width:90%;
+	height:10px;
+	text-align: center;
+	
+}
 
 div#exit{
 	background-color: yellow;

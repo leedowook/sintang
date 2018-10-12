@@ -17,7 +17,6 @@
 	<delete id="DelAllLine">
 		delete from ConsertHall_Col where C_col_name='DeleteLine' 
 	</delete>
-	
 	<select id="SelectConsertLine" parameterType="String" resultType="ConsertLine" >
 		select * from ConsertHall_Col where C_num=#{num}
 	</select>

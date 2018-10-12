@@ -14,8 +14,6 @@
 </form> -->
 <form action="inputLinedata" method="post">
 줄이름을 알아서 생성
-
-
 </form>
 
 <input type="button" onclick="submit()">

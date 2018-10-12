@@ -70,7 +70,8 @@ public class AdminSeatService {
 		mav.addObject("ConsertSeat",consertInfo);
 		mav.addObject("HallInfo",consertInfo.getHallinfo());
 		mav.addObject("LineList",consertInfo.getLineList());
-
+		/*Map<String,Object> consert=consertInfo.Matchjava(consertInfo);
+		mav.addObject("MapConsertSeat",consert);*/
 		mav.setViewName("ViewConsertSeat");
 		return mav;
 	}

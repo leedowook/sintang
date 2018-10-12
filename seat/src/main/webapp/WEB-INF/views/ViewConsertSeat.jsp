@@ -19,7 +19,7 @@ ViewConsertSeat
 
 
 콘서트장 이름 ${ConsertSeat.c_name}
-
+<form>
 <c:forEach items="${ConsertSeat.hallinfo}" var="Hallinfo">
 <div class="${Hallinfo.c_hall_name }" name="${Hallinfo.c_hall_name}Hall" style="position:absolute; left:${Hallinfo.c_hall_loc_left-160}px; top:${Hallinfo.c_hall_loc_top}px;">
 <p style='text-align:center;'>${Hallinfo.c_hall_name}</p>
@@ -36,7 +36,7 @@ ViewConsertSeat
 </div>
 </div>
 </c:forEach>
-
+</form>
 <script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   

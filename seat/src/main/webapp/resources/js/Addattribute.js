@@ -29,10 +29,11 @@ function Create(){
 				 if(data=="1"){
 				console.log("새로 만들기 서공 콘서트 이름 사용가능사용가능");
 					if(Consertname!=null){
+						Conserthall=null;
+						Conserthall={Hallcount:0};
 						Conserthall.ConsertName=Consertname;
 						Ready='true';
 						document.getElementById("AddJob").innerHTML="";
-						ConsertHall={Hallcount:0};
 						Hallinfo=new Array;
 						LineList=new Array;
 						HallNameList = new Array;
@@ -138,7 +139,7 @@ function AddHall_1(){
 	var name=prompt("홀의 이름을 쳐주세요","please enter Hall name");
 	name=name.replace(/\s/gi,"");
 	var HallCount=0;
-	if(name!=null){
+	if(name!=null||name!=""){
 	function searching(){
 	if(HallNameList.length!=0){//중복검사
 		for(var names in HallNameList){
@@ -158,6 +159,21 @@ function AddHall_1(){
 	AddHall_2(name);
 	HallNameList.push(name);
 }}
+function AddHall_2(name){
+	console.log(name);
+	Hallinfo.push({
+	Hallname:name,
+	Hallindex:HallCount});
+	//콘서트의 기본
+	HallCount+=1;
+	var ClearLine="ClearLine('"+name+"')";
+	var CreateLine="CreateLine('"+name+"')";
+	var ModifyHall="ModifyHall('"+name+"')";
+	var DeleteHall="DeleteHall('"+name+"')"
+	var startdrag="startDrag(event,this)";
+	$("#AddJob").append("<div class='"+name+"' id='Hall' name='"+name+"Hall' resize='both' style='position:absolute; left:200px; top:120px; cursor:pointer; cursor:hand' onmousedown="+startdrag+"><p style='text-align: center;'  ><b1>"+name+"</b1><input type='button' value='홀이름변경' onclick="+ModifyHall+"><input type='button' value='홀삭제' onclick="+DeleteHall+"></p>" +
+			"<p><input type='button' value='라인 추가시키기' onclick="+CreateLine+"><input type='button' value='라인전체삭제' onclick="+ClearLine+"><div id='"+name+"Linebox'></p></div> </div>");
+}
 function ShowConsertname(Consertname){
 	document.getElementById("Consertnamediv").innerHTML="<h>"+Consertname+"</h>";
 }
@@ -176,9 +192,75 @@ function PreviewConsert(){
 	goData();
 	function goData(){
 	    var form = document.ConsertInfoForm;
-	    
+	    var gsWin = window.open("about:blank", "winName");
 	    form.submit();
 	}
+	
+}
+function DeleteHall(Hallname){
+	console.log("삭제실행");
+	$('.'+Hallname).remove();
+	
+	for(var j in LineList){
+		if(LineList[j].Hallname==Hallname){
+			LineList[j].Linename='DeleteLine';	
+		}
+	}
+	for(var i in Hallinfo){
+		if(Hallinfo[i].Hallname==Hallname){
+			Hallinfo[i].Hallname='DeleteHall';
+		}	
+	}
+	
+}
+function ModifyHall(Hallname){
+	var Changename=prompt("변경하실 이름을 쳐주세요","please enter Changename");
+	
+	name=name.replace(/\s/gi,"");
+	if(Changename!=null||Changename!=""){
+		
+	function searching(){
+	for(var names in HallNameList){
+		if(Changename==HallNameList[names]){
+					Changename=prompt("중복된 이름입니다 다시 홀의 이름을 쳐주세요","please enter Hall name");
+					searching();
+					break;
+			}
+		}
+	}
+	searching();
+	if(Changename!=""||Changename!=null){		
+		Changename=Changename.replace(/\s/gi,"");
+		for(var i in Hallinfo){
+		if(Hallinfo[i].Hallname==Hallname){
+			Hallinfo[i].Hallname=Changename;	
+		}
+		
+	}
+	
+	var ClearLine="ClearLine('"+Changename+"')";
+	var CreateLine="CreateLine('"+Changename+"')";
+	var ModifyHall="ModifyHall('"+Changename+"')";
+	var DeleteHall="DeleteHall('"+Changename+"')"
+	var startdrag="startDrag(event,this)";
+	var top=$('.'+Hallname).offset().top;
+	var left=$('.'+Hallname).offset().left;
+	$('.'+Hallname).remove();
+	$("#AddJob").append("<div class='"+Changename+"' id='Hall' name='"+Changename+"Hall' resize='both' style='position:absolute; left:"+left+"px; top:"+top+"px; cursor:pointer; cursor:hand' onmousedown="+startdrag+"   ><p style='text-align: center;'  ><b1>"+Changename+"</b1><input type='button' value='홀이름변경' onclick="+ModifyHall+"><input type='button' value='홀삭제' onclick="+DeleteHall+"></p>" +
+			"<p><input type='button' value='라인 추가시키기' onclick="+CreateLine+"><input type='button' value='라인전체삭제' onclick="+ClearLine+"><div id='"+Changename+"Linebox'></p></div> </div>");
+	for(var j in LineList){
+		if(LineList[j].Hallname==Hallname){
+			LineList[j].Hallname=Changename;	
+			var AddSeat="AddSeat('"+LineList[j].Linename+"','"+Changename+"')"; 
+			document.getElementById(Changename+"Linebox").innerHTML+="<p id='"+Changename+LineList[j].Linename+"SeatBox'>"+LineList[j].Linename+"열 </p><input type='button' value='좌석추가' onclick="+AddSeat+">";
+			document.getElementById(Changename+LineList[j].Linename+"SeatBox").innerHTML=LineList[j].Linename+"열 ";
+			document.getElementById(Changename+LineList[j].Linename+"SeatBox").innerHTML+="좌석:"+LineList[j].Seatcount;
+		
+		}
+	}
+		
+		}
+		}
 	
 }
 function SelectConsert(){
@@ -214,10 +296,12 @@ function SelectConsert(){
 function LoadAllData(){
 	document.getElementById("AddJob").innerHTML="";
 	for(var i=0;i<Hallinfo.length;i++){
+		var ModifyHall="ModifyHall('"+Hallinfo[i].Hallname+"')";
+		var DeleteHall="DeleteHall('"+Hallinfo[i].Hallname+"')"
 		var ClearLine="ClearLine('"+Hallinfo[i].Hallname+"')";
 		var CreateLine="CreateLine('"+Hallinfo[i].Hallname+"')";
 		var startdrag="startDrag(event,this)";
-	$("#AddJob").append("<div class="+Hallinfo[i].Hallname+" id=Hall name="+Hallinfo[i].Hallname+"Hall resize='both' style='position:absolute; left:"+Hallinfo[i].HallLeft+"px; top:"+Hallinfo[i].HallTop+"px; cursor:pointer; cursor:hand' onmousedown="+startdrag+"><p style='text-align: center;'><b1>"+Hallinfo[i].Hallname+"</b1></p>" +
+	$("#AddJob").append("<div class="+Hallinfo[i].Hallname+" id=Hall name="+Hallinfo[i].Hallname+"Hall resize='both' style='position:absolute; left:"+Hallinfo[i].HallLeft+"px; top:"+Hallinfo[i].HallTop+"px; cursor:pointer; cursor:hand' onmousedown="+startdrag+"><p style='text-align: center;'><b1>"+Hallinfo[i].Hallname+"</b1><input type='button' value='홀이름변경' onclick="+ModifyHall+"><input type='button' value='홀삭제' onclick="+DeleteHall+"></p>" +
 "<p><input type='button' value='라인 추가시키기' onclick="+CreateLine+"><input type='button' value='라인전체삭제' onclick="+ClearLine+"><div id='"+Hallinfo[i].Hallname+"Linebox'></p></div>");	
 	}
 	$("#AddJob").append("<div id=Consertnamediv></div>");
@@ -233,21 +317,8 @@ function LoadAllData(){
 }
 
 
-function AddHall_2(name){
-	console.log(name);
-	Hallinfo.push({
-	Hallname:name,
-	Hallindex:HallCount});
-	//콘서트의 기본
-	HallCount+=1;
-	var ClearLine="ClearLine('"+name+"')";
-	var CreateLine="CreateLine('"+name+"')";
-	var startdrag="startDrag(event,this)";
-	$("#AddJob").append("<div class='"+name+"' id='Hall' name='"+name+"Hall' resize='both' style='position:absolute; left:200px; top:120px; cursor:pointer; cursor:hand' onmousedown="+startdrag+"   ><p style='text-align: center;'  ><b1>"+name+"</b1></p>" +
-			"<p><input type='button' value='라인 추가시키기' onclick="+CreateLine+"><input type='button' value='라인전체삭제' onclick="+ClearLine+"><div id='"+name+"Linebox'></p></div> </div>");
-}
+
 function DeleteConsert(){
-	
 	 var Consertnum=LoadConsertForm.ConsertList.value;
 	 if (confirm("정말로 삭제하시겠습니까? 하시겠습니까?") == true) {
 		 $.ajax({
@@ -367,9 +438,14 @@ function SaveMotion(){
 function Save(){
 	for(var i=0;i<Hallinfo.length;i++){
 		var Hallname=Hallinfo[i].Hallname;
+		if(Hallinfo[i].Hallname!="DeleteHall"){
 		Hallinfo[i].HallTop=$('.'+Hallinfo[i].Hallname).offset().top;
 		Hallinfo[i].HallLeft=$('.'+Hallinfo[i].Hallname).offset().left;
-	}
+	}else{
+		Hallinfo[i].HallTop=0;
+		Hallinfo[i].HallLeft=0;
+		
+	}}
 	Conserthall.exitTop=$('#exit').offset().top;
 	Conserthall.exitLeft=$('#exit').offset().left;
 	Conserthall.entryTop=$('#entry').offset().top;
@@ -387,7 +463,6 @@ function Save(){
 				 if(data.isExist){
 					 console.log("사용불가");
 				 }else{
-				
 				 Conserthall=data;
 				 Hallinfo=data.Hallinfo;
 				 LineList=data.LineList;
