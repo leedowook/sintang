@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	
+<configuration>
+	<typeAliases>
+		<typeAlias alias="Board" type="com.choju.fpro.vo.BoardVO"/>
+		<typeAlias alias="Member" type="com.choju.fpro.vo.MemberVO"/>
+		<typeAlias alias="PageMaker" type="com.choju.fpro.vo.PageMaker"/>
+		<typeAlias alias="Comment" type="com.choju.fpro.vo.CommentVO"/>
+		<typeAlias alias="ConsertMain" type="com.choju.fpro.vo.ConsertVO"/>
+		<typeAlias alias="ConsertHall" type="com.choju.fpro.vo.HallVO"/>
+		<typeAlias alias="ConsertLine" type="com.choju.fpro.vo.LineVO"/>
+	</typeAliases>
+</configuration>

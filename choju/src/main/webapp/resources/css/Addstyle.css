@@ -1,0 +1,150 @@
+html,body{
+	margin:0px;
+	width:100%;
+	height:100%;
+}
+div#AddJob,#AddConsertMenu{padding:0px;
+
+}
+div#Hall{
+	padding:1px;
+	height: auto; 
+	width: 300px;
+ 	border:1px solid gold;
+}
+
+div#entry{
+	background-color: red;
+	text-align: center;
+	height:30px;
+	width:100px;
+
+	
+}
+div#Consertnamediv{
+	float:right;
+	width:90%;
+	height:10px;
+	text-align: center;
+	
+}
+
+div#exit{
+	background-color: yellow;
+	text-align: center;
+	height:30px;
+	width:100px;
+	
+}
+div#Consertname{
+	top:2%;
+	left:50%;
+	
+}
+
+
+.AddConsertMenu{
+	text-align: center;
+	background-color: coral;
+	display:block;
+	float:left;
+	width:160px;
+	height:100%;
+}
+.AddJob{
+	float:right;
+	width:90%;
+	height:100%;
+}
+
+button{
+  background:coral;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  width:100%;
+  font-size:1.05em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+button:hover{
+  background:#fff;
+  color:#804040;
+}
+button:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #ff8040;
+  transition:400ms ease all;
+}
+button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+button:hover:before,button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+select {
+	text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #2c3e50;
+  background-image: none;
+}
+/* Custom Select */
+.select {
+  position: relative;
+  display: block;
+  width: 20em;
+  height: 3em;
+  line-height: 3;
+  background: #2c3e50;
+  overflow: hidden;
+  border-radius: .25em;
+}
+select {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0 0 0 .5em;
+  color: #fff;
+  cursor: pointer;
+}
+select::-ms-expand {
+  display: none;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 1em;
+  background: #34495e;
+  pointer-events: none;
+}
+/* Transition */
+.select:hover::after {
+  color: #f39c12;
+}
+.select::after {
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+}

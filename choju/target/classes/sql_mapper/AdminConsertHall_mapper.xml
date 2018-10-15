@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdminConsertHall">
+	<select id="CountHallid" parameterType="ConsertHall" resultType="String">
+		select max(C_hall_num) from ConsertHall_Hall where C_num=#{C_num}
+	</select>
+	<!-- 기본 메인정보 입력 쿼리 -->
+	<insert id="AddHall" parameterType="ConsertHall">
+		INSERT INTO ConsertHall_Hall VALUES(#{C_hall_num},#{C_num},#{C_hall_name},#{C_hall_loc_top},#{C_hall_loc_left})
+	</insert>
+	<update id="ModHall" parameterType="ConsertHall">
+		update ConsertHall_Hall set C_hall_name=#{C_hall_name},C_hall_loc_top=#{C_hall_loc_top},C_hall_loc_left=#{C_hall_loc_left} where C_num=#{C_num} and C_hall_num=#{C_hall_num}
+	</update>
+	<select id="SelectConsertHall" parameterType="String" resultType="ConsertHall">
+		select * from ConsertHall_Hall where C_num=#{num}
+	</select>
+	<delete id="DelAllHall">
+		delete from ConsertHall_Hall where C_Hall_name='DeleteHall'
+	</delete>
+</mapper>

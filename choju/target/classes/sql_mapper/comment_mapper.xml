@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Comment">
+	
+	<!-- 작성된 댓글에 대한리스트 -->
+	<select id="replyList" resultType="Comment">
+    	SELECT * FROM Board ORDER BY board_num
+    </select>
+    
+    <!-- 댓글이 써지는 쿼리 -->
+   <insert id="boardreply" parameterType="Comment" useGeneratedKeys="true" keyProperty="Comment_Num">
+         INSERT INTO Board_Comment VALUES(Board_Comment_SEQ.nextval,#{Board_Num},#{Comment_Content},#{Comment_Nickname},0,SYSDATE)
+         <selectKey keyProperty="Comment_Num" resultType="int" order="AFTER">
+            SELECT Board_Comment_SEQ.CURRVAL FROM DUAL
+         </selectKey>
+   </insert>
+   
+	<!-- 게시판에 단 댓글 작성 보여주는 쿼리 -->
+   <select id="replyView" parameterType="int" resultType="Comment">
+      SELECT * FROM Board_Comment WHERE board_num=#{board_num}
+      </select>
+   
+   <!-- 오홍홍 조와용 -->
+   <update id="ReplyLike" parameterType="int">
+      UPDATE Board_Comment SET Comment_Like=Comment_Like+1 WHERE Comment_Num=#{Comment_Num}
+   </update>
+	
+</mapper>
