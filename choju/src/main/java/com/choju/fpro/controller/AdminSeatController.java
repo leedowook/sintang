@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.choju.fpro.service.AdminSeatService;
+import com.choju.fpro.service.LiveBoardService;
 import com.choju.fpro.vo.*;
 
 
@@ -99,28 +100,28 @@ public class AdminSeatController{
 		}
 		
 
-		/*@RequestMapping(value="/ConsertBoardLoad",method=RequestMethod.POST)
-		public ModelAndView ConsertBoardLoad(@ModelAttribute BoardVO BoardVO,HttpServletResponse response) {//게시글을 불러올때 
-			mv=new ModelAndView();
-			BuskingBoardVO BusVO;
-			ConsertBoardVO ConVO;
-			SingBoardService SBService=new SingBoardService();
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out=response.getWriter();
-			if(BoardVO.getBoardType().equals("Con")) {//콘서트로 안내
-				ConVO=new ConVO();
-				ConVO=SBService.BoardConsertInfo(BoardVO.getConsertnum());
-				mv.addObject("Board", ConVO);
-				mv.setViewName("ConsertBoardInfo");
-			}else if(BoardVO.getBoardType().equals("Bus")) {//버스킹으로 안내
-				BusVO=new BuskingVO();
-				BusVO=SBService.BoardBuskingInfo(BoardVO.getConsertnum());
-				mv.addObject("Board", BusVO);
-				mv.setViewName("BuskingBoardInfo");
-			}else{
-				out.println("<script>alert('이상한값이다 검새해라'); history.back();</script>");
-			}
-			return mv;
-		
-	}*/
+		@RequestMapping(value="/ConsertBoardLoad",method=RequestMethod.POST)
+		   public ModelAndView ConsertBoardLoad(@ModelAttribute LiveBoardVO BoardVO,HttpServletResponse response) throws IOException {//게시글을 불러올때 
+		      mv=new ModelAndView();
+		      BuskingBoardVO BusVO;
+		      ConsertBoardVO ConVO;
+		      LiveBoardService SBService=new LiveBoardService();
+		      response.setContentType("text/html;charset=UTF-8");
+		      PrintWriter out=response.getWriter();
+		      if(BoardVO.getL_kind().equals("Con")) {//콘서트로 안내
+		         ConVO=new ConsertBoardVO();
+		         ConVO=SBService.BoardConsertInfo(BoardVO.getL_num());
+		         mv.addObject("Board", ConVO);
+		         mv.setViewName("ConsertBoardInfo");
+		      }else if(BoardVO.getL_kind().equals("Bus")) {//버스킹으로 안내
+		         BusVO=new BuskingBoardVO();
+		         BusVO=SBService.BoardBuskingInfo(BoardVO.getL_num());
+		         mv.addObject("Board", BusVO);
+		         mv.setViewName("BuskingBoardInfo");
+		      }else{
+		         out.println("<script>alert('이상한값이다 검새해라'); history.back();</script>");
+		      }
+		      return mv;
+		      
+		   }
 }
