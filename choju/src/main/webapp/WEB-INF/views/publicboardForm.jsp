@@ -151,16 +151,16 @@
 							<td style="width: 100px">작성일자</td>
 						</tr>
 						 
-						<c:forEach items="${result}" var="board">  
+						<c:forEach items="${publicboardlist}" var="PublicBoard">  
 							
 							<tr style="height: 30px; text-align: center;">
-								<td>${board.board_Num}</td> 
-								<td>${board.board_Type}</td> 
+								<td>${PublicBoard.public_Board_Num}</td> 
+								<td>${PublicBoard.public_Board_Type}</td>
 								<td style="text-align:left;">
-								<a href="boardview?board_Num=${board.board_Num}">&nbsp;&nbsp;&nbsp;${board.board_Title}</a></td>
-								<td>${board.board_Nickname}</td>
-								<td>${board.board_Hit}</td> 
-								<td>${board.board_Date}</td>
+								<a href="boardview?board_Num=${PublicBoard.public_Board_Num}">&nbsp;&nbsp;&nbsp;${PublicBoard.public_Board_Title}</a></td>
+								<td>${PublicBoard.public_Board_Nickname}</td>
+								<td>${PublicBoard.public_Board_Hit}</td> 
+								<td>${PublicBoard.public_Board_Date}</td>
 							</tr>
 						
 						</c:forEach>
@@ -174,7 +174,7 @@
 		</div>
 		
 		<!-- 페이지 정보 출력및 페이지 링크 -->
-		<div style="padding:-50px;">
+		<!-- <div style="padding:-50px;">
 		<ul class="pageUL" style="text-align:center;list-style:none;">
 			<c:if test="${pageMaker.prev }">
 				<li style="display:inline;font-size:15px;"><a href='freeboardForm?page=${pageMaker.start -1}' >이전&nbsp;&nbsp;&nbsp;</a></li>
@@ -191,7 +191,7 @@
 				<li style="display:inline;font-size:15px;"><a href='freeboardForm?page=${pageMaker.end +1}'>&nbsp;&nbsp;&nbsp;다음</a></li>
 			</c:if>
 		</ul>
-		</div>
+		</div> -->
 		 
 		
 		<footer id="colorlib-footer" role="contentinfo">

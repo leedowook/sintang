@@ -40,6 +40,7 @@ import com.choju.fpro.service.MemberService;
 import com.choju.fpro.util.SHA256;
 import com.choju.fpro.vo.MemberVO;
 import com.choju.fpro.vo.PageMaker;
+import com.choju.fpro.vo.Public_BoardVO;
 import com.choju.fpro.vo.alertMember;
 import com.choju.fpro.vo.emailVO;
 import com.choju.fpro.controller.MailHandler;
@@ -117,13 +118,15 @@ public class FinalProjectController {
 		pagemaker.setCount(count);//해당 페이지메이커에개수를 입력해줌
 		System.out.println("count의 값 : " + count);
 		// 페이지 계산
-		System.out.println("컨트롤 " + pagemaker.getPage());
+		System.out.println("컨트롤 페이지값 " + pagemaker.getPage());
 		System.out.println("페이지 메이커 VO start"+pagemaker.getStart());
 		System.out.println("페이지 메이커 VO end"+pagemaker.getEnd());
 		List<BoardVO> list = bs.getRead(pagemaker);
 		System.out.println("list.size의 값은? " + list.size());
+		
 		model.addAttribute("result", list);
 		model.addAttribute("pageMaker", pagemaker);
+		
 
 		return mav;
 	}
@@ -265,6 +268,156 @@ public class FinalProjectController {
     }
     
     // -------------------FreeboardForm -------------------------------
+    
+    //------------------------PublicboardForm---------------------------------
+    
+ // freeboard 메뉴 눌렸을때 나오는 화면(글목록)
+ 	@RequestMapping(value = "/publicboardForm", method = RequestMethod.GET)
+ 	public ModelAndView boardList() {
+ 		mav = new ModelAndView();
+ 		mav = bs.publicboardForm();
+ 		return mav;
+ 	}
+  	
+
+
+  	// 글쓰기 화면 호출
+  	/* @RequestMapping(value = "/boardwriteForm", method = RequestMethod.GET)
+  	public String boardwriteForm(HttpServletResponse response) throws IOException {
+  	
+  		if(session.getAttribute("session_Email")==null) {
+  			
+  			response.setContentType("text/html;charset=UTF-8");
+  			PrintWriter out = response.getWriter();
+  			
+  			out.println("<script>");
+  			out.println("alert('로그인을 해주시길 바랍니다.');");
+  			out.println("history.back()");
+  			out.println("</script>");
+  			out.close(); 
+  		}
+  		return "boardWrite";
+  	}
+
+  	// 글쓰기
+  	@RequestMapping(value = "/boardwrite", method = RequestMethod.POST)
+  	public ModelAndView boardWrite(@ModelAttribute BoardVO boardVO, HttpServletResponse response)
+  			throws IllegalStateException, IOException {
+  		mav = new ModelAndView();
+  		
+  		String Board_Nickname = (String)session.getAttribute("session_Nickname");
+  		System.out.println("파이널컨트롤에서의 글쓰기단에서의 session_Nickname 은 ? " + session.getAttribute("session_Nickname"));
+  		boardVO.setBoard_Nickname(Board_Nickname);
+  		
+  		MultipartFile Board_File = boardVO.getBoard_File(); // 파일처리
+  		if (!Board_File.isEmpty()) {
+  			String fileName = Board_File.getOriginalFilename();
+  			Board_File.transferTo(new File(
+  					"C:\\Users\\user\\Documents\\workspace-sts-3.9.5.RELEASE\\choju\\src\\main\\webapp\\WEB-INF\\Fileupload\\"
+  							+ fileName));
+  		}
+  		boardVO.setBoard_FileName(Board_File.getOriginalFilename());
+  		mav = bs.boardWrite(boardVO, response);
+  		return mav;
+  	}
+
+  	// 글상세보기
+  	@RequestMapping(value = "/boardview", method = RequestMethod.GET)
+  	public ModelAndView boardView(@RequestParam("board_Num") int board_Num) {
+  		// 조회수 증가 처리
+  		bs.increaseHit(board_Num);
+  		mav = new ModelAndView();
+  		mav = bs.boardView(board_Num);
+  		
+  		return mav;
+  	}
+  	
+  	// 글수정하기
+  	@RequestMapping(value = "/boardmodify", method = RequestMethod.GET)
+  	public ModelAndView boardModify(@RequestParam("board_Num") int board_Num) {
+  		mav = new ModelAndView();
+  		mav = bs.boardView(board_Num);
+  		mav.setViewName("boardModify");
+  		return mav;
+  	}
+
+  	// 글수정업데이트
+  	@RequestMapping(value = "/boardmodify1", method = RequestMethod.POST)
+  	public String boardModify1(@ModelAttribute BoardVO boardVO) throws IllegalStateException, IOException {
+  		// 글 수정 시 파일 수정 업데이트
+  		MultipartFile Board_File = boardVO.getBoard_File(); // 파일처리
+  		if (!Board_File.isEmpty()) {
+  			String fileName = Board_File.getOriginalFilename();
+  			Board_File.transferTo(new File(
+  					"C:\\Users\\user\\Documents\\workspace-sts-3.9.5.RELEASE\\choju\\src\\main\\webapp\\WEB-INF\\Fileupload\\"
+  							+ fileName));
+  		}
+  		boardVO.setBoard_FileName(Board_File.getOriginalFilename());
+  		bs.boardModify1(boardVO);
+  		return "redirect:/freeboardForm";
+  	}
+
+  	// 첨부파일 다운로드
+  	@RequestMapping(value = "/boardFileDown", method = RequestMethod.GET)
+  	public void fileDown(@RequestParam("board_FileName") String board_FileName, HttpServletResponse response) throws Exception {
+  		// 무조건 팝업창 뜨게 하는!
+  		response.setContentType("application/octet-stream");
+  		String Orgname = new String(board_FileName.getBytes("UTF-8"), "iso-8859-1");
+  		// 파일명 지정(스펠링 중요)
+  		response.setHeader("Content-Disposition", "attachment;filename=\"" + Orgname + "\"");
+  		OutputStream os = response.getOutputStream();
+  		String path = "C:\\Users\\user\\Documents\\workspace-sts-3.9.5.RELEASE\\choju\\src\\main\\webapp\\WEB-INF\\Fileupload\\";
+  		FileInputStream fis = new FileInputStream(path + File.separator + board_FileName);
+  		int n = 0;
+  		byte[] b = new byte[512];
+  		while ((n = fis.read(b)) != -1) {
+  			os.write(b, 0, n);
+  		}
+  		fis.close();
+  		os.close();
+  	}
+
+  	// 글삭제하기
+  	@RequestMapping(value = "/boarddelete", method = RequestMethod.GET)
+  	public String boardDelete(@RequestParam("board_Num") int board_Num, BoardVO boardVO, HttpServletResponse response) throws IOException {
+  		
+  		response.setContentType("text/html;charset=UTF-8");
+  		PrintWriter out = response.getWriter();
+  		
+  		bs.boardDelete(board_Num);
+  		return "redirect:/freeboardForm";
+  	}
+  	
+  	//댓글 달기
+      @RequestMapping(value = "/boardreply", method= RequestMethod.POST)
+      public ModelAndView boardreply(@ModelAttribute CommentVO commentVO, @RequestParam("Board_Num") int Board_Num) throws IOException {
+      	mav = new ModelAndView();
+      	
+      	String Comment_Nickname = (String)session.getAttribute("session_Nickname");
+  		System.out.println("파이널컨트롤에서의 session_Nickname 은 ? " + session.getAttribute("session_Nickname"));
+  		commentVO.setComment_Nickname(Comment_Nickname);	
+  		
+      	commentVO.setBoard_Num(Board_Num);
+      	System.out.println("파이널컨트롤에서의 Board_Num 은 ? " + commentVO.getBoard_Num());
+  		
+      	
+      	bs.boardreply(commentVO);
+      	mav = bs.boardView(Board_Num);
+      	return mav;
+      }
+      
+      //좋아요?싫어요!
+      @RequestMapping(value= "/ReplyLike", method= RequestMethod.GET)
+      public ModelAndView ReplyLike(@RequestParam("Comment_Num") int Comment_Num,@RequestParam("board_Num")int board_Num, HttpServletResponse response) throws IOException{
+         mav = new ModelAndView();
+         mav = bs.ReplyLike(Comment_Num, response,board_Num);
+         
+         return mav;
+      } */
+  	
+  	//-----------------------------------publicboardForm--------------------------
+    
+    
 
 	// ----------------------Member 베타테스트 --------------------------------
 	 // 회원가입 처리
@@ -332,11 +485,7 @@ public class FinalProjectController {
 	         out.close();
 	         mav.setViewName("loginForm");
 	      } else {
-	         if(email == "Admin")
-	         {
-	            mav = new ModelAndView();
-	            mav = ms.memberLogin(memberVO, response);
-	         }
+	         
 	         mav = new ModelAndView();
 	         mav = ms.memberLogin(memberVO, response);
 	      }

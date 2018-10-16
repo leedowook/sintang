@@ -84,7 +84,7 @@
 									</ul>
 								</li> -->
 								<li><a href="freeboardForm">Free Board</a></li>
-								<li><a href="about">Public Board</a></li>
+								<li><a href="publicboardForm">Public Board</a></li>
 								<li><a href="contact.html">Customer</a></li>			
 								<%if((String)session.getAttribute("session_Email")==null){ %>
 								<li><a href="Login">Login</a></li> <!-- <i class="icon-shopping-cart"></i> -->

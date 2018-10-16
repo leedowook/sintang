@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PublicBoard">
+	
+	<!-- 글목록 쿼리 -->
+	<select id="publicboardForm" resultType="PublicBoard">
+		SELECT * FROM Public_Board order by Public_Board_Num desc
+	</select>
+	
+</mapper>

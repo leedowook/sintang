@@ -107,7 +107,7 @@ public class MemberService {
 	      if (memberVO.getEmail().equals("Admin") && memberVO.getPassword().equals("admin")) {
 	         session.setAttribute("session_Admin", memberVO.getEmail());
 	         mav.addObject("loginMember", loginMember); // 모델담기
-	         mav.setViewName("Admin"); // 뷰담기
+	         mav.setViewName("main"); // 뷰담기
 	      } else if (loginMember.getEmail().equals(memberVO.getEmail())
 	            && loginMember.getPassword().equals(memberVO.getPassword()) && loginMember.getCheked() == 1) {
 	         session.setAttribute("session_Email", memberVO.getEmail());

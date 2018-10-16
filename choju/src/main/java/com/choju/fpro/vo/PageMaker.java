@@ -7,7 +7,33 @@ public class PageMaker {
 	private int count; //컬럼갯수
 	private boolean prev; //이전
 	private boolean next; //다음
-	
+	private int boardendnum;
+	private int boardcount=10;
+	private int boardstartnum;
+	public int getBoardendnum() {
+		return boardendnum;
+	}
+
+	public void setBoardendnum(int boardendnum) {
+		this.boardendnum = boardendnum;
+	}
+
+	public int getBoardcount() {
+		return boardcount;
+	}
+
+	public void setBoardcount(int boardcount) {
+		this.boardcount = boardcount;
+	}
+
+	public int getBoardstartnum() {
+		return boardstartnum;
+	}
+
+	public void setBoardstartnum(int boardstartnum) {
+		this.boardstartnum = boardstartnum;
+	}
+
 	public PageMaker() {
 		
 	}
@@ -19,8 +45,8 @@ public class PageMaker {
 		if (page < 1) {
 			this.page = 1;
 			return;
-		}
-		this.page = page;
+		}else {this.page = page;
+		return;}
 	}
 	public int getEnd() {
 		return end;
@@ -80,9 +106,16 @@ public class PageMaker {
 		      }
 
 		      System.out.println("this.end = "+this.end);
-
+		     
 		      this.prev = this.start != 1; 
 		      this.next = this.end * 10 < this.count;   
+		      this.boardstartnum=this.boardcount*(this.page-1);
+		      this.boardendnum=this.boardstartnum+this.boardcount;
+		      if(this.count-this.boardstartnum<this.boardcount) {
+		    	  this.boardendnum= this.count;
+		      }
+		      System.out.println("페이지에따른 첫게시글순서:"+this.boardstartnum);
+	    	  System.out.println("페이지에따른 끝게시글순서:"+this.boardendnum);
 		   }
 	
 	@Override

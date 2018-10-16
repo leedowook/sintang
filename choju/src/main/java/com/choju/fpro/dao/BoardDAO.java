@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.choju.fpro.vo.BoardVO;
 import com.choju.fpro.vo.CommentVO;
 import com.choju.fpro.vo.PageMaker;
+import com.choju.fpro.vo.Public_BoardVO;
 
 @Repository
 public class BoardDAO extends MemberDAO {
@@ -35,7 +36,11 @@ public class BoardDAO extends MemberDAO {
 	//게시판 페이징
 	public List<BoardVO> getRead(PageMaker pagemaker) {
 		System.out.println("DAO pageMaker"+pagemaker.toString());
-		return sqlSession.selectList("Board.getRead", pagemaker);
+		HashMap map=new HashMap();
+		map.put("start",pagemaker.getBoardstartnum());
+		map.put("end",pagemaker.getBoardendnum());
+		System.out.println("boardDao실행");
+		return sqlSession.selectList("Board.getRead", map);
 	}
 
 	//게시판 글처리
@@ -88,9 +93,9 @@ public class BoardDAO extends MemberDAO {
 		return sqlSession.update("Comment.ReplyLike", comment_Num);
 	}
 
-
-
-	
-	
+	//--------------------------------publicboardForm-------------------------------
+	public List<Public_BoardVO> publicboardForm() {
+		return sqlSession.selectList("PublicBoard.publicboardForm");
+	}
 
 }

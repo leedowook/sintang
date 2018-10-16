@@ -20,6 +20,7 @@ import com.choju.fpro.vo.BoardVO;
 import com.choju.fpro.vo.CommentVO;
 import com.choju.fpro.vo.MemberVO;
 import com.choju.fpro.vo.PageMaker;
+import com.choju.fpro.vo.Public_BoardVO;
 
 @Service
 public class BoardService {
@@ -172,10 +173,21 @@ public class BoardService {
         }
         return mav;
 	}
-
-
-
 	
+	//----------------------------publicboardform Service -------------------------------------------
+	
+	//publicboardform
+	public ModelAndView publicboardForm() {
+		mav = new ModelAndView();
+		List<Public_BoardVO> publicboardForm = new ArrayList<Public_BoardVO>();
+		publicboardForm = bdao.publicboardForm();
+		
+		mav.addObject("PublicBoardlist", publicboardForm);
+		mav.setViewName("publicboardForm");
+		
+		return mav;
+	}
+
 	
 	
 }

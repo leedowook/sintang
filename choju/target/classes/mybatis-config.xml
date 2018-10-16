@@ -6,6 +6,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="Board" type="com.choju.fpro.vo.BoardVO"/>
+		<typeAlias alias="PublicBoard" type="com.choju.fpro.vo.Public_BoardVO"/>
 		<typeAlias alias="Member" type="com.choju.fpro.vo.MemberVO"/>
 		<typeAlias alias="PageMaker" type="com.choju.fpro.vo.PageMaker"/>
 		<typeAlias alias="Comment" type="com.choju.fpro.vo.CommentVO"/>
