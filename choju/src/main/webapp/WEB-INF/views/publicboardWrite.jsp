@@ -1,15 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+   pageEncoding="UTF-8"%>
 <%@ page import="com.choju.fpro.vo.*"%>
-<%@ page import="java.util.*"%>
-<%
-					request.setCharacterEncoding("UTF-8");
-					session = request.getSession(true);
-					String id = request.getParameter("id");
-					request.getSession().setAttribute("id",id);
-				%>
-
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -40,7 +34,7 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/icomoon.css">
 	<!-- Bootstrap  -->
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
-
+ 
 	<!-- Magnific Popup -->
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/magnific-popup.css">
 
@@ -62,36 +56,39 @@
 	<!-- Modernizr JS -->
 	<script src="<c:url value="/resources/js/modernizr-2.6.2.min.js" />"></script>
 	<!-- -------------------------------------절대 수정 하지 말것.---------------------------------------------------  -->
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
-    function page(idx){
-        var pagenum = idx;
-        var contentnum = $("#contentnum option:selected").val();                
-        location.href="${pageContext.request.contextPath}/list?pagenum="+pagenum+"&contentnum="+contentnum;    
-    }
-</script>
-	
-	<style>
-	.youtubeWrap {
-        position: relative;
-        width:  900px;
-        height: 400px;
-        padding-bottom: 56.25%;
-      }
-      .youtubeWrap iframe {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-      }
-	</style>
-	
-	
+	<script src="https://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript" src="./resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
+
+
 	</head>
+	
+	<script type="text/javascript">
+    $(function(){
+        //전역변수
+        var obj = [];              
+        //스마트에디터 프레임생성
+        nhn.husky.EZCreator.createInIFrame({
+            oAppRef: obj,
+            elPlaceHolder: "editor",
+            sSkinURI: "./resources/editor/SmartEditor2Skin.html",
+            htParams : {
+                // 툴바 사용 여부
+                bUseToolbar : true,            
+                // 입력창 크기 조절바 사용 여부
+                bUseVerticalResizer : false,    
+                // 모드 탭(Editor | HTML | TEXT) 사용 여부
+                bUseModeChanger : false,
+            }
+        });
+         $("#insertBoard").click(function(){
+            //id가 smarteditor인 textarea에 에디터에서 대입
+            obj.getById["editor"].exec("UPDATE_CONTENTS_FIELD", []);
+            //폼 submit
+            $("#boardwriteFrm").submit();
+        });
+    });
+</script>
 	
 	
 	
@@ -110,19 +107,10 @@
 						</div>
 						<div class="col-xs-10 text-right menu-1">
 							<ul>
-								<!-- li class="active" --><li><a href="ConsertView">Concert & Busking</a></li>
-								<!-- <li class="has-dropdown">
-									<a href="shop.html">Shop</a>
-									<ul class="dropdown">
-										<li><a href="product-detail.html">Product Detail</a></li>
-										<li><a href="cart.html">Shipping Cart</a></li>
-										<li><a href="checkout.html">Checkout</a></li>
-										<li><a href="order-complete.html">Order Complete</a></li>
-										<li><a href="addtowishlist">Wishlist</a></li>
-									</ul>
-								</li> -->
+								<li><a href="ConsertView">Concert & Busking</a></li>
+								
 								<li><a href="freeboardForm">Free Board</a></li>
-								<li><a href="about">Public Board</a></li>
+								<li><a href="publicboardForm">Public Board</a></li>
 								<li><a href="contact.html">Customer</a></li>			
 								<%if((String)session.getAttribute("session_Email")==null){ %>
 								<li><a href="Login">Login</a></li> <!-- <i class="icon-shopping-cart"></i> -->
@@ -149,131 +137,70 @@
 		<div id="colorlib-featured-product">
 			<div align="center"> <!-- class="container" -->
 				<div>
-					<form action="boardmodify" name="modify" method="post">
-						<input type="hidden" name="board_Num" value="${boardview.board_Num }">
-						<table id=freeboard border=1 style="cellpadding:0;cellspacing:0;border-top:2px solid red;border-bottom:2px solid red;
-							border-left:1px solid black;border-right:1px solid black;" >
-							<tr style="height:30px;text-align:center;border-bottom:black;" bgcolor="#d6d6d6">
-								<td style="width:75px">글번호</td>
-								<td style="width:75px">글유형</td>
-								<td style="width:500px">글제목</td>
-								<td style="width:100px">작성자</td>
-								<td style="width:50px">조회수</td>
-								<td style="width:100px">작성일자</td>
+					<form action="publicboardwrite" name="write" method="post" enctype="multipart/form-data" id="boardwriteFrm">
+						<table border=1 style="cellpadding:0;cellspacing:0;border-top:2px solid red;border-bottom:2px solid red;
+							border-left:1px solid black;border-right:1px solid black;">
+							
+							<tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;width:70px;">작성자</td>
+								<td>&nbsp;&nbsp;&nbsp;<%=session.getAttribute("session_Nickname")%></td>
+								<!-- <input type="text" name="Member_nickname" style="height:50px;width:750px;text-align:left;"> -->
 							</tr>
 							
+							<tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;width:70px;">글제목</td>
+								<td><input type="text" name="Public_Board_Title" style="height:50px;width:750px;text-align:left;"></td>
+							</tr>
+							
+							<tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;">비밀번호</td>
+								<td><input type="password" name="Public_Board_Password" style="height:50px;width:750px;text-align:left;"></td>
+							</tr>
+			
+							<tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;">글유형</td>
+								<td>&nbsp;&nbsp;&nbsp;<select name="Public_Board_Type">
+										<option value="Free">자유</option>
+										<option value="Auction">경매</option>
+										<option value="Relations">홍보</option>
+									</select>
+								</td>
+							</tr>
+							
+							<tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;">글내용</td>
+								<td>
+								<input type="text" id="editor" name="Public_Board_Content" style="width:750px;height:500px;"/>
+								</td>
+							</tr>
+
+							
+							<!-- <tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;">글내용</td>
+								<td><input type="text" name="Board_Content" style="height:500px;width:750px;"></td>
+							</tr> -->
+							
+							<tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;">동영상</td>
+								<td><input type="text" name="Public_Board_Videourl" style="height:50px;width:750px;" placeholder="동영상 url를 작성해주세요"></td>
+							</tr>
+			
 							<tr style="text-align:center;border-bottom:black;">
-								<td>${boardview.board_Num }</td>
-								<td>${boardview.board_Type }</td>
-								<td style="text-align:left;">&nbsp;&nbsp;&nbsp;${boardview.board_Title}</td>
-								<td>${boardview.board_Nickname}</td>
-								<td>${boardview.board_Hit }</td>
-								<td>${boardview.board_Date }</td>
+								<td bgcolor="#d6d6d6" style="height:50px;">첨부파일</td>
+								<td><input type="file" name="Public_Board_File"></td>
 							</tr>
-							
-							<tr style="border-bottom:black;">
-								<td colspan="6"><br><br><br>&nbsp;&nbsp;&nbsp;${boardview.board_Videourl }
-												<br><br><br>&nbsp;&nbsp;&nbsp;${boardview.board_Content }<br><br><br>
-								</td>
-								<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-   								
-   								<script>
-      							jQuery( document ).ready( function( $ ) {
-        						$( 'iframe[src^="https://www.youtube.com/"]' ).wrap( '<div class="youtubeWrap"></div>' );
-     							} );
-   								</script>
-   								 
-							</tr>
-							
-							<tr style="border-bottom:black;">
-								<td bgcolor="#d6d6d6">&nbsp;&nbsp;&nbsp;파일명</td>
-								<td colspan="5"><a href="boardFileDown?board_FileName=${boardview.board_FileName }">&nbsp;&nbsp;&nbsp;${boardview.board_FileName}</a></td>
-							</tr>
-										
+		
 							<tr>
-								<td colspan="6" style="text-align:right;height:30px;">
-									<c:if test="${sessionScope.session_Nickname == boardview.board_Nickname}">
-									<a href="boardmodify?board_Num=${boardview.board_Num }">수정</a> &nbsp;&nbsp;
-									<a href="freeboardForm">목록보기</a> &nbsp;&nbsp;
-									<a href="boarddelete?board_Num=${boardview.board_Num }">삭제</a> &nbsp;&nbsp;
-									</c:if>
-									<c:if test="${sessionScope.session_Nickname != boardview.board_Nickname}">
-									<a href="freeboardForm">목록보기</a> &nbsp;&nbsp;
-									</c:if>
-								</td>
-							</tr>
-						</table>
+								<td colspan="2" style="height:50px;text-align:right;">
+								<a href="##" onclick="history.go(-1)">돌아가기&nbsp;&nbsp;&nbsp;</a>
+								<a href="javascript:write.submit()" id="insertBoard" >작성하기&nbsp;&nbsp;&nbsp;</a></td>
+							</tr> 
+						</table>	
 					</form>
 				</div>
 				
-				<br>
-				<br>
 				
-				
-				
-				<!-- <h3>댓글이지렁</h3> -->
-				
-				<form action="boardreply" name="reply" method ="post" >
-					<table border=1 style="cellpadding:0;cellspacing:0;border-top:2px solid red;border-bottom:2px solid red;
-							border-left:1px solid black;border-right:1px solid black;" >
-					<tbody>
-					<div style="font-size:15px;text-align:center;">댓글</div>
-						<tr style="height:30px;text-align:center;border-bottom:black;" >
-							<td style="width:200px" bgcolor="#d6d6d6">글 작성자</td>
-							<td style="width:700px;text-align:left;">
-							<%if(session.getAttribute("session_Nickname")==null) {%>
-							&nbsp;&nbsp;&nbsp;로그인이 필요합니다<%} %>
-							<%if(session.getAttribute("session_Nickname")!=null) { %>
-							&nbsp;&nbsp;&nbsp;<%=session.getAttribute("session_Nickname")%><%} %>
-							</td>
-							<!-- <input type="text" name="Comment_Writer" required="required" style="width:700px; height:30px;" > -->
-						</tr>
-						<tr style="height:30px;text-align:center;border-bottom:black;">
-							<input type="hidden" name="Board_Num" value="${boardview.board_Num }">
-							<td style="width:200px" bgcolor="#d6d6d6">댓글 작성하기</td>
-							<td style="width:700px"><input type="text" name="Comment_Content" required="required" style="width:700px; height:75px;"
-								placeholder="건전한 커뮤니티 이용을 부탁드립니다."></td>
-						</tr>
-						
-						<tr>
-							<td colspan="2" style="text-align:right;height:30px;">
-								<%if(session.getAttribute("session_Nickname")!=null) { %>
-								<a href="javascript:reply.submit()" style="width:50px; height:30px;">등록&nbsp;&nbsp;&nbsp;</a>
-								<%} %>
-							</td> <!-- <a href="boardreply?board_Num=${boardview.board_Num }">등록</a>&nbsp;&nbsp;  -->  
-						</tr>
-					</tbody>
-					</table>
-				</form>
-				
-				<br>
-				<br>
-				<br>
-		   
-				
-					<table border=1 style="cellpadding:0;cellspacing:0;border-top:2px solid red;border-bottom:2px solid red;
-							border-left:1px solid black;border-right:1px solid black;" >
-							<div style="font-size:15px;text-align:center;">댓글 리스트</div>
-							<tbody>
-							<c:forEach var="reply" items="${replyView}">
-							<input type="hidden" name="Comment_Num" value="${reply.comment_Num}">
-							<tr style="height:30px;text-align:center;border-bottom:black;">
-								<td style="width:200px" bgcolor="#d6d6d6">댓글 작성자</td>
-								<td style="width:250px;">${reply.comment_Nickname}</td>
-								<td style="width:200px;" bgcolor="#d6d6d6">
-									<a href="ReplyLike?Comment_Num=${reply.comment_Num}&board_Num=${boardview.board_Num }"><img src="./resources/images/like2.png"></a>
-								</td>
-								<td style="width:250px;">${reply.comment_Like}</td>
-							</tr>
-						
-							<tr style="height:30px;text-align:center;border-bottom:black;">
-								<td style="width:200px;" bgcolor="#d6d6d6">댓글 내용</td>
-								<td style="width:700px;" colspan="3">${reply.comment_Content}</td>
-							</tr>
-							</c:forEach>
-							</tbody>
-					</table>
-					
+			
 				<!-- <div class="row">
 					<div class="col-md-6">
 						<a href="shop.html" class="f-product-1" style="background-image: url(./resources/images/item-1.jpg);background-size:100%;">

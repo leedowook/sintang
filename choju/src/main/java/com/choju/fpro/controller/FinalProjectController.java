@@ -165,7 +165,7 @@ public class FinalProjectController {
 		if (!Board_File.isEmpty()) {
 			String fileName = Board_File.getOriginalFilename();
 			Board_File.transferTo(new File(
-					"C:\\Users\\user\\Documents\\workspace-sts-3.9.5.RELEASE\\choju\\src\\main\\webapp\\WEB-INF\\Fileupload\\"
+					"C:\\Users\\user\\git\\re\\sin\\choju\\src\\main\\webapp\\WEB-INF\\Fileupload\\"
 							+ fileName));
 		}
 		boardVO.setBoard_FileName(Board_File.getOriginalFilename());
@@ -201,7 +201,7 @@ public class FinalProjectController {
 		if (!Board_File.isEmpty()) {
 			String fileName = Board_File.getOriginalFilename();
 			Board_File.transferTo(new File(
-					"C:\\Users\\user\\Documents\\workspace-sts-3.9.5.RELEASE\\choju\\src\\main\\webapp\\WEB-INF\\Fileupload\\"
+					"C:\\Users\\user\\git\\re\\sin\\choju\\src\\main\\webapp\\WEB-INF\\Fileupload\\"
 							+ fileName));
 		}
 		boardVO.setBoard_FileName(Board_File.getOriginalFilename());
@@ -218,7 +218,7 @@ public class FinalProjectController {
 		// 파일명 지정(스펠링 중요)
 		response.setHeader("Content-Disposition", "attachment;filename=\"" + Orgname + "\"");
 		OutputStream os = response.getOutputStream();
-		String path = "C:\\Users\\user\\Documents\\workspace-sts-3.9.5.RELEASE\\choju\\src\\main\\webapp\\WEB-INF\\Fileupload\\";
+		String path = "C:\\Users\\user\\git\\re\\sin\\choju\\src\\main\\webapp\\WEB-INF\\Fileupload\\";
 		FileInputStream fis = new FileInputStream(path + File.separator + board_FileName);
 		int n = 0;
 		byte[] b = new byte[512];
@@ -271,19 +271,17 @@ public class FinalProjectController {
     
     //------------------------PublicboardForm---------------------------------
     
- // freeboard 메뉴 눌렸을때 나오는 화면(글목록)
+ // publicboardForm 메뉴 눌렸을때 나오는 화면(글목록)
  	@RequestMapping(value = "/publicboardForm", method = RequestMethod.GET)
  	public ModelAndView boardList() {
  		mav = new ModelAndView();
  		mav = bs.publicboardForm();
  		return mav;
  	}
-  	
-
 
   	// 글쓰기 화면 호출
-  	/* @RequestMapping(value = "/boardwriteForm", method = RequestMethod.GET)
-  	public String boardwriteForm(HttpServletResponse response) throws IOException {
+  	@RequestMapping(value = "/publicboardwriteForm", method = RequestMethod.GET)
+  	public String publicboardwriteForm(HttpServletResponse response) throws IOException {
   	
   		if(session.getAttribute("session_Email")==null) {
   			
@@ -296,33 +294,33 @@ public class FinalProjectController {
   			out.println("</script>");
   			out.close(); 
   		}
-  		return "boardWrite";
+  		return "publicboardWrite";
   	}
 
   	// 글쓰기
-  	@RequestMapping(value = "/boardwrite", method = RequestMethod.POST)
-  	public ModelAndView boardWrite(@ModelAttribute BoardVO boardVO, HttpServletResponse response)
-  			throws IllegalStateException, IOException {
+  	@RequestMapping(value = "/publicboardwrite", method = RequestMethod.POST)
+  	public ModelAndView publicboardwrite(@ModelAttribute Public_BoardVO public_boardVO, @ModelAttribute BoardVO boardVO,
+  			HttpServletResponse response) throws IllegalStateException, IOException {
   		mav = new ModelAndView();
   		
   		String Board_Nickname = (String)session.getAttribute("session_Nickname");
-  		System.out.println("파이널컨트롤에서의 글쓰기단에서의 session_Nickname 은 ? " + session.getAttribute("session_Nickname"));
-  		boardVO.setBoard_Nickname(Board_Nickname);
-  		
-  		MultipartFile Board_File = boardVO.getBoard_File(); // 파일처리
-  		if (!Board_File.isEmpty()) {
-  			String fileName = Board_File.getOriginalFilename();
-  			Board_File.transferTo(new File(
-  					"C:\\Users\\user\\Documents\\workspace-sts-3.9.5.RELEASE\\choju\\src\\main\\webapp\\WEB-INF\\Fileupload\\"
-  							+ fileName));
-  		}
-  		boardVO.setBoard_FileName(Board_File.getOriginalFilename());
-  		mav = bs.boardWrite(boardVO, response);
-  		return mav;
+		System.out.println("파이널컨트롤에서의 글쓰기단에서의 session_Nickname 은 ? " + session.getAttribute("session_Nickname"));
+		boardVO.setBoard_Nickname(Board_Nickname);
+		
+		MultipartFile Public_Board_File = public_boardVO.getPublic_Board_File(); // 파일처리
+		if (!Public_Board_File.isEmpty()) {
+			String publicfileName = Public_Board_File.getOriginalFilename();
+			Public_Board_File.transferTo(new File(
+					"C:\\Users\\user\\git\\re\\sin\\choju\\src\\main\\webapp\\WEB-INF\\Fileupload\\"
+							+ publicfileName));
+		}
+		public_boardVO.setPublic_Board_FileName(Public_Board_File.getOriginalFilename());
+		mav = bs.publicboardwrite(public_boardVO, boardVO, response);
+		return mav;
   	}
 
   	// 글상세보기
-  	@RequestMapping(value = "/boardview", method = RequestMethod.GET)
+  	/* @RequestMapping(value = "/boardview", method = RequestMethod.GET)
   	public ModelAndView boardView(@RequestParam("board_Num") int board_Num) {
   		// 조회수 증가 처리
   		bs.increaseHit(board_Num);

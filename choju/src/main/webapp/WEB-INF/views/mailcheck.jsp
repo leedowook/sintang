@@ -140,7 +140,7 @@
         <div class="panel panel-success">
             <div class="panel-body" >
                 <form id="cheked" method="post" action="cheked">
-                        <h4>인증을 완료하였습니다.아래의 확인 버튼을 눌러주세요</h4>
+                        <h4>인증을 완료하였습니다. 아래의 확인 버튼을 눌러주세요</h4>
                     <br>
                     <br>
                         <button type="submit" class="btn btn-primary center-block">확인</button>

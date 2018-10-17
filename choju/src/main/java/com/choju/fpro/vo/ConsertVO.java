@@ -183,6 +183,7 @@ public class ConsertVO {
 		if(ConsertInfo.get("Consertnum")!=null) {
 			Consert.setC_num((String)ConsertInfo.get("Consertnum"));
 		};
+		
 		for(int i=0;i<Hallinfo.size();i++) {
 			HallVO HallVO=new HallVO();
 			HallVO.setC_hall_name((String)Hallinfo.get(i).get("Hallname"));
@@ -200,7 +201,7 @@ public class ConsertVO {
 			LineVO.setC_hall_name((String)LineList.get(i).get("Hallname"));
 			LineVO.setC_col_name((String)LineList.get(i).get("Linename"));
 			LineVO.setC_row_count((String)LineList.get(i).get("Seatcount"));
-			LineVO.setC_col_priority((Double)LineList.get(i).get("Order"));
+			LineVO.setC_col_priority((double)LineList.get(i).get("Order"));
 			if(LineList.get(i).get("Linenum")!=null) {
 				LineVO.setC_col_num((String)LineList.get(i).get("Linenum"));
 			};

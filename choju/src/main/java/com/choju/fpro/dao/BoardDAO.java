@@ -94,8 +94,13 @@ public class BoardDAO extends MemberDAO {
 	}
 
 	//--------------------------------publicboardForm-------------------------------
+	//public 게시판
 	public List<Public_BoardVO> publicboardForm() {
 		return sqlSession.selectList("PublicBoard.publicboardForm");
 	}
-
+	
+	//public 게시판 글쓰기
+	public int publicboardwrite(Public_BoardVO public_boardVO) {
+		return sqlSession.insert("PublicBoard.publicboardwrite", public_boardVO);
+	}
 }

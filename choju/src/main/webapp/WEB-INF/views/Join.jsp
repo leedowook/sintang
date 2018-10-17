@@ -83,9 +83,6 @@
 						<div class="col-xs-2">
 							<div id="colorlib-logo"><a href="/fpro/">HOME</a></div>
 						</div>
-						<div class="col-xs-2">
-							<div id="colorlib-logo"><a href="/fpro/">HOME</a></div>
-						</div>
 						<div class="col-xs-10 text-right menu-1">
 							<ul>
 								<!-- li class="active" --><li><a href="ConsertView">Concert & Busking</a></li>

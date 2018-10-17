@@ -139,7 +139,7 @@
 			<div align="center">
 				<!-- class="container" -->
 				<div>
-					<table id="freeboard" border="0"
+					<table id="publicboard" border="0"
 						style="cellpadding: 0; cellspacing: 0; border-top: 2px solid red; border-bottom: 2px solid red; border-left: none; border-right: none;">
 						<!-- width="1000px" -->
 						<tr style="height: 30px; text-align: center;" bgcolor="#d6d6d6">
@@ -151,7 +151,7 @@
 							<td style="width: 100px">작성일자</td>
 						</tr>
 						 
-						<c:forEach items="${publicboardlist}" var="PublicBoard">  
+						<c:forEach items="${result}" var="PublicBoard">  
 							
 							<tr style="height: 30px; text-align: center;">
 								<td>${PublicBoard.public_Board_Num}</td> 
@@ -166,7 +166,7 @@
 						</c:forEach>
 						<tr>
 							<td colspan="8" style="text-align: right; height: 30px;">				
-							<a href="boardwriteForm">글쓰기&nbsp;&nbsp;&nbsp;</a></td>
+							<a href="publicboardwriteForm">글쓰기&nbsp;&nbsp;&nbsp;</a></td>
 						</tr>
 					</table>
 				</div>

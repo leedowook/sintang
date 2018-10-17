@@ -143,7 +143,7 @@
 				<div class="row">
 					<div class="col-md-3 text-center">
 						<div class="product-entry">
-							<div class="product-img" style="background-image: url(./resources/images/item-9.jpg);background-size:100%;">
+							<div class="product-img" style="background-image: url(./resources/images/con1.jpg);background-size:100%;">
 								<p class="tag"><span class="sale">Sale</span></p>
 								<div class="cart">
 									<p>
@@ -153,13 +153,13 @@
 								</div>
 							</div>
 							<div class="desc">
-								<h3>공연장1</h3>
+								<h3>Consert1</h3>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3 text-center">
 						<div class="product-entry">
-							<div class="product-img" style="background-image: url(./resources/images/item-10.jpg);background-size:100%;">
+							<div class="product-img" style="background-image: url(./resources/images/con2.jpg);background-size:100%;">
 								<p class="tag"><span class="new">New</span></p>
 								<div class="cart">
 									<p>
@@ -169,13 +169,13 @@
 								</div>
 							</div>
 							<div class="desc">
-								<h3>공연장2</h3>
+								<h3>Consert2</h3>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3 text-center">
 						<div class="product-entry">
-							<div class="product-img" style="background-image: url(./resources/images/item-11.jpg);background-size:100%;">
+							<div class="product-img" style="background-image: url(./resources/images/con3.jpg);background-size:100%;">
 								<p class="tag"><span class="new">New</span></p>
 								<div class="cart">
 									<p>
@@ -185,13 +185,13 @@
 								</div>
 							</div>
 							<div class="desc">
-								<h3>공연장3</h3>
+								<h3>Consert3</h3>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3 text-center">
 						<div class="product-entry">
-							<div class="product-img" style="background-image: url(./resources/images/item-12.jpg);background-size:100%;">
+							<div class="product-img" style="background-image: url(./resources/images/con4.jpg);background-size:100%;">
 								<p class="tag"><span class="new">New</span></p>
 								<div class="cart">
 									<p>
@@ -201,13 +201,13 @@
 								</div>
 							</div>
 							<div class="desc">
-								<h3>공연장4</h3>
+								<h3>Consert4</h3>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3 text-center">
 						<div class="product-entry">
-							<div class="product-img" style="background-image:url(./resources/images/item-13.jpg);background-size:100%;">
+							<div class="product-img" style="background-image:url(./resources/images/con5.jpg);background-size:100%;">
 								<p class="tag"><span class="new">New</span></p>
 								<div class="cart">
 									<p>
@@ -217,13 +217,13 @@
 								</div>
 							</div>
 							<div class="desc">
-								<h3>공연장5</h3>
+								<h3>Consert5</h3>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3 text-center">
 						<div class="product-entry">
-							<div class="product-img" style="background-image: url(./resources/images/item-14.jpg);background-size:100%;">
+							<div class="product-img" style="background-image: url(./resources/images/con6.jpg);background-size:100%;">
 								<p class="tag"><span class="new">New</span></p>
 								<div class="cart">
 									<p>
@@ -233,13 +233,13 @@
 								</div>
 							</div>
 							<div class="desc">
-								<h3>공연장6</h3>
+								<h3>Consert6</h3>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3 text-center">
 						<div class="product-entry">
-							<div class="product-img" style="background-image: url(./resources/images/item-15.jpg);background-size:100%;">
+							<div class="product-img" style="background-image: url(./resources/images/con7.jpg);background-size:100%;">
 								<p class="tag"><span class="new">New</span></p>
 								<div class="cart">
 									<p>
@@ -249,13 +249,13 @@
 								</div>
 							</div>
 							<div class="desc">
-								<h3>공연장7</h3>
+								<h3>Consert7</h3>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3 text-center">
 						<div class="product-entry">
-							<div class="product-img" style="background-image: url(./resources/images/item-16.jpg);background-size:100%;">
+							<div class="product-img" style="background-image: url(./resources/images/con8.jpg);background-size:100%;">
 								<p class="tag"><span class="new">New</span></p>
 								<div class="cart">
 									<p>
@@ -265,7 +265,7 @@
 								</div>
 							</div>
 							<div class="desc">
-								<h3>공연장8</h3>
+								<h3>Consert8</h3>
 							</div>
 						</div>
 					</div>

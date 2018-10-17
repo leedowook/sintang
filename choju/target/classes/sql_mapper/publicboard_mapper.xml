@@ -10,4 +10,13 @@
 		SELECT * FROM Public_Board order by Public_Board_Num desc
 	</select>
 	
+	<!-- 글쓰기 쿼리 -->
+	<insert id="publicboardwrite" parameterType="PublicBoard" useGeneratedKeys="true" keyProperty="Public_Board_Num">
+		INSERT INTO Public_Board VALUES(Public_Board_seq.nextval, #{Public_Board_Password}, #{Public_Board_Type},
+		#{Public_Board_Title}, #{Public_Board_Content}, #{Public_Board_Videourl}, #{Public_Board_FileName}, 0, SYSDATE)
+		<selectKey keyProperty="Public_Board_Num" resultType="int" order="AFTER">
+			SELECT Public_Board_seq.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
 </mapper>

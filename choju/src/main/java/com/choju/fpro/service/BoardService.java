@@ -182,12 +182,40 @@ public class BoardService {
 		List<Public_BoardVO> publicboardForm = new ArrayList<Public_BoardVO>();
 		publicboardForm = bdao.publicboardForm();
 		
-		mav.addObject("PublicBoardlist", publicboardForm);
+		mav.addObject("publicboardlist", publicboardForm);
 		mav.setViewName("publicboardForm");
 		
 		return mav;
 	}
 
+	//publicBoard 에서 글쓰기
+	public ModelAndView publicboardwrite(Public_BoardVO public_boardVO, BoardVO boardVO,
+			HttpServletResponse response) throws IOException {
+		mav=new ModelAndView();
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		int result = bdao.publicboardwrite(public_boardVO);
+		if(result==0) {
+			//글쓰기 실패시
+			out.println("<script>");
+			out.println("alert('다시 작성해주시기 바랍니다.');");
+			out.println("history.back()");
+			out.println("</script>");
+			out.close();
+		} else {
+			//글쓰기 성공시
+			out.println("<script>");
+			out.println("alert('글쓰기에 성공했습니다.');");
+			out.println("window.location.href='publicboardForm';");
+			out.println("</script>");
+			out.close();
+			mav.setViewName("redirect:/publicboardForm");
+		}
+		
+		return mav;
+	}
+	
 	
 	
 }

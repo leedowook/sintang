@@ -11,7 +11,7 @@ public class Public_BoardVO {
 	private String Public_Board_Title;
 	private String Public_Board_Content;
 	private String Public_Board_Videourl;
-	private String Public_Board_Nickname;
+	private String Board_Nickname;
 	private MultipartFile Public_Board_File;
 	private int Public_Board_Hit;
 	private Date Public_Board_Date;
@@ -23,19 +23,19 @@ public class Public_BoardVO {
 		return "Public_BoardVO [Public_Board_Num=" + Public_Board_Num + ", Public_Board_Password="
 				+ Public_Board_Password + ", Public_Board_Type=" + Public_Board_Type + ", Public_Board_Title="
 				+ Public_Board_Title + ", Public_Board_Content=" + Public_Board_Content + ", Public_Board_Videourl="
-				+ Public_Board_Videourl + ", Public_Board_Nickname=" + Public_Board_Nickname + ", Public_Board_File="
+				+ Public_Board_Videourl + ", Board_Nickname=" + Board_Nickname + ", Public_Board_File="
 				+ Public_Board_File + ", Public_Board_Hit=" + Public_Board_Hit + ", Public_Board_Date="
 				+ Public_Board_Date + ", Public_Board_FileName=" + Public_Board_FileName + "]";
 	}
-	
+
 	//생성자
 	public Public_BoardVO() {
 				
 	}
 
 	public Public_BoardVO(int public_Board_Num, String public_Board_Password, String public_Board_Type,
-			String public_Board_Title, String public_Board_Content, String public_Board_Videourl,
-			String public_Board_Nickname, MultipartFile public_Board_File, int public_Board_Hit, Date public_Board_Date,
+			String public_Board_Title, String public_Board_Content, String public_Board_Videourl, String board_Nickname,
+			MultipartFile public_Board_File, int public_Board_Hit, Date public_Board_Date,
 			String public_Board_FileName) {
 		super();
 		Public_Board_Num = public_Board_Num;
@@ -44,7 +44,7 @@ public class Public_BoardVO {
 		Public_Board_Title = public_Board_Title;
 		Public_Board_Content = public_Board_Content;
 		Public_Board_Videourl = public_Board_Videourl;
-		Public_Board_Nickname = public_Board_Nickname;
+		Board_Nickname = board_Nickname;
 		Public_Board_File = public_Board_File;
 		Public_Board_Hit = public_Board_Hit;
 		Public_Board_Date = public_Board_Date;
@@ -99,12 +99,12 @@ public class Public_BoardVO {
 		Public_Board_Videourl = public_Board_Videourl;
 	}
 
-	public String getPublic_Board_Nickname() {
-		return Public_Board_Nickname;
+	public String getBoard_Nickname() {
+		return Board_Nickname;
 	}
 
-	public void setPublic_Board_Nickname(String public_Board_Nickname) {
-		Public_Board_Nickname = public_Board_Nickname;
+	public void setBoard_Nickname(String board_Nickname) {
+		Board_Nickname = board_Nickname;
 	}
 
 	public MultipartFile getPublic_Board_File() {
@@ -138,7 +138,6 @@ public class Public_BoardVO {
 	public void setPublic_Board_FileName(String public_Board_FileName) {
 		Public_Board_FileName = public_Board_FileName;
 	}
-	
 	
 	
 }
