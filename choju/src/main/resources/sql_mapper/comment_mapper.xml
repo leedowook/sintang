@@ -1,31 +1,76 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="Board">
 
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="Comment">
+	<!-- 글목록 쿼리 -->
+	<select id="freeboardForm" resultType="board">
+		SELECT * FROM Board order by board_Num desc
+	</select>
 	
-	<!-- 작성된 댓글에 대한리스트 -->
-	<select id="replyList" resultType="Comment">
-    	SELECT * FROM Board ORDER BY board_num
-    </select>
-    
-    <!-- 댓글이 써지는 쿼리 -->
-   <insert id="boardreply" parameterType="Comment" useGeneratedKeys="true" keyProperty="Comment_Num">
-         INSERT INTO Board_Comment VALUES(Board_Comment_SEQ.nextval,#{Board_Num},#{Comment_Content},#{Comment_Nickname},0,SYSDATE)
-         <selectKey keyProperty="Comment_Num" resultType="int" order="AFTER">
-            SELECT Board_Comment_SEQ.CURRVAL FROM DUAL
-         </selectKey>
-   </insert>
-   
-	<!-- 게시판에 단 댓글 작성 보여주는 쿼리 -->
-   <select id="replyView" parameterType="int" resultType="Comment">
-      SELECT * FROM Board_Comment WHERE board_num=#{board_num}
-      </select>
-   
-   <!-- 오홍홍 조와용 -->
-   <update id="ReplyLike" parameterType="int">
-      UPDATE Board_Comment SET Comment_Like=Comment_Like+1 WHERE Comment_Num=#{Comment_Num}
-   </update>
+	<!-- 게시판 상세보기 내 리스트 불려오기 쿼리 -->
+	<select id="boardviewInList" resultType="board">
+		SELECT * FROM Board order by board_Num desc
+	</select>
+	
+	<!-- 글쓰기 쿼리 -->
+	<insert id="boardwrite" parameterType="board" useGeneratedKeys="true" keyProperty="Board_Num">
+		INSERT INTO BOARD VALUES(BOARD_SEQ.nextval, #{Board_Password}, #{Board_Type}, #{Board_Title}, #{Board_Content}, #{Board_Videourl}, #{Board_Nickname}, #{Board_FileName}, 0, SYSDATE)
+		<selectKey keyProperty="Board_Num" resultType="int" order="AFTER">
+			SELECT BOARD_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<!-- 조회수 증가 쿼리 -->
+	<update id="increaseHit" parameterType="int">
+		UPDATE BOARD SET Board_Hit = Board_Hit+1 WHERE Board_Num = #{Board_Num}
+	</update>
+
+	<!-- 글 상세보기 쿼리 -->
+	<select id="boardview" parameterType="int" resultType="board">
+		SELECT * FROM BOARD WHERE Board_Num=#{Board_Num}
+	</select>
+
+	<!-- 글 수정하기 쿼리 -->
+	<select id="boardmodify" parameterType="int" resultType="board">
+		SELECT * FROM BOARD WHERE Board_Num=#{Board_Num}
+	</select>
+
+	<!-- 글 수정 업데이트 -->
+	<update id="boardmodify1" parameterType="board">
+		UPDATE BOARD SET Board_Title=#{Board_Title}, Board_Content=#{Board_Content}, Board_FileName=#{Board_FileName} WHERE Board_Num=#{Board_Num}
+	</update>
+
+	<!-- 글 삭제하기 쿼리 -->
+	<delete id="boarddelete" parameterType="int">
+		DELETE FROM BOARD WHERE Board_Num=#{Board_Num}
+	</delete>
+	
+	<!-- 카운트 -->
+	<select id="getListCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM BOARD
+	</select>
+	
+	<!-- 짜르게 -->
+		<select id="getRead" parameterType="java.util.HashMap" resultType="board">
+		<![CDATA[
+		SELECT * FROM ( SELECT ROWNUM AS RNUM, T1.*, COUNT(*) OVER() AS TOTAL_CNT
+		FROM( SELECT * FROM board ORDER BY board_num DESC) T1) WHERE RNUM > #{start} AND RNUM <= #{end} ]]>
+	</select>
+	
+	<!-- select * from(select Board_Num, rownum as rnum from(select board_num from board))r1, board r2 where r1.Board_Num = r2.Board_Num and rnum between 1 and 10 order by r2.Board_Date
+	 -->
+	 
+	<!-- <select id="listPage" resultType="com.choju.fpro.vo.BoardVO" parameterType="com.choju.fpro.vo.Criteria">
+    select Board_Num, Board_Title, Board_Content, Board_Nickname, Board_Hit, Board_Date from (
+    select Board_Num, Board_Title, Board_Content, Board_Nickname, Board_Hit, Board_Date, 
+    row_number() over(order by Board_Num desc) as rNum from Board) mb where rNum between #{rowStart} and #{rowEnd} order by Board_Num desc
+	</select> 
+	
+	<select id="listCount" resultType="int">
+	<![CDATA[
+		select count(Board_Num) from Board where Board_Num > 0
+	]]>
+	</select> --> 
+	
+	
+	
 	
 </mapper>

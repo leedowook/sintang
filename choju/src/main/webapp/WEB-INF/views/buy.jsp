@@ -181,7 +181,7 @@
 								</tr>
 							</table>
 							<br>
-								<a href="##" class="btn btn-primary center-block" id=
+								<a href="##" class="btn btn-primary center-block" id=""
 								style="width: 100px; text-align: center;">결제하기&nbsp;&nbsp;&nbsp;</a>
 						</div>
 					</div>

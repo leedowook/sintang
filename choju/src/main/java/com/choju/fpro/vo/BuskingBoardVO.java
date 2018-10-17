@@ -2,7 +2,7 @@ package com.choju.fpro.vo;
 
 import java.sql.Date;
 
-public class BuskingBoardVO {
+public class BuskingBoardVO extends LiveBoardVO {
 	private String L_num;
 	private String L_bus_place;
 	private String L_bus_kind;

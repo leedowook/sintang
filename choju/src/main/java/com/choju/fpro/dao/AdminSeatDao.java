@@ -136,7 +136,7 @@ public class AdminSeatDao {
 		}
 	}
 	
-	public  void ConsertOverlap(String ID, String Consertname,HttpServletResponse response) throws IOException {
+	public void ConsertOverlap(String ID, String Consertname,HttpServletResponse response) throws IOException {
 		  HashMap map = new HashMap();//파라미터값을 여러개 ㅈ넘겨주기위해 map을 선언 
 	      map.put("ID", ID);
 	      map.put("C_name", Consertname);

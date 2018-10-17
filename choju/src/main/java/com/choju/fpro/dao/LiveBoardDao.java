@@ -10,6 +10,9 @@ import com.choju.fpro.vo.*;
 public class LiveBoardDao {
    @Autowired
    private SqlSessionTemplate sqlSession;
+   public String SelectLnum(String L_num) {
+	   return sqlSession.selectOne("ConsertBoardLive.Liveboardlid",L_num);
+   }
    public ConsertBoardVO InfoConsertBoard() {
       return sqlSession.selectOne("LiveBoardVO");
    }
@@ -17,5 +20,10 @@ public class LiveBoardDao {
       BuskingBoardVO BuskingBoardVO=new BuskingBoardVO();
       return sqlSession.selectOne("LiveBoardVO");
    }
-   
+   public void InsertBuskingBoard(BuskingBoardVO BusVO) {
+	   sqlSession.insert("ConsertBoardLive.Buskingboardwirte",BusVO);
+   }
+   public void ConsertBoard(ConsertBoardVO ConVO) {
+	   sqlSession.insert("ConsertBoardLive.Consertboardwrite",ConVO);
+   }
 }
