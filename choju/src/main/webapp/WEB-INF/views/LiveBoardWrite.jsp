@@ -1,7 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page session="true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+   pageEncoding="UTF-8"%>
+<%@ page import="com.choju.fpro.vo.*"%>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -32,7 +34,7 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/icomoon.css">
 	<!-- Bootstrap  -->
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
-
+ 
 	<!-- Magnific Popup -->
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/magnific-popup.css">
 
@@ -54,12 +56,43 @@
 	<!-- Modernizr JS -->
 	<script src="<c:url value="/resources/js/modernizr-2.6.2.min.js" />"></script>
 	<!-- -------------------------------------절대 수정 하지 말것.---------------------------------------------------  -->
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
+	
+	<script src="https://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript" src="./resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
+
 
 	</head>
+	
+	<script type="text/javascript">
+    $(function(){
+        //전역변수
+        var obj = [];              
+        //스마트에디터 프레임생성
+        nhn.husky.EZCreator.createInIFrame({
+            oAppRef: obj,
+            elPlaceHolder: "editor",
+            sSkinURI: "./resources/editor/SmartEditor2Skin.html",
+            htParams : {
+                // 툴바 사용 여부
+                bUseToolbar : true,            
+                // 입력창 크기 조절바 사용 여부
+                bUseVerticalResizer : false,    
+                // 모드 탭(Editor | HTML | TEXT) 사용 여부
+                bUseModeChanger : false,
+            }
+        });
+         $("#insertBoard").click(function(){
+            //id가 smarteditor인 textarea에 에디터에서 대입
+            obj.getById["editor"].exec("UPDATE_CONTENTS_FIELD", []);
+            //폼 submit
+            $("#boardwriteFrm").submit();
+        });
+    });
+</script>
+	
+	
+	
+	
 	<body>
 		
 	<div class="colorlib-loader"></div>
@@ -74,28 +107,19 @@
 						</div>
 						<div class="col-xs-10 text-right menu-1">
 							<ul>
-								<!-- li class="active" --><li><a href="ConsertView">Concert & Busking</a></li>
-								<!-- <li class="has-dropdown">
-									<a href="shop.html">Shop</a>
-									<ul class="dropdown">
-										<li><a href="product-detail.html">Product Detail</a></li>
-										<li><a href="cart.html">Shipping Cart</a></li>
-										<li><a href="checkout.html">Checkout</a></li>
-										<li><a href="order-complete.html">Order Complete</a></li>
-										<li><a href="addtowishlist">Wishlist</a></li>
-									</ul>
-								</li> -->
+								<li><a href="ConsertView">Concert & Busking</a></li>
+								
 								<li><a href="freeboardForm">Free Board</a></li>
 								<li><a href="about">Public Board</a></li>
 								<li><a href="contact.html">Customer</a></li>			
 								<%if((String)session.getAttribute("session_Email")==null){ %>
 								<li><a href="Login">Login</a></li> <!-- <i class="icon-shopping-cart"></i> -->
 								<%}else if(session.getAttribute("session_Email").equals("Admin")){ %>
-								<li><a href="logout">Logout</a></li>
 								<li><a href="Admin">Admin</a></li>
-								<%}else{ %>
 								<li><a href="logout">Logout</a></li>
+								<%}else{ %>
 								<li><a href="Mypage.go?id=<%=session.getAttribute("session_Email")%>">MyPage</a></li>
+								<li><a href="logout">Logout</a></li>
 								<%} %>
 							</ul>
 						</div>
@@ -103,120 +127,77 @@
 				</div>
 			</div>
 		</nav>
+		<aside id="colorlib-hero">
+			<div class="flexslider">
+				<ul class="slides">
+				<!-- ì´ë¯¸ì§ í¸ì¶ ìë ì  backgrount-size:100%; êµ¬ë¬¸ ì¶ê°  -->
+			   	<li style="background-image: url(./resources/images/SZ.jpg);background-size:30%;">
+		</aside>
 		
-		<div id="colorlib-intro" class="colorlib-intro" style="background-image: url(./resources/images/cover-img-1.jpg);background-size:100%;" data-stellar-background-ratio="0.5">
-			<div class="overlay"></div>
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="intro-desc">
-							<div class="text-salebox">
-								<div class="text-lefts">
-									<div class="sale-box">
-										<div class="sale-box-top">
-											<h2 class="number">45</h2>
-											<span class="sup-1">%</span>
-											<span class="sup-2">Off</span>
-										</div>
-										<h2 class="text-sale">Sale</h2>
-									</div>
-								</div>
-								<div class="text-rights">
-									<h3 class="title">Just hurry up limited offer!</h3>
-									<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-									<p><a href="buy" class="btn btn-primary">Ticket Buy</a> <a href="DetailView" class="btn btn-primary btn-outline">Detail View</a></p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div id="colorlib-featured-product">
+			<div align="center"> <!-- class="container" -->
+				<div>
+					<form action="Liveboardwrite" name="write" method="post" enctype="multipart/form-data" id="boardwriteFrm">
+						<table border=1 style="cellpadding:0;cellspacing:0;border-top:2px solid red;border-bottom:2px solid red;
+							border-left:1px solid black;border-right:1px solid black;">
+							
+							<tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;width:70px;">작성자</td>
+								<td>&nbsp;&nbsp;&nbsp;<%=session.getAttribute("session_Nickname")%></td>
+								<!-- <input type="text" name="Member_nickname" style="height:50px;width:750px;text-align:left;"> -->
+							</tr>
+							
+							<tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;width:70px;">글제목</td>
+								<td><input type="text" name="Board_Title" style="height:50px;width:750px;text-align:left;"></td>
+							</tr>
+							
+							<tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;">비밀번호</td>
+								<td><input type="password" name="Board_Password" style="height:50px;width:750px;text-align:left;"></td>
+							</tr>
+			
+							<tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;">글유형</td>
+								<td>&nbsp;&nbsp;&nbsp;<select name="Board_Type">
+										<option value="Free">자유</option>
+										<option value="Auction">경매</option>
+										<option value="Relations">홍보</option>
+									</select>
+								</td>
+							</tr>
+							
+							<tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;">글내용</td>
+								<td>
+								<input type="text" id="editor" name="Board_Content" style="width:750px;height:500px;"/>
+								</td>
+							</tr>
 
-		<div class="colorlib-shop">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3 text-center colorlib-heading">
-						<h2><span>Ticket Reservation</span></h2>
-						<p>We love to tell our successful far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-					</div>
+							
+							<!-- <tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;">글내용</td>
+								<td><input type="text" name="Board_Content" style="height:500px;width:750px;"></td>
+							</tr> -->
+							
+							<tr style="border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="text-align:center;height:50px;">동영상</td>
+								<td><input type="text" name="Board_Videourl" style="height:50px;width:750px;" placeholder="동영상 url를 작성해주세요"></td>
+							</tr>
+			
+							<tr style="text-align:center;border-bottom:black;">
+								<td bgcolor="#d6d6d6" style="height:50px;">첨부파일</td>
+								<td><input type="file" name="Board_File"></td>
+							</tr>
+		
+							<tr>
+								<td colspan="2" style="height:50px;text-align:right;">
+								<a href="##" onclick="history.go(-1)">돌아가기&nbsp;&nbsp;&nbsp;</a>
+								<a href="javascript:write.submit()" id="insertBoard" >작성하기&nbsp;&nbsp;&nbsp;</a></td>
+							</tr> 
+						</table>	
+					</form>
 				</div>
-				<div class="row">
-					<c:forEach var="Live" items="${LiveList}">
-					<c:if test="${Live.Kind eq 'Busking'}">
-					<c:forEach var="Bus" items="${BuskingList}">
-					<c:if test="${Live.L_num eq Bus.L_num }">
-					<div class="col-md-3 text-center">
-						<div class="product-entry">
-							<div class="product-img" style="background-image: url(./resources/images/busking.jpg);background-size:100%;">
-								<p class="tag"><span class="new">New</span></p>
-								<div class="cart">
-									<p>
-										<span class="addtocart"><a href="buy">티켓 구매하기</a></span> 
-										<span><a href="product-detail.html"><i class="icon-eye"></i></a></span> 
-									</p>
-								</div>
-							</div>
-							<div class="desc">
-								<h3>${Live.L_singger}</h3>
-							</div>
-						</div>
-					</div>
-					</c:if>
-					</c:forEach>
-					</c:if>
-					<c:if test="${Live.Kind eq 'Consert'}">
-					<c:forEach var="Con" items="${ConsertList}">
-					<c:if test="${Live.L_num eq Con.L_num }">
-					<div class="col-md-3 text-center">
-						<div class="product-entry">
-							<div class="product-img" style="background-image: url(./resources/images/${Consert.img});background-size:100%;">
-								<p class="tag"><span class="new">New</span></p>
-								<div class="cart">
-									<p>
-										<span class="addtocart"><a href="buy">티켓 구매하기</a></span> 
-										<span><a href="product-detail.html"><i class="icon-eye"></i></a></span> 
-									</p>
-								</div>
-							</div>
-							<div class="desc">
-								<h3>${Con.L_consert_title}</h3>
-							</div>
-						</div>
-					</div>
-					</c:if>
-					</c:forEach>
-					</c:if>
-					
-					</c:forEach>
-				</div>
-			</div>
-		</div>
-
-		<div id="colorlib-subscribe">
-			<div class="overlay"></div>
-			<div class="container">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
-						<div class="col-md-6 text-center">
-							<h2><i class="icon-paperplane"></i>Sign Up for a Newsletter</h2>
-						</div>
-						<div class="col-md-6">
-							<form class="form-inline qbstp-header-subscribe">
-								<div class="row">
-									<div class="col-md-12 col-md-offset-0">
-										<div class="form-group">
-											<input type="text" class="form-control" id="email" placeholder="Enter your email">
-											<button type="submit" class="btn btn-primary">Subscribe</button>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<footer id="colorlib-footer" role="contentinfo">
 			<div class="container">

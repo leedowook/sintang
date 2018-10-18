@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ConsertBoardLive">
+   <!-- 글쓰기 쿼리 -->
+   <select id="Liveboardlid" parameterType="String" resultType="String">
+      select max(L_num) from Live_Board where L_num=#{L_num}
+   </select>
+   
+   <insert id="Liveboardwrite" parameterType="LiveBoard">
+      insert into Live_Board values(#{L_num},#{L_kind},#{L_password},#{L_content},#{L_singger})
+   </insert>
+   <insert id="Buskingboardwrite" parameterType="ConsertBoard" >
+      INSERT INTO Live_consert VALUES(#{L_num}, #{L_consert_num}, #{L_consert_title}, #{L_price}, #{L_consert_kind}, #{L_date_s}, #{L_date_e})
+   </insert>
+   <insert id="Consertboardwrite" parameterType="BuskingBoard">
+      INSERT INTO Live_busking VALUES(#{L_num},#{L_bus_place}, #{L_bus_kind}, #{L_bus_date})
+   </insert>
+   
+   <select id="getListCount"  resultType="int">
+      SELECT COUNT(*) FROM Live_Board
+   </select>
+   
+   
+   <select id="Consertboardlist" parameterType="java.util.HashMap" resultType="ConsertBoard">
+      <![CDATA[
+      SELECT * FROM ( SELECT ROWNUM AS RNUM, T1.*, COUNT(*) OVER() AS TOTAL_CNT
+      FROM( SELECT * FROM board ORDER BY board_num DESC) T1) WHERE RNUM > #{start} AND RNUM <= #{end} ]]>
+   </select>
+   <select id="Buskingboardlist" parameterType="java.util.HashMap" resultType="BuskingBoard">
+      <![CDATA[
+      SELECT * FROM ( SELECT ROWNUM AS RNUM, T1.*, COUNT(*) OVER() AS TOTAL_CNT
+      FROM( SELECT * FROM board ORDER BY board_num DESC) T1) WHERE RNUM > #{start} AND RNUM <= #{end} ]]>
+   </select>
+   
+   <select id="Liveboardlist" parameterType="java.util.HashMap" resultType="LiveBoard">
+      <![CDATA[
+      SELECT * FROM ( SELECT ROWNUM AS RNUM, T1.*, COUNT(*) OVER() AS TOTAL_CNT
+      FROM( SELECT * FROM board ORDER BY board_num DESC) T1) WHERE RNUM > #{start} AND RNUM <= #{end} ]]>
+   </select>
+
+
+</mapper>
+   

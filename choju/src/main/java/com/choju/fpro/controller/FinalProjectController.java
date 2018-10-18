@@ -35,7 +35,7 @@ import com.choju.fpro.vo.CommentVO;
 import com.choju.fpro.dao.BoardDAO;
 import com.choju.fpro.recapcha.VerifyRecaptcha;
 import com.choju.fpro.service.BoardService;
-
+import com.choju.fpro.service.LiveBoardService;
 import com.choju.fpro.service.MemberService;
 import com.choju.fpro.util.SHA256;
 import com.choju.fpro.vo.MemberVO;
@@ -50,7 +50,9 @@ public class FinalProjectController {
 	private static final Logger logger = LoggerFactory.getLogger(FinalProjectController.class);
 	@Autowired
 	private BoardService bs;
-
+	@Autowired
+	private LiveBoardService ls;
+	
 	private ModelAndView mav;
 	
 	private ModelAndView bvil;
@@ -100,7 +102,13 @@ public class FinalProjectController {
 		mav = bs.freeboardForm();
 		return mav;
 	} */
-    
+    @RequestMapping(value="/LiveboardForm",method=RequestMethod.GET)
+    public ModelAndView board(PageMaker pagemaker) {
+    	pagemaker.setPage(pagemaker.getPage());
+    	mav = new ModelAndView();
+    	mav = ls.LiveBoardList(pagemaker);
+    	return mav;
+    }
 	
 	//글 목록 페이징 처리
 	@RequestMapping(value = "/freeboardForm", method = RequestMethod.GET) // /list

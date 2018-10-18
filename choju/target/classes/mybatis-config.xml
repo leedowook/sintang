@@ -13,5 +13,8 @@
 		<typeAlias alias="ConsertMain" type="com.choju.fpro.vo.ConsertVO"/>
 		<typeAlias alias="ConsertHall" type="com.choju.fpro.vo.HallVO"/>
 		<typeAlias alias="ConsertLine" type="com.choju.fpro.vo.LineVO"/>
+		<typeAlias alias="Liveboard" type="com.choju.fpro.vo.LiveBoardVO"/>
+		<typeAlias alias="Consertboard" type="com.choju.fpro.vo.ConsertBoardVO"/>
+		<typeAlias alias="Buskingboard" type="com.choju.fpro.vo.BuskingBoardVO"/>
 	</typeAliases>
 </configuration>
